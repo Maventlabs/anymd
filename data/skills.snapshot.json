@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2026.09.16",
+  "updatedAt": "2026-09-16T00:00:00.000Z",
+  "skills": [
+    {
+      "id": "api-and-interface-design",
+      "name": "API and Interface Design",
+      "description": "Use when defining stable APIs, module boundaries, or contracts between application layers.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "code-review",
+      "name": "Code Review",
+      "description": "Use when reviewing a branch or work in progress against repository standards and the requested specification.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "code-simplification",
+      "name": "Code Simplification",
+      "description": "Use when working code needs to become clearer and easier to maintain without changing behavior.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "debugging-and-error-recovery",
+      "name": "Debugging and Error Recovery",
+      "description": "Use when failures need evidence-based root-cause diagnosis instead of speculative fixes.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "planning-and-task-breakdown",
+      "name": "Planning and Task Breakdown",
+      "description": "Use when a clear requirement must be decomposed into ordered, implementable work.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "test-driven-development",
+      "name": "Test-Driven Development",
+      "description": "Use when new behavior or a bug fix needs test-first proof through red, green, and refactor.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "verification-before-completion",
+      "name": "Verification Before Completion",
+      "description": "Use before claiming work is complete so every status statement is backed by fresh evidence.",
+      "category": "architecture-quality",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "featured"
+    },
+    {
+      "id": "frontend-design",
+      "name": "Frontend Design",
+      "description": "Use when creating a distinctive interface direction instead of a generic template layout.",
+      "category": "ui-ux-design",
+      "sourceRepo": "anthropics/skills",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "priority": "standard"
+    },
+    {
+      "id": "impeccable",
+      "name": "Impeccable",
+      "description": "Use when auditing or polishing interface hierarchy, accessibility, responsiveness, and interaction details.",
+      "category": "ui-ux-design",
+      "sourceRepo": "pbakaus/impeccable",
+      "sourceUrl": "https://github.com/pbakaus/impeccable",
+      "priority": "standard"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "name": "UI/UX Pro Max",
+      "description": "Use when product-specific UI guidance is needed across layout, typography, color, and interaction patterns.",
+      "category": "ui-ux-design",
+      "sourceRepo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "priority": "standard"
+    },
+    {
+      "id": "shadcn",
+      "name": "shadcn",
+      "description": "Use when discovering, composing, or adapting accessible shadcn UI components.",
+      "category": "ui-ux-design",
+      "sourceRepo": "shadcn-ui/ui",
+      "sourceUrl": "https://github.com/shadcn-ui/ui",
+      "priority": "standard"
+    },
+    {
+      "id": "accessibility",
+      "name": "Accessibility",
+      "description": "Use when auditing or implementing keyboard, screen-reader, contrast, and WCAG requirements.",
+      "category": "ui-ux-design",
+      "sourceRepo": "addyosmani/web-quality-skills",
+      "sourceUrl": "https://github.com/addyosmani/web-quality-skills",
+      "priority": "standard"
+    },
+    {
+      "id": "extract-design-system",
+      "name": "Extract Design System",
+      "description": "Use when an existing public interface must be analyzed into reusable visual primitives and tokens.",
+      "category": "ui-ux-design",
+      "sourceRepo": "arvindrk/extract-design-system",
+      "sourceUrl": "https://github.com/arvindrk/extract-design-system",
+      "priority": "standard"
+    },
+    {
+      "id": "animate",
+      "name": "Animate",
+      "description": "Use when purposeful interface motion or transitions need to be designed and implemented.",
+      "category": "motion-3d",
+      "sourceRepo": "emilkowalski/skills",
+      "sourceUrl": "https://github.com/emilkowalski/skills",
+      "priority": "standard"
+    },
+    {
+      "id": "gsap-core",
+      "name": "GSAP Core",
+      "description": "Use when DOM or SVG animation needs framework-agnostic GSAP tweens and responsive motion controls.",
+      "category": "motion-3d",
+      "sourceRepo": "greensock/gsap-skills",
+      "sourceUrl": "https://github.com/greensock/gsap-skills",
+      "priority": "standard"
+    },
+    {
+      "id": "gsap-scrolltrigger",
+      "name": "GSAP ScrollTrigger",
+      "description": "Use when building scroll-linked animation, scrubbed sequences, or pinned sections with GSAP.",
+      "category": "motion-3d",
+      "sourceRepo": "greensock/gsap-skills",
+      "sourceUrl": "https://github.com/greensock/gsap-skills",
+      "priority": "standard"
+    },
+    {
+      "id": "threejs-fundamentals",
+      "name": "Three.js Fundamentals",
+      "description": "Use when a project requires a Three.js scene, camera, renderer, transforms, or object hierarchy.",
+      "category": "motion-3d",
+      "sourceRepo": "CloudAI-X/threejs-skills",
+      "sourceUrl": "https://github.com/CloudAI-X/threejs-skills",
+      "priority": "standard"
+    },
+    {
+      "id": "hyperframes",
+      "name": "HyperFrames",
+      "description": "Use when creating or rendering a video, animation, motion graphic, or interactive composition.",
+      "category": "motion-3d",
+      "sourceRepo": "heygen-com/hyperframes",
+      "sourceUrl": "https://github.com/heygen-com/hyperframes",
+      "priority": "standard"
+    },
+    {
+      "id": "remotion",
+      "name": "Remotion",
+      "description": "Use when producing programmatic video with React and Remotion-specific composition patterns.",
+      "category": "motion-3d",
+      "sourceRepo": "remotion-dev/skills",
+      "sourceUrl": "https://github.com/remotion-dev/skills",
+      "priority": "standard"
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "description": "Use when a technical question needs evidence from high-trust primary sources captured for the project.",
+      "category": "research-content",
+      "sourceRepo": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills",
+      "priority": "standard"
+    },
+    {
+      "id": "doc-coauthoring",
+      "name": "Document Coauthoring",
+      "description": "Use when collaborating on structured documentation, proposals, technical specs, or decision documents.",
+      "category": "research-content",
+      "sourceRepo": "anthropics/skills",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "priority": "standard"
+    },
+    {
+      "id": "scientific-writing",
+      "name": "Scientific Writing",
+      "description": "Use when research evidence must become a structured manuscript with accurate citations and reporting conventions.",
+      "category": "research-content",
+      "sourceRepo": "K-Dense-AI/scientific-agent-skills",
+      "sourceUrl": "https://github.com/K-Dense-AI/scientific-agent-skills",
+      "priority": "standard"
+    },
+    {
+      "id": "copywriting",
+      "name": "Copywriting",
+      "description": "Use when a product needs persuasive landing-page, feature, pricing, or positioning copy.",
+      "category": "research-content",
+      "sourceRepo": "coreyhaines31/marketingskills",
+      "sourceUrl": "https://github.com/coreyhaines31/marketingskills",
+      "priority": "standard"
+    },
+    {
+      "id": "content-strategy",
+      "name": "Content Strategy",
+      "description": "Use when deciding what content to create, how topics connect, and which audience needs each piece.",
+      "category": "research-content",
+      "sourceRepo": "coreyhaines31/marketingskills",
+      "sourceUrl": "https://github.com/coreyhaines31/marketingskills",
+      "priority": "standard"
+    },
+    {
+      "id": "pdf",
+      "name": "PDF",
+      "description": "Use when reading, creating, combining, splitting, filling, or extracting structured content from PDF files.",
+      "category": "research-content",
+      "sourceRepo": "anthropics/skills",
+      "sourceUrl": "https://github.com/anthropics/skills",
+      "priority": "standard"
+    }
+  ]
+}
