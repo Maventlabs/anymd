@@ -78,9 +78,9 @@ export default function IdeaWizard() {
       >
         <div className="composer-heading">
           <span>
-            <Sparkles aria-hidden="true" /> Start with the messy version
+              <Sparkles aria-hidden="true" /> Describe the product
           </span>
-          <span>Any language</span>
+            <span>Write in any language</span>
         </div>
         <div className="composer-input">
           <label htmlFor="product-idea" className="sr-only">
@@ -95,7 +95,7 @@ export default function IdeaWizard() {
               setDraft({ ...draft, idea: event.target.value });
               if (error) setError(validateIdea(event.target.value));
             }}
-            placeholder="I want to build a place where..."
+            placeholder="Describe the product, the problem, and who it helps…"
             aria-invalid={!!error}
             aria-describedby={`idea-help${error ? " idea-error" : ""}`}
             rows={2}
@@ -105,7 +105,7 @@ export default function IdeaWizard() {
               <details ref={stackPicker} className="stack-picker">
                 <summary>
                   <SlidersHorizontal aria-hidden="true" />
-                  Advanced
+                  Stack preferences
                   {selectedCount > 0 && (
                     <span className="selection-count">{selectedCount}</span>
                   )}
@@ -114,15 +114,15 @@ export default function IdeaWizard() {
                 <div className="stack-panel">
                   <div className="stack-panel-heading">
                     <div>
-                      <strong>Tech preferences</strong>
+                      <strong>Stack preferences</strong>
                       <p>Choose only what is already decided.</p>
                     </div>
                     <div className="stack-panel-actions">
-                      <span>{selectedCount}/6 selected</span>
+                      <span>{selectedCount} of 6 selected</span>
                       <button
                         type="button"
                         className="stack-panel-close"
-                        aria-label="Close tech preferences"
+                        aria-label="Close stack preferences"
                         onClick={() => stackPicker.current?.removeAttribute("open")}
                       >
                         <X aria-hidden="true" />
@@ -186,21 +186,21 @@ export default function IdeaWizard() {
                 </div>
               </details>
               <span className="privacy-chip">
-                <LockKeyhole aria-hidden="true" /> This tab only
+                 <LockKeyhole aria-hidden="true" /> Draft stays in this tab
               </span>
             </div>
             <button
               className="send-button"
               type="submit"
               disabled={busy}
-              aria-label="Shape my idea"
+              aria-label="Continue to clarification"
             >
               <ArrowUp aria-hidden="true" />
             </button>
           </div>
         </div>
         <div className="input-meta">
-          <span id="idea-help">20 characters minimum. No perfect brief required.</span>
+          <span id="idea-help">20 characters minimum. Include the problem and first users.</span>
           <span>{count.toLocaleString("en-US")} / 5,000</span>
         </div>
         {error && (
@@ -209,7 +209,7 @@ export default function IdeaWizard() {
           </p>
         )}
         <div className="starter-prompts" aria-label="Starter ideas">
-          <span>Try a starting point</span>
+          <span>Start with an example</span>
           <div>
             {starters.map((starter) => (
               <button
@@ -229,8 +229,8 @@ export default function IdeaWizard() {
         </div>
       </form>
       <p className="prototype-note">
-        Fase 1 interface. Continue to the existing clarification preview; skill
-        selection and generation arrive later.
+        Your draft stays in this tab until you submit it. Next, AnyMD asks focused
+        questions, recommends skills, and prepares your documents.
       </p>
     </div>
   );

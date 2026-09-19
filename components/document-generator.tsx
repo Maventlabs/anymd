@@ -77,8 +77,8 @@ async function fetchDocuments(
     }
     onProgress?.(
       status === "processing"
-        ? "Generating your documents..."
-        : "Your generation job is queued...",
+         ? "Generating your documents…"
+         : "Your generation job is queued…",
     );
     await new Promise<void>((resolve, reject) => {
       const timeout = window.setTimeout(resolve, 750);
@@ -212,7 +212,7 @@ export default function DocumentGenerator() {
     const controller = new AbortController();
     rebuildController.current = controller;
     setRebuilding(key);
-    setStatus(`Rebuilding ${sectionTitle}...`);
+     setStatus(`Rebuilding ${sectionTitle}…`);
     try {
       const rebuilt = await fetchRebuiltDocuments(
         JSON.stringify({
@@ -290,7 +290,7 @@ export default function DocumentGenerator() {
 
         {loading && !bundle ? (
           <p className="generate-notice" role="status">
-            Assembling the PRD structure, agent instructions, and diagrams...
+             Assembling the PRD structure, agent instructions, and diagrams…
           </p>
         ) : null}
 

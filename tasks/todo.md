@@ -28,4 +28,8 @@
 
 ## Final
 - [ ] Redesign the full visual system after functional work is stable. (Still requires design-direction approval.)
+- [x] Rewrite product copy across the landing and active flow screens. (Preview, phase, and future-feature wording removed from user-facing copy.)
+- [x] Place the real pricing cards on the landing page. (The `/pricing` route remains available for direct access.)
+- [x] Add on-page SEO foundations and Netlify configuration. (Live domain and deployment credentials remain deferred.)
+- [x] Mark internal product documents as local-only and exclude them from the release commit. (They remain on disk and are staged for removal from the Git index.)
 - [x] Complete QA, security review, dependency audit, and production verification. (Local review and all automated gates pass; live Stripe/OAuth/provider/deployment checks remain deferred in `docs/qa/final.md`.)

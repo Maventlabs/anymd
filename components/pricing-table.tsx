@@ -5,16 +5,19 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { tokenPackages, type TokenPackageId } from "@/lib/token-packages";
 
-type PricingTableProps = { signedIn: boolean };
+type PricingTableProps = { signedIn: boolean; returnTo?: string };
 
-export default function PricingTable({ signedIn }: PricingTableProps) {
+export default function PricingTable({
+  signedIn,
+  returnTo = "/pricing",
+}: PricingTableProps) {
   const router = useRouter();
   const [pending, setPending] = useState<TokenPackageId | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function checkout(packageId: TokenPackageId) {
     if (!signedIn) {
-      router.push(`/login?callbackUrl=${encodeURIComponent("/pricing")}`);
+      router.push(`/login?callbackUrl=${encodeURIComponent(returnTo)}`);
       return;
     }
     setPending(packageId);
@@ -43,17 +46,27 @@ export default function PricingTable({ signedIn }: PricingTableProps) {
         {(Object.entries(tokenPackages) as [TokenPackageId, (typeof tokenPackages)[TokenPackageId]][]).map(
           ([id, tokenPackage]) => (
             <article className={`pricing-card ${id === "builder" ? "pricing-card-featured" : ""}`} key={id}>
-              {id === "builder" && <span className="pricing-badge">Most useful starting point</span>}
+              {id === "builder" && (
+                <span className="pricing-badge">
+                  Recommended for a first full brief
+                </span>
+              )}
               <span className="pricing-kicker">{tokenPackage.tokens} tokens</span>
               <h2>{tokenPackage.name}</h2>
               <p className="pricing-price">${(tokenPackage.unitAmount / 100).toFixed(2)}</p>
-              <p className="pricing-detail">One-time purchase. Tokens are added after Stripe confirms payment.</p>
+              <p className="pricing-detail">
+                One-time purchase. Tokens are added after payment is confirmed.
+              </p>
               <ul>
                 <li><Check aria-hidden="true" /> No subscription</li>
                 <li><Check aria-hidden="true" /> Use when you need them</li>
               </ul>
               <button type="button" onClick={() => void checkout(id)} disabled={pending !== null}>
-                {pending === id ? "Opening checkout..." : signedIn ? "Buy tokens" : "Sign in to buy"}
+                {pending === id
+                  ? "Opening checkout…"
+                  : signedIn
+                    ? "Buy tokens"
+                    : "Sign in to buy"}
                 <ArrowUpRight aria-hidden="true" />
               </button>
             </article>

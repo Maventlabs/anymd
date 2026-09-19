@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger, GSAPSplitText, useGSAP);
 
 type SplitTextProps = {
   text: string;
+  id?: string;
   className?: string;
   delay?: number;
   tag?: "h1" | "h2" | "h3" | "p" | "span";
@@ -18,6 +19,7 @@ type SplitTextProps = {
 
 export default function SplitText({
   text,
+  id,
   className = "",
   delay = 34,
   tag: Tag = "span",
@@ -60,6 +62,7 @@ export default function SplitText({
   return (
     <Tag
       ref={ref as React.Ref<never>}
+      id={id}
       className={`split-parent ${className}`}
       style={{ textAlign }}
     >

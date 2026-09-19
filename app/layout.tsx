@@ -8,9 +8,48 @@ import "./globals.css";
 import { DraftProvider } from "@/components/draft-provider";
 
 export const metadata: Metadata = {
-  title: "AnyMD - A thoughtful start to your next build",
+  metadataBase: new URL(
+    process.env.ANYMD_APP_URL?.trim() || "http://localhost:3000",
+  ),
+  title: {
+    default: "AnyMD | Turn product ideas into build-ready briefs",
+    template: "%s | AnyMD",
+  },
   description:
-    "Clarify a product idea, review matched skills, and assemble agent-ready Markdown documents with AnyMD.",
+    "Clarify a product idea, choose relevant skills, and create a PRD.md and AGENTS.md for your coding agent.",
+  applicationName: "AnyMD",
+  keywords: [
+    "product requirements document",
+    "PRD generator",
+    "AI coding agent",
+    "AGENTS.md",
+    "product planning",
+  ],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    siteName: "AnyMD",
+    title: "AnyMD | Turn product ideas into build-ready briefs",
+    description:
+      "Clarify a product idea and create the Markdown context your coding agent needs to build it.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AnyMD | Turn product ideas into build-ready briefs",
+    description:
+      "Clarify a product idea and create the Markdown context your coding agent needs to build it.",
+  },
   icons: {
     icon: "/brand/anymd-mark.png",
     apple: "/brand/anymd-mark.png",

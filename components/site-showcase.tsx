@@ -10,13 +10,13 @@ const previews = [
   "Launch dashboard",
 ];
 
-function PreviewPlaceholder({ label, index }: { label: string; index: number }) {
+function ProductConcept({ label, index }: { label: string; index: number }) {
   return (
     <figure className="preview-card">
       <div
         className={`preview-placeholder preview-pattern-${(index % 3) + 1}`}
         role="img"
-        aria-label={`Placeholder for an AnyMD-generated ${label} website preview`}
+         aria-label={`Illustrative ${label} product concept`}
       >
         <div className="preview-browser-bar">
           <span />
@@ -34,7 +34,7 @@ function PreviewPlaceholder({ label, index }: { label: string; index: number }) 
         </div>
       </div>
       <figcaption>
-        <span>AnyMD preview slot {String(index + 1).padStart(2, "0")}</span>
+         <span>Product concept {String(index + 1).padStart(2, "0")}</span>
         <strong>{label}</strong>
       </figcaption>
     </figure>
@@ -46,12 +46,12 @@ export default function SiteShowcase() {
     <div className="showcase-marquees" data-reveal>
       <Marquee pauseOnHover repeat={3} className="preview-marquee">
         {previews.slice(0, 4).map((label, index) => (
-          <PreviewPlaceholder key={label} label={label} index={index} />
+          <ProductConcept key={label} label={label} index={index} />
         ))}
       </Marquee>
       <Marquee reverse pauseOnHover repeat={3} className="preview-marquee slow">
         {previews.slice(2).map((label, index) => (
-          <PreviewPlaceholder key={label} label={label} index={index + 2} />
+          <ProductConcept key={label} label={label} index={index + 2} />
         ))}
       </Marquee>
     </div>

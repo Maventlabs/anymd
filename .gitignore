@@ -23,6 +23,11 @@
 *.p12
 *.pfx
 
+# Private product documents
+/PRD-AnyMD-Product.md
+/PRD-Template-Output-AnyMD.md
+/PRODUCT.md
+
 # Test and browser artifacts
 /test-results/
 /playwright-report/

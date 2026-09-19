@@ -3,8 +3,8 @@
  * refuses the generic AI dashboard hero.
  * OWN-WORLD: pure white and voltage blue, heavy grotesk type, hard-edged
  * browser previews, compact controls, and alternating full-width bands.
- * STORY: write the idea, see the future output, understand the clarification
- * path, then continue with confidence.
+ * STORY: write the idea, see the output shape, answer the key questions, then
+ * continue with a brief your coding agent can use.
  * FIRST VIEWPORT: a large two-line promise sits above one compact prompt
  * composer while a restrained laser field makes the input feel active.
  * FORM: a blueprint-to-interface scroll, with opposing preview marquees as the
@@ -28,6 +28,7 @@ import HeroLaser from "@/components/hero-laser";
 import HeroTrail from "@/components/hero-trail";
 import IdeaWizard from "@/components/idea-wizard";
 import LandingMotion from "@/components/landing-motion";
+import PricingTable from "@/components/pricing-table";
 import SiteShowcase from "@/components/site-showcase";
 import SplitText from "@/components/split-text";
 import { auth } from "@/auth";
@@ -40,24 +41,24 @@ import {
 
 const faqs = [
   [
-    "What can I do in this preview?",
-    "Write an idea in any language, choose optional tech preferences, answer adaptive questions, pick a visual direction, review automatic skill recommendations, and generate structured Markdown documents with the configured AI provider. Drafts stay local until generation; authenticated jobs and token purchases are handled server-side.",
+    "What does AnyMD create?",
+    "Describe an idea in any language, answer focused questions, choose a visual direction, review skill recommendations, and generate a structured prd.md plus AGENTS.md. An optional CLAUDE.md bridge is available for Claude Code projects.",
   ],
   [
     "Is this another AI app builder?",
-    "No. AnyMD is being built to prepare the documents, not execute the code. You bring the resulting brief and instructions to your own coding agent, in your own environment.",
+    "No. AnyMD prepares the documents; it does not execute your code. Bring the brief and instructions to the coding agent and environment you already use.",
   ],
   [
     "Do I need to know my tech stack?",
-    "Not at all. Every category has an Open option. You can describe the problem first and leave technology decisions open.",
+    "No. Every category includes an Open option. Describe the problem first and leave technology decisions open.",
   ],
   [
     "Will it work with my coding agent?",
-    "The output is plain Markdown: prd.md plus AGENTS.md. Support for instruction files varies by agent. For Claude Code, you can include an optional CLAUDE.md importer containing @AGENTS.md.",
+    "The output is plain Markdown: prd.md plus AGENTS.md. Most coding agents can read these files. For Claude Code, you can include an optional CLAUDE.md bridge containing @AGENTS.md.",
   ],
   [
-    "Should I write a PRD for every change?",
-    "Probably not. AnyMD is intended for new products and substantial, multi-step features. For a small fix or one extra form field, a direct prompt is usually enough.",
+    "When should I use AnyMD?",
+    "Use it for a new product or a substantial, multi-step feature. A small fix or one extra form field usually needs a direct prompt instead.",
   ],
 ];
 
@@ -67,11 +68,25 @@ const stackRows = [
   ["Database", "Neon / Supabase / PlanetScale / MongoDB Atlas / Postgres"],
   ["Auth", "Clerk / Auth0 / Supabase Auth / Auth.js"],
   ["Payments", "Stripe / Xendit / Paddle / LemonSqueezy"],
-  ["Hosting", "Vercel / Railway / Fly.io / Your own server"],
+  ["Hosting", "Netlify / Railway / Fly.io / Your own server"],
 ];
 
 export default async function Home() {
   const session = await auth();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "AnyMD",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    description:
+      "A product planning workspace that creates PRD.md and AGENTS.md files for coding agents.",
+    url: process.env.ANYMD_APP_URL?.trim() || "http://localhost:3000",
+    creator: {
+      "@type": "Organization",
+      name: "Maventlabs",
+    },
+  };
   return (
     <LandingMotion>
       <a className="skip-link" href="#main">
@@ -81,34 +96,40 @@ export default async function Home() {
         <a className="wordmark" href="#" aria-label="AnyMD home">
           <BrandLogo className="wordmark-image" />
         </a>
-           <nav aria-label="Main navigation">
-             <a href="#how-it-works">How it works</a>
-             <a href="#output">The output</a>
-             <a href="#principles">Our approach</a>
-             <a href="/pricing">Tokens</a>
-              {session?.user ? <SignOutButton /> : <a href="/login">Log in</a>}
-           </nav>
+        <nav aria-label="Main navigation">
+          <a href="#how-it-works">How it works</a>
+          <a href="#output">The output</a>
+          <a href="#principles">Our approach</a>
+          <a href="#pricing">Pricing</a>
+          {session?.user ? <SignOutButton /> : <a href="/login">Log in</a>}
+        </nav>
         <a className="nav-cta" href="#idea">
           Start with an idea <ArrowUpRight aria-hidden="true" />
         </a>
       </header>
 
       <main id="main" className="landing">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <section className="hero band-white" aria-labelledby="hero-title">
           <div className="shell hero-shell">
             <HeroLaser />
             <div className="hero-copy">
               <div className="hero-meta" data-reveal>
                 <span>AnyMD by Maventlabs</span>
-                <span>Fase 1 / A thoughtful beginning</span>
+                <span>Product planning for coding agents</span>
               </div>
               <h1 id="hero-title">
-                <SplitText text="Big idea." />
-                <SplitText text="Clear beginning." delay={46} />
+                <SplitText text="Turn product ideas" />
+                <SplitText text="into build-ready briefs." delay={46} />
               </h1>
               <p data-reveal>
-                Turn a rough product thought into a direction your coding agent
-                can actually follow.
+                Clarify the product, answer the decisions that affect scope, and
+                export the project context your coding agent needs.
               </p>
             </div>
             <IdeaWizard />
@@ -121,17 +142,17 @@ export default async function Home() {
         >
           <div className="shell showcase-heading">
             <span className="section-kicker" data-reveal>
-              Website previews / Placeholder collection
+              Illustrative product concepts
             </span>
             <SplitText
               tag="h2"
-              text="Ideas that are ready to become interfaces."
+              id="showcase-title"
+              text="See the product contexts your brief can describe."
               className="section-title"
             />
             <p data-reveal>
-              These 16:9 frames will become a rotating gallery of websites made
-              from AnyMD briefs. For Fase 1, they intentionally remain preview
-              placeholders.
+              These wireframes show example product directions. They are visual
+              references for the brief, not generated websites.
             </p>
           </div>
           <SiteShowcase />
@@ -146,33 +167,35 @@ export default async function Home() {
             <div className="shell process-grid">
               <div className="process-sticky">
                 <span className="section-kicker" data-reveal>
-                  01 / The process
+                  01 / How it works
                 </span>
                 <SplitText
                   tag="h2"
-                  text="From a loose thought to a shared direction."
+                  id="process-title"
+                  text="From product idea to working brief."
                   className="section-title"
                 />
                 <p data-reveal>
-                  The journey gives your agent context before it gives you code.
+                  Describe the product, resolve the important unknowns, and export
+                  the files your coding agent can follow.
                 </p>
               </div>
               <ol className="process-list">
                 {[
                   [
-                    "Tell us the idea",
+                    "Describe the product",
                     "The problem, the people, the possibility. Write naturally and start with what you know.",
                     "Available now",
                   ],
                   [
-                    "Work through the unknowns",
+                    "Answer the decisions that affect scope",
                     "Focused clarification defines the audience, scope, and decisions that materially change the build.",
                     "Available now",
                   ],
                   [
-                    "Give your agent a better start",
-                    "A product brief and working instructions, designed to travel together without a folder of duplicate documents.",
-                    "Coming later",
+                    "Export the project context",
+                    "A product brief and working instructions that travel together without duplicate setup notes.",
+                    "Available now",
                   ],
                 ].map(([title, body, status], index) => (
                   <li key={title} data-reveal>
@@ -198,19 +221,20 @@ export default async function Home() {
             <div className="output-heading">
               <div>
                 <span className="section-kicker" data-reveal>
-                  02 / The output
+                  02 / Output files
                 </span>
                 <SplitText
                   tag="h2"
-                  text="Two files. One clear working context."
+                  id="output-title"
+                  text="Two files that keep the build aligned."
                   className="section-title"
                 />
               </div>
               <p data-reveal>
-                A clean separation between what to build and how the coding
+                prd.md defines what to build. AGENTS.md defines how your coding
                 agent should work.
                 <span className="sample-label">
-                  Illustrative excerpts, not generated output.
+                  Illustrative excerpts from the output format.
                 </span>
               </p>
             </div>
@@ -222,8 +246,8 @@ export default async function Home() {
                   <span>What to build</span>
                 </div>
                 <div className="document-content">
-                  <span className="document-caption">Sample client portal</span>
-                  <h3>The product, precisely.</h3>
+                  <span className="document-caption">Example product brief</span>
+                  <h3>Product scope and decisions.</h3>
                   <p>
                     One place for freelance designers and clients to keep
                     project decisions moving.
@@ -248,9 +272,9 @@ export default async function Home() {
                 </div>
                 <div className="document-content">
                   <span className="document-caption">
-                    Instructions that stay with the project
+                    Instructions that stay with the repository
                   </span>
-                  <h3>The working agreement.</h3>
+                  <h3>Agent instructions.</h3>
                   <div className="instruction">
                     <span>Must</span>
                     <p>Check recommended skills and use them when installed and relevant.</p>
@@ -269,8 +293,9 @@ export default async function Home() {
             <div className="output-note" data-reveal>
               <ArrowDown aria-hidden="true" />
               <p>
-                Then, a short initiation prompt brings both files to your agent.
-                <span>Planned for a later phase. No extra default document.</span>
+                Then, use the included initiation prompt to bring both files into
+                your coding agent.
+                <span>Optional CLAUDE.md support is available for Claude Code.</span>
               </p>
             </div>
           </div>
@@ -283,11 +308,12 @@ export default async function Home() {
           <div className="shell split-layout">
             <div>
               <span className="section-kicker" data-reveal>
-                03 / Clarify what matters
+                03 / Clarify the brief
               </span>
               <SplitText
                 tag="h2"
-                text="The right question changes the brief."
+                id="clarify-title"
+                text="Answer the questions that change the build."
                 className="section-title"
               />
             </div>
@@ -298,8 +324,7 @@ export default async function Home() {
               </p>
               <p data-reveal>
                 Essential questions combine with follow-ups that adapt to your
-                answers. No arbitrary completeness score. No questionnaire for
-                its own sake.
+                answers. Each question exists to improve the brief.
               </p>
               <div className="question-example" data-reveal>
                 <span>For example</span>
@@ -318,11 +343,12 @@ export default async function Home() {
           <div className="shell">
             <div className="centered-heading">
               <span className="section-kicker" data-reveal>
-                04 / Optional decisions
+                04 / Stack preferences
               </span>
               <SplitText
                 tag="h2"
-                text="Bring a stack. Or bring an open mind."
+                id="stack-title"
+                text="Set the decisions you have already made."
                 className="section-title"
               />
               <p data-reveal>
@@ -339,7 +365,7 @@ export default async function Home() {
               ))}
             </div>
             <a className="text-link centered-link" href="#idea">
-              Set preferences in the idea box
+              Edit stack preferences in the idea box
               <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
@@ -353,15 +379,16 @@ export default async function Home() {
           <div className="shell split-layout">
             <div>
               <span className="section-kicker" data-reveal>
-                05 / Know-how is not access
+                05 / Skills and tools
               </span>
               <SplitText
                 tag="h2"
-                text="Better instructions. Not more instructions."
+                id="skills-title"
+                text="Give your agent relevant guidance, not invented access."
                 className="section-title"
               />
               <p data-reveal>
-                A useful brief respects the environment your agent actually has.
+                AnyMD separates local task guidance from access to external tools.
               </p>
             </div>
             <div className="capability-compare">
@@ -412,12 +439,13 @@ export default async function Home() {
               </span>
               <SplitText
                 tag="h2"
-                text="A little direction. A lot less generic."
+                id="visual-title"
+                text="Give your agent a visual brief it can implement."
                 className="section-title"
               />
               <p data-reveal>
-                Typography, a considered palette, and explicit boundaries give
-                an agent direction without pretending AnyMD is a design tool.
+                Typography, palette, and explicit boundaries give an agent a
+                usable visual direction without pretending AnyMD is a design tool.
               </p>
               <ul className="plain-list" data-reveal>
                 <li>
@@ -442,18 +470,18 @@ export default async function Home() {
           <div className="shell privacy-content">
             <Fingerprint aria-hidden="true" className="privacy-icon" />
             <span className="section-kicker" data-reveal>
-              07 / Private by default in this preview
+              07 / Draft handling
             </span>
             <SplitText
               tag="h2"
-              text="Your next big thing. Not someone else's data."
+              id="privacy-title"
+              text="Your draft stays in this tab until you submit it."
               className="section-title"
             />
             <p data-reveal>
-              Your working draft stays in React state in this browser tab until
-              you submit it. Generation sends the selected brief to the
-              configured server-side provider and stores the job result so the
-              queue can retry, recover, and enforce quota safely.
+              Your working draft stays in this browser tab until you submit it.
+              Generation sends the selected brief to the server-side provider and
+              stores the job result so the queue can recover safely.
             </p>
             <div className="privacy-flow" data-reveal>
               <span>Your idea</span>
@@ -465,8 +493,8 @@ export default async function Home() {
             <div className="privacy-note" data-reveal>
               <LockKeyhole aria-hidden="true" />
               <p>
-                No account. No API key. No submission. Self-hosting and provider
-                choice remain roadmap items.
+                The draft is not submitted until you continue to generation. AnyMD
+                does not expose provider credentials in the browser.
               </p>
             </div>
           </div>
@@ -480,18 +508,19 @@ export default async function Home() {
           <div className="shell faq-grid">
             <div className="faq-heading">
               <span className="section-kicker" data-reveal>
-                08 / Before you begin
+                08 / Questions before you start
               </span>
               <SplitText
                 tag="h2"
-                text="A clear start should leave fewer questions."
+                id="faq-title"
+                text="Know what happens before you write."
                 className="section-title"
               />
               <div className="faq-action" data-reveal>
-                <span>For the project you keep thinking about.</span>
-                <h3>Start somewhere. Start with your idea.</h3>
+                <span>For a new product or a substantial feature.</span>
+                <h3>Describe the product you want to build.</h3>
                 <a className="pill inverse" href="#idea">
-                  Give it a beginning <ArrowUpRight aria-hidden="true" />
+                  Describe your idea <ArrowUpRight aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -514,6 +543,34 @@ export default async function Home() {
             </Accordion>
           </div>
         </section>
+
+        <section
+          className="section band-white pricing-landing"
+          id="pricing"
+          aria-labelledby="landing-pricing-title"
+        >
+          <div className="shell">
+            <div className="centered-heading">
+              <span className="section-kicker" data-reveal>
+                09 / Pricing
+              </span>
+              <SplitText
+                tag="h2"
+                id="landing-pricing-title"
+                text="Generate when your brief is ready."
+                className="section-title"
+              />
+              <p data-reveal>
+                Start with the included quota. Buy tokens only when you need
+                additional document generations.
+              </p>
+            </div>
+            <PricingTable
+              signedIn={Boolean(session?.user?.id)}
+              returnTo="/"
+            />
+          </div>
+        </section>
       </main>
 
       <footer className="shell footer">
@@ -523,11 +580,11 @@ export default async function Home() {
         <p>
           A Maventlabs project.
           <br />
-          Built for thoughtful beginnings.
+          Product planning for coding agents.
         </p>
         <div>
           <a href="#privacy">
-            Privacy in this preview <ArrowUpRight aria-hidden="true" />
+            How AnyMD handles drafts <ArrowUpRight aria-hidden="true" />
           </a>
           <a
             href="https://github.com/vetrns/skills-vault"
@@ -537,7 +594,7 @@ export default async function Home() {
             <Github aria-hidden="true" /> Explore the skill source
           </a>
         </div>
-        <span>Fase 1 / Landing foundation</span>
+        <span>AnyMD by Maventlabs</span>
       </footer>
     </LandingMotion>
   );

@@ -45,13 +45,13 @@ async function reachSkills(page: Page) {
     .fill(
       "A client portal for independent designers to share milestones, collect feedback, and record approvals.",
     );
-  await page.getByRole("button", { name: "Shape my idea" }).click();
+  await page.getByRole("button", { name: "Continue to clarification" }).click();
   await expect(page).toHaveURL(/\/clarify$/);
 
   for (let step = 0; step < 12; step += 1) {
     if (
       await page
-        .getByRole("heading", { name: "Your idea, in focus." })
+        .getByRole("heading", { name: "Review your brief." })
         .isVisible()
         .catch(() => false)
     )

@@ -12,7 +12,7 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
     .fill(
       "A workspace that helps independent studios turn client feedback into clear product decisions.",
     );
-  const shapeIdea = page.getByRole("button", { name: "Shape my idea" });
+  const shapeIdea = page.getByRole("button", { name: "Continue to clarification" });
   await expect(shapeIdea).toBeEnabled();
   await shapeIdea.click();
   await expect(page).toHaveURL(/\/clarify$/, { timeout: 15_000 });
@@ -20,7 +20,7 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
   for (let step = 0; step < 12; step += 1) {
     if (
       await page
-        .getByRole("heading", { name: "Your idea, in focus." })
+        .getByRole("heading", { name: "Review your brief." })
         .isVisible()
         .catch(() => false)
     )
@@ -30,7 +30,6 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
     });
     if (await themeHeading.isVisible().catch(() => false)) {
       await expect(page.locator(".theme-card")).toHaveCount(6);
-      await expect(page.locator(".theme-slot")).toHaveCount(3);
       await page.getByRole("radio", { name: /Signal Black/ }).click();
     } else {
       const radio = page.getByRole("radio").first();
@@ -56,7 +55,7 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
   }
 
   await expect(
-    page.getByRole("heading", { name: "Your idea, in focus." }),
+    page.getByRole("heading", { name: "Review your brief." }),
   ).toBeVisible();
   await expect(page.getByText("Signal Black", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Review recommended skills" }).click();
@@ -99,7 +98,7 @@ test("direct skill selection without a draft shows the empty state", async ({
 }) => {
   await page.goto("/skills");
   await expect(
-    page.getByRole("heading", { name: "Start with your idea first." }),
+    page.getByRole("heading", { name: "Start with your product idea first." }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Write an idea" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Describe your idea" })).toBeVisible();
 });

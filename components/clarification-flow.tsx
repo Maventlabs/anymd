@@ -94,11 +94,11 @@ export default function ClarificationFlow() {
         >
           <BrandLogo className="wordmark-image" />
         </Link>
-        <span className="quiet">Your idea, a little clearer.</span>
+         <span className="quiet">Answer the decisions that shape the build.</span>
       </header>
       <main id="clarification-main" className="clarify-main">
         <div className="clarify-meta">
-          <span>02 / Clarification</span>
+           <span>02 / Clarify the brief</span>
           <span>
             {reviewing
               ? "Ready to review"
@@ -110,7 +110,7 @@ export default function ClarificationFlow() {
         <div
           className="clarify-progress"
           role="progressbar"
-          aria-label="Clarification completeness"
+             aria-label="Brief completion"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={progress}
@@ -121,7 +121,7 @@ export default function ClarificationFlow() {
           {!validDraft ? (
             <>
               <h1 tabIndex={-1} data-stage-heading>
-                Start with a spark.
+                 Describe your product first.
               </h1>
               <p>
                 There is no idea in this tab yet. Drafts live only in memory, so
@@ -141,7 +141,7 @@ export default function ClarificationFlow() {
           ) : reviewing ? (
             <>
               <h1 tabIndex={-1} data-stage-heading>
-                Your idea, in focus.
+                 Review your brief.
               </h1>
               <p>
                 Review the details below. Everything stays editable in this tab
@@ -149,7 +149,7 @@ export default function ClarificationFlow() {
               </p>
               <section className="review-item" aria-labelledby="review-idea">
                 <div className="review-label">
-                  <h2 id="review-idea">Your starting point</h2>
+                  <h2 id="review-idea">Starting idea</h2>
                   <button
                     className="text-link"
                     disabled={busy}
@@ -192,12 +192,12 @@ export default function ClarificationFlow() {
                     {(item.id === "theme"
                       ? getThemePreset(clarification.answers[item.id])?.name
                       : clarification.answers[item.id]?.trim()) ||
-                      "Skipped / no constraints specified"}
+                       "No constraint provided"}
                   </p>
                 </section>
               ))}
               <aside className="clarify-next">
-                <h2>What comes next?</h2>
+                <h2>Next: review the recommended skills</h2>
                 <p>
                   Review the skills recommended from your idea, stack, and answers.
                   No AI has been called and no documents have been generated.
@@ -315,16 +315,6 @@ export default function ClarificationFlow() {
                           {preset.fonts.display} / {preset.fonts.body}
                         </small>
                       </label>
-                    ))}
-                    {Array.from({ length: 3 }, (_, slot) => (
-                      <div
-                        className="theme-slot"
-                        aria-disabled="true"
-                        key={slot}
-                      >
-                        <strong>ETC</strong>
-                        <span>Future preset</span>
-                      </div>
                     ))}
                   </RadioGroup>
                 ) : question.options ? (

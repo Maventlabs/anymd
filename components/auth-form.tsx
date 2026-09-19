@@ -93,7 +93,7 @@ export default function AuthForm({
           </label>
           {error && <p className="auth-error" role="alert">{error}</p>}
           <button className="auth-submit" disabled={pending} type="submit">
-            {pending ? "Working..." : isSignup ? "Create account" : "Log in"}
+            {pending ? "Working…" : isSignup ? "Create account" : "Log in"}
             <ArrowUpRight aria-hidden="true" />
           </button>
         </form>

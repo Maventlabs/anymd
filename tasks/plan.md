@@ -38,6 +38,8 @@
 ### Final Design, QA, and Security
 - Redesign landing/auth/pricing surfaces as one coherent system.
 - Final visual redesign remains paused until a new direction is approved; the current `DESIGN.md` is provisional.
+- Copy and SEO pass: landing, clarification, skills, pricing, and generation copy now describe shipped behavior without preview, phase, or future-feature claims. The real `PricingTable` appears on the landing page and remains available at `/pricing`.
+- SEO foundations: root/page metadata, canonical URLs, Open Graph/Twitter metadata, JSON-LD, `robots.txt`, and `sitemap.xml` are implemented. Netlify build configuration is present in `netlify.toml`; live deployment still requires the public domain and credentials.
 - Run unit/API/E2E/build/lint/typecheck/audit checks. (Local gates pass; see `docs/qa/final.md`.)
 - Perform security review for auth, IP hashing, webhook handling, rate limits, secrets, and data retention. (Local review documented; durable production rate limiting and credential-backed verification remain deferred.)
 
@@ -65,6 +67,6 @@
 - `npm run lint`: passed.
 - `npm run typecheck`: passed.
 - `npm run build`: passed.
-- `npm run test:e2e`: 20 passed across desktop and mobile Chromium.
+- `npm run test:e2e`: 19 passed across desktop and mobile Chromium; the single mobile auth failure was caused by a Neon connection timeout during signup. Targeted copy/pricing specs pass: 6 passed across desktop and mobile Chromium.
 - `npm audit --omit=dev`: 0 vulnerabilities.
 - `git diff --check`: passed; only Windows line-ending warnings were reported.

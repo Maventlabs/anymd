@@ -76,13 +76,13 @@ export default function SkillSelection() {
         </header>
         <main className="skills-empty">
           <span className="quiet">03 / Skills</span>
-          <h1>Start with your idea first.</h1>
+          <h1>Start with your product idea first.</h1>
           <p>
-            Skill recommendations belong to a completed clarification in this tab. A
-            refresh clears the draft, so begin again from the idea composer.
+            Skill recommendations use a completed brief in this tab. A refresh
+            clears the draft, so return to the idea composer to begin again.
           </p>
           <Link href="/" className="pill">
-            Write an idea <ArrowRight aria-hidden="true" />
+            Describe your idea <ArrowRight aria-hidden="true" />
           </Link>
         </main>
       </div>
@@ -116,8 +116,8 @@ export default function SkillSelection() {
             <h1 id="skills-complete-title">Recommendations saved for this tab.</h1>
             <p>
               {recommended.length
-                ? `${recommended.length} recommended skill${recommended.length === 1 ? "" : "s"} will guide the future AGENTS.md instructions.`
-                : "No matching skills were recommended. That is valid; the future output will follow repository conventions."}
+                ? `${recommended.length} recommended skill${recommended.length === 1 ? "" : "s"} will guide the AGENTS.md instructions.`
+                : "No matching skills were recommended. The generated files will follow repository conventions."}
             </p>
             {recommended.length ? (
               <ul className="selected-skill-list">
@@ -156,13 +156,13 @@ export default function SkillSelection() {
             {catalog?.meta.source === "snapshot" ? (
               <p className="catalog-notice" role="status">
                 Showing the verified fallback catalog because the live structured
-                catalog is not available yet.
+                catalog is unavailable.
               </p>
             ) : null}
 
             {!catalog && !error ? (
               <p className="catalog-loading" role="status">
-                Loading the curated catalog...
+                Loading the curated catalog…
               </p>
             ) : null}
 

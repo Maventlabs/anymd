@@ -93,7 +93,7 @@ const questions: readonly Question[] = [
   {
     id: "theme",
     title: "Which visual direction fits the product?",
-    help: "Choose one curated font and color system. Three ETC slots are reserved for future presets.",
+    help: "Choose one curated font and color system for the generated project.",
     options: themePresetIds,
   },
   {
