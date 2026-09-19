@@ -19,7 +19,17 @@ import type {
   GeneratedDocument,
 } from "@/lib/generated-documents";
 
-async function fetchDocuments(body: string, signal?: AbortSignal) {
+type GenerationError =
+  | "FAILED"
+  | "UNKNOWN_SKILL"
+  | "AUTH_REQUIRED"
+  | "QUOTA_EXHAUSTED";
+
+async function fetchDocuments(
+  body: string,
+  signal?: AbortSignal,
+  onProgress?: (status: string) => void,
+) {
   const response = await fetch("/api/generate", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -32,11 +42,56 @@ async function fetchDocuments(body: string, signal?: AbortSignal) {
       value && typeof value === "object" && "error" in value
         ? (value as { error?: { code?: unknown } }).error?.code
         : undefined;
-    throw new Error(code === "UNKNOWN_SKILL" ? "UNKNOWN_SKILL" : "FAILED");
+    throw new Error(
+      code === "UNKNOWN_SKILL" ||
+        code === "AUTH_REQUIRED" ||
+        code === "QUOTA_EXHAUSTED"
+        ? code
+        : "FAILED",
+    );
   }
-  const bundle = parseGeneratedBundle(value);
-  if (!bundle) throw new Error("FAILED");
-  return bundle;
+  const job =
+    value && typeof value === "object" && "job" in value
+      ? (value as { job?: { id?: unknown; status?: unknown } }).job
+      : undefined;
+  if (!job || typeof job.id !== "string") throw new Error("FAILED");
+
+  while (true) {
+    const statusResponse = await fetch(`/api/generate/${job.id}`, { signal });
+    const statusValue: unknown = await statusResponse.json();
+    const statusJob =
+      statusValue && typeof statusValue === "object" && "job" in statusValue
+        ? (statusValue as { job?: Record<string, unknown> }).job
+        : undefined;
+    if (!statusResponse.ok || !statusJob) throw new Error("FAILED");
+    const status = statusJob.status;
+    if (status === "succeeded") {
+      const result = parseGeneratedBundle(statusJob.result);
+      if (!result) throw new Error("FAILED");
+      return result;
+    }
+    if (status === "failed" || status === "timed_out") {
+      throw new Error(
+        statusJob.errorCode === "UNKNOWN_SKILL" ? "UNKNOWN_SKILL" : "FAILED",
+      );
+    }
+    onProgress?.(
+      status === "processing"
+        ? "Generating your documents..."
+        : "Your generation job is queued...",
+    );
+    await new Promise<void>((resolve, reject) => {
+      const timeout = window.setTimeout(resolve, 750);
+      signal?.addEventListener(
+        "abort",
+        () => {
+          window.clearTimeout(timeout);
+          reject(new DOMException("Aborted", "AbortError"));
+        },
+        { once: true },
+      );
+    });
+  }
 }
 
 async function fetchRebuiltDocuments(body: string, signal: AbortSignal) {
@@ -65,7 +120,7 @@ export default function DocumentGenerator() {
   const [bundle, setBundle] = useState<GeneratedBundle | null>(null);
   const [activeFilename, setActiveFilename] =
     useState<GeneratedDocument["filename"]>("prd.md");
-  const [error, setError] = useState<"FAILED" | "UNKNOWN_SKILL" | null>(null);
+  const [error, setError] = useState<GenerationError | null>(null);
   const [loading, setLoading] = useState(validDraft);
   const [retry, setRetry] = useState(0);
   const [rebuilding, setRebuilding] = useState<string | null>(null);
@@ -85,7 +140,7 @@ export default function DocumentGenerator() {
   useEffect(() => {
     if (!validDraft) return;
     const controller = new AbortController();
-    fetchDocuments(requestBody, controller.signal)
+     fetchDocuments(requestBody, controller.signal, setStatus)
       .then((result) => {
         setBundle(result);
         setError(null);
@@ -99,8 +154,11 @@ export default function DocumentGenerator() {
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === "AbortError") return;
         setError(
-          reason instanceof Error && reason.message === "UNKNOWN_SKILL"
-            ? "UNKNOWN_SKILL"
+          reason instanceof Error &&
+            (reason.message === "UNKNOWN_SKILL" ||
+              reason.message === "AUTH_REQUIRED" ||
+              reason.message === "QUOTA_EXHAUSTED")
+            ? (reason.message as GenerationError)
             : "FAILED",
         );
         setLoading(false);
@@ -241,17 +299,35 @@ export default function DocumentGenerator() {
             <h2>
               {error === "UNKNOWN_SKILL"
                 ? "A selected skill changed."
-                : "The documents could not be assembled."}
+                : error === "AUTH_REQUIRED"
+                  ? "Sign in to keep generating."
+                  : error === "QUOTA_EXHAUSTED"
+                    ? "Your free generation is used."
+                    : "The documents could not be assembled."}
             </h2>
             <p>
               {error === "UNKNOWN_SKILL"
                 ? "Return to the catalog and confirm the skills that are still available."
-                : "Your draft is still safe in this tab. Retry document generation."}
+                : error === "AUTH_REQUIRED"
+                  ? "Create an account to use token generation after the free quota."
+                  : error === "QUOTA_EXHAUSTED"
+                    ? "Buy a token pack to continue generating documents."
+                    : "Your draft is still safe in this tab. Retry document generation."}
             </p>
             <div className="generate-error-actions">
-              <Link href="/skills" className="pill">
-                <ArrowLeft aria-hidden="true" /> Back to skills
-              </Link>
+              {error === "AUTH_REQUIRED" ? (
+                <Link href="/login" className="pill">
+                  Sign in
+                </Link>
+              ) : error === "QUOTA_EXHAUSTED" ? (
+                <Link href="/pricing" className="pill">
+                  Buy tokens
+                </Link>
+              ) : (
+                <Link href="/skills" className="pill">
+                  <ArrowLeft aria-hidden="true" /> Back to skills
+                </Link>
+              )}
               {error === "FAILED" ? (
                 <button
                   className="pill"
@@ -421,7 +497,8 @@ export default function DocumentGenerator() {
       </main>
       <p className="clarify-privacy">
         Your brief is sent to the AnyMD server and its configured AI provider.
-        AnyMD does not persist the draft or generated files.
+        The working draft stays local until submit; the submitted job and result
+        are persisted for queue recovery, not as a permanent document library.
       </p>
     </div>
   );

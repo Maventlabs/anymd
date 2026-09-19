@@ -8,13 +8,20 @@ import {
   rebuildDocumentSection,
 } from "../lib/generator";
 import { parseSkillsCatalog, snapshotCatalog } from "../lib/skills";
-import { handleGenerateRequest, POST } from "../app/api/generate/route";
+import {
+  handleGenerateRequest,
+  handleQueuedGenerateRequest,
+  POST,
+} from "../app/api/generate/route";
+import type { GenerationJobRepository } from "../lib/generation-jobs";
 import { POST as REBUILD } from "../app/api/generate/rebuild/route";
 import {
   parseGeneratedBundle,
   renderDocumentMarkdown,
 } from "../lib/generated-documents";
 import { validGenerateRequest } from "./fixtures";
+
+process.env.ANYMD_IP_HASH_PEPPER ??= "test-only-ip-hash-pepper";
 
 function hasCode(code: GenerateValidationError["code"]) {
   return (error: unknown) =>
@@ -359,13 +366,102 @@ test("rejects malformed generated bundles", () => {
   assert.equal(parseGeneratedBundle(oversized), null);
 });
 
-function generateRequest(body: string) {
+function generateRequest(body: string, headers?: HeadersInit) {
   return new Request("http://localhost/api/generate", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...headers },
     body,
   });
 }
+
+function queuedJob() {
+  return {
+    id: "job-queued",
+    userId: "user-1",
+    status: "queued" as const,
+    input: validGenerateRequest,
+    result: null,
+    errorCode: null,
+    attemptCount: 0,
+    maxAttempts: 2,
+    availableAt: generatedAt,
+    leaseExpiresAt: null,
+    startedAt: null,
+    completedAt: null,
+    createdAt: generatedAt,
+    updatedAt: generatedAt,
+  };
+}
+
+function queueDependencies(
+  freeResult: Awaited<ReturnType<GenerationJobRepository["enqueueFreeJob"]>>,
+  paidResult: Awaited<ReturnType<GenerationJobRepository["enqueuePaidJob"]>>,
+  userId: string | undefined,
+) {
+  const repository = {
+    enqueueFreeJob: async () => freeResult,
+    enqueuePaidJob: async () => paidResult,
+  } as unknown as GenerationJobRepository;
+  return {
+    loadCatalog: async () => ({ data: selectedSkills, meta: {} as never }),
+    getSession: async () => (userId ? { user: { id: userId } } : null),
+    createRepository: () => repository,
+    getConfig: () => ({
+      maxAttempts: 2,
+      leaseMs: 120_000,
+      retryDelayMs: 1_000,
+      timeoutMs: 60_000,
+      ratePerMinute: 15,
+    }),
+  };
+}
+
+test("queued generation uses the free quota when it is available", async () => {
+  const response = await handleQueuedGenerateRequest(
+    generateRequest(JSON.stringify(validGenerateRequest), {
+      "x-forwarded-for": "203.0.113.8",
+    }),
+    queueDependencies({ accepted: true, job: queuedJob() }, { accepted: false, reason: "INSUFFICIENT_BALANCE" }, "user-1"),
+  );
+
+  assert.equal(response.status, 202);
+  assert.deepEqual(await response.json(), {
+    job: { id: "job-queued", status: "queued" },
+    billing: "free",
+  });
+});
+
+test("queued generation falls back to a token after the free quota is used", async () => {
+  const response = await handleQueuedGenerateRequest(
+    generateRequest(JSON.stringify(validGenerateRequest), {
+      "x-forwarded-for": "203.0.113.8",
+    }),
+    queueDependencies({ accepted: false, reason: "QUOTA_EXHAUSTED" }, { accepted: true, job: queuedJob() }, "user-1"),
+  );
+
+  assert.equal(response.status, 202);
+  assert.deepEqual(await response.json(), {
+    job: { id: "job-queued", status: "queued" },
+    billing: "token",
+  });
+});
+
+test("queued generation returns a sign-in recovery state for anonymous exhausted quota", async () => {
+  const response = await handleQueuedGenerateRequest(
+    generateRequest(JSON.stringify(validGenerateRequest), {
+      "x-forwarded-for": "203.0.113.8",
+    }),
+    queueDependencies({ accepted: false, reason: "QUOTA_EXHAUSTED" }, { accepted: false, reason: "INSUFFICIENT_BALANCE" }, undefined),
+  );
+
+  assert.equal(response.status, 401);
+  assert.deepEqual(await response.json(), {
+    error: {
+      code: "AUTH_REQUIRED",
+      message: "Sign in to continue after the free generation is used.",
+    },
+  });
+});
 
 test("POST /api/generate returns the stable document bundle", async () => {
   const previous = process.env.ANYMD_SKILLS_CATALOG_URL;

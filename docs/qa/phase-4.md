@@ -1,4 +1,8 @@
-# Phase 4, 4A1, and 5 QA
+# Phase 4, 4A1, and 5 QA Snapshot
+
+> Historical evidence captured before the later identity, queue, quota, token,
+> and Stripe slices. For the current overall status, see `docs/qa/final.md` and
+> `PRD-AnyMD-Product.md`.
 
 ## Scope
 
@@ -50,9 +54,9 @@ Verification on 18 September 2026:
 - `npm audit --omit=dev` reported 0 known production dependency vulnerabilities.
 - A production-server response check confirmed every configured security header and omitted the framework-powered header.
 
-## Known Limits
+## Historical Limits at Capture Time
 
-- Queueing, quotas, free-generation enforcement, and payment remain later Phase 4A work.
+- Queueing, quotas, free-generation enforcement, and payment were later Phase 4A work at the time this snapshot was captured; those slices are now implemented, with live credential-backed verification still deferred.
 - Hosted deployments use the public 9router tunnel as `ANYMD_AI_BASE_URL`; local development uses `http://localhost:20128`. `localhost` is not a production fallback because a Netlify function cannot reach the maintainer's machine.
 - Generated content remains in React memory and is cleared by refresh.
 - Mermaid is emitted as fenced source and is not rendered as SVG or canvas in this phase.

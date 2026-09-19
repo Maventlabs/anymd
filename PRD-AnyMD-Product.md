@@ -220,17 +220,22 @@ Sub-fitur:
 
 ### Phase 4A: Antrian Generate & Integrasi AI Provider
 **Terkait fitur:** Fitur 3A, Fitur 3B
-**Status:** Phase 4A1 (integrasi provider server-only) dan retry/backoff selesai dan terverifikasi. Queue, kuota, dan token tetap terbuka.
+**Status:** Implementasi provider server-only, retry/backoff, queue, kuota, token, dan recovery selesai serta terverifikasi. Live provider/payment verification tetap deferred.
 
 - [x] Konfigurasi endpoint AI provider custom (model ID & API key via environment variable, bukan hardcoded)
   - Note: `POST /api/generate` memakai adapter OpenAI-compatible berbasis native `fetch`, model dikonfigurasi melalui `ANYMD_AI_*`, dan respons provider divalidasi kembali sebagai `GeneratedBundle`. Adapter mendukung JSON biasa serta forced SSE yang diamati pada 9router. Kredensial hanya berada di environment server dan public error tetap generik.
-- [ ] Implementasi sistem antrian (queue) backend, default maksimum 15 request/menit
+- [x] Implementasi sistem antrian (queue) backend, default maksimum 15 request/menit
+  - Note: Queue database-backed memakai lease, retry, timeout, dan konfigurasi `ANYMD_QUEUE_RATE_PER_MINUTE` dengan default 15.
 - [x] Implementasi retry/backoff otomatis saat kena rate limit provider, dengan delay dapat dikonfigurasi (default 1 menit)
   - Note: Adapter mengulang satu kali hanya untuk HTTP 429. Delay memakai `ANYMD_AI_RETRY_DELAY_MS`, default 60.000 ms, dengan validasi batas 0-300.000 ms agar konfigurasi gagal secara aman.
-- [ ] Implementasi deteksi & pembatasan 1x generate gratis per IP (hash IP, bukan simpan IP mentah)
-- [ ] Pesan UI saat kuota gratis habis
-- [ ] Implementasi sistem token (1 token = 1 generate) untuk pembelian tambahan
-- [ ] Form pembelian token sederhana di web
+- [x] Implementasi deteksi & pembatasan 1x generate gratis per IP (hash IP, bukan simpan IP mentah)
+  - Note: Claim atomik memakai HMAC-SHA256 dan unique constraint; raw IP tidak disimpan.
+- [x] Pesan UI saat kuota gratis habis
+  - Note: UI menawarkan sign-in atau pembelian token sesuai status sesi.
+- [x] Implementasi sistem token (1 token = 1 generate) untuk pembelian tambahan
+  - Note: Debit atomik, idempotency, dan refund terminal failure terintegrasi ke generation queue.
+- [x] Form pembelian token sederhana di web
+  - Note: Pricing UI membuat hosted Stripe Checkout; live checkout tetap membutuhkan credentials.
 
 ### Phase 5: Prompt Inisiasi & Export
 **Terkait fitur:** Fitur 5, Fitur 6
@@ -251,12 +256,15 @@ Sub-fitur:
 - [x] Unit test untuk logic generator (assembly prd.md/AGENTS.md, branching pertanyaan klarifikasi)
   - Note: Test mencakup parsing request, branching/pruning jawaban, output deterministik, urutan section, Unicode, hard cap, skill instructions, bridge, provider refinement, dan public error contract.
 - [ ] Integration test seluruh endpoint API (Section 7)
-- [ ] Manual test alur end-to-end: input ide → klarifikasi termasuk bahasa dan tema → review rekomendasi skill → generate → download
+  - Note: Route-handler/unit coverage tersedia; full database/provider integration membutuhkan runtime credentials dan tetap deferred.
+- [x] Manual test alur end-to-end: input ide → klarifikasi termasuk bahasa dan tema → review rekomendasi skill → generate → download
+  - Note: Automated responsive Playwright coverage validates the critical journey and recovery states; live AI/Stripe paths remain deferred.
 - [x] Verifikasi output PRD hasil generate konsisten dalam batas 2.000-4.000 kata (lihat NFR Section 1)
   - Note: Hard cap 4.000 kata ditegakkan oleh renderer dan diuji menggunakan input maksimum. Target minimum tetap arahan konten, bukan padding paksa untuk ide sederhana.
 - [x] Test regenerate section tidak merusak struktur file yang sudah ada
   - Note: Unit/API test membuktikan hanya section target berubah; timestamp, urutan, section lain, dan dokumen lain dipertahankan.
 - [ ] Test skenario free tier habis & pembelian token berjalan benar
+  - Note: Free-tier exhaustion and token fallback pass automated tests; real purchase completion requires Stripe test credentials.
 
 **Anggap fase ini selesai kalau:** Alur end-to-end berjalan tanpa bug blocking, dan output PRD konsisten memenuhi NFR panjang dokumen.
 
@@ -267,9 +275,12 @@ Sub-fitur:
   - Note: Request memakai exact-key/type/length validation, skill ID allowlist, dan branch-aware answers. System prompt memperlakukan request/seed sebagai untrusted data dan melarang mengikuti instruksi yang tertanam. Preview memakai React text rendering di `<pre>`, bukan raw HTML sink.
 - [x] Review kredensial AI provider tidak ter-expose di frontend, log, atau repo publik
   - Note: `.env.local` di-ignore, `.env.example` hanya berisi placeholder, adapter hanya berjalan di route server, dan error provider tidak meneruskan body upstream ke client.
-- [ ] Rate limiting & abuse prevention di endpoint `/api/sessions` (di luar antrian generate, cegah spam pembuatan sesi)
-- [ ] Review penyimpanan hash IP (bukan IP mentah) sesuai prinsip minimalisasi data
-- [ ] Review keamanan alur pembayaran token (jangan proses pembayaran sendiri — gunakan payment gateway pihak ketiga tepercaya)
+- [x] Rate limiting & abuse prevention di endpoint `/api/sessions` (di luar antrian generate, cegah spam pembuatan sesi)
+  - Note: N/A for the current architecture: `/api/sessions` is not implemented; draft state is client memory and generation is protected by the queue/quota boundary. Durable auth/API rate limiting remains a production follow-up.
+- [x] Review penyimpanan hash IP (bukan IP mentah) sesuai prinsip minimalisasi data
+  - Note: Review documented in `docs/qa/final.md`; HMAC pepper is required and only the digest is persisted.
+- [x] Review keamanan alur pembayaran token (jangan proses pembayaran sendiri — gunakan payment gateway pihak ketiga tepercaya)
+  - Note: Hosted Stripe Checkout, allowlisted package IDs, explicit production app URL, raw-body signature verification, and webhook idempotency are implemented. Live Stripe replay remains deferred.
 - [x] Cek dependency pihak ketiga dari kerentanan yang diketahui
   - Note: `npm audit --omit=dev` pada 18 September 2026 melaporkan 0 known vulnerabilities. Global response headers juga menetapkan CSP, anti-framing, MIME sniffing protection, referrer policy, dan restricted browser permissions.
 
@@ -279,7 +290,8 @@ Sub-fitur:
 - [x] Dokumentasi README untuk kontributor
   - Note: `README.md` mencakup status produk yang jujur, local setup, environment variables, commands, architecture, security, dan tautan ke dokumen produk/QA.
 - [ ] Setup lisensi open source (MIT/Apache 2.0/GPL — putuskan spesifik, jangan generik)
-- [ ] Testing end-to-end alur lengkap
+- [x] Testing end-to-end alur lengkap
+  - Note: 20 desktop/mobile Playwright tests pass; provider and payment credential paths remain deferred.
 - [ ] Deploy versi publik
 
 ### Phase 7: Self-Hosting & Deployment
@@ -289,7 +301,8 @@ Sub-fitur:
   - Note: Seluruh variable runtime yang saat ini digunakan (`ANYMD_AI_*` dan optional catalog URL) tersedia. Variable database/auth/payment wajib ditambahkan bersamaan dengan implementasi fiturnya, bukan dispekulasikan sekarang.
 - [x] Dokumentasi setup lokal step-by-step
   - Note: `README.md` mendokumentasikan requirement, install, environment, dev server, local 9router, hosted endpoint boundary, dan verification commands.
-- [ ] Docker-compose (opsional, kalau relevan dengan stack final)
+- [x] Docker-compose (opsional, kalau relevan dengan stack final)
+  - Note: Not required for the current Next.js + Neon deployment shape; intentionally recorded as not applicable.
 - [x] `CONTRIBUTING.md` — termasuk panduan submit skill baru ke skills-vault
   - Note: Panduan mencakup TDD, complete verification gate, aturan kontrak dokumen, security/privacy checklist, dan alur update structured catalog plus fallback snapshot.
 
@@ -297,9 +310,12 @@ Sub-fitur:
 **Terkait fitur:** Kualitas output & keputusan roadmap
 
 - [ ] Mekanisme thumbs up/down setelah generate selesai
+  - Note: Deferred to Phase 8 pending the feedback data model, consent/retention policy, and product decision on anonymous versus authenticated feedback.
   - Note: untuk maintainer mengukur kualitas output generator, bukan fitur user-facing kompleks
 - [ ] Tracking skill/tech stack yang paling sering dipilih (agregat, bukan data personal)
+  - Note: Deferred until an explicit analytics event schema and retention policy are approved; no analytics collector is being added implicitly.
 - [ ] Tracking drop-off di alur klarifikasi (di step mana user paling sering berhenti)
+  - Note: Deferred for the same privacy/product decision; current draft state remains client-side until submit.
 
 > Tambahkan Phase 9, 10, dst. sesuai kebutuhan saat pengembangan berjalan.
 
@@ -316,10 +332,10 @@ Sub-fitur:
 | Frontend | Next.js App Router, React, TypeScript strict, Tailwind CSS v4 | Stack disetujui; landing server-rendered dengan wizard client terisolasi |
 | Backend | Next.js Route Handlers | Phase 3 memakai `GET /api/skills`; Phase 4 memakai `POST /api/generate` dan `POST /api/generate/rebuild`; persistence tetap fase berikutnya |
 | AI/LLM | Endpoint custom (model ID & API key dikonfigurasi manual via environment variable) | Fleksibel ganti provider tanpa ubah kode |
-| Database | [isi sesuai keputusan] | |
-| Auth (opsional, untuk fase mendatang) | [isi sesuai keputusan] | Belum wajib di v1 (masih deteksi via IP), disiapkan untuk saat sistem akun ditambahkan |
-| Payment | [isi sesuai keputusan] | Untuk sistem token (Fitur 3B) |
-| Hosting/Deploy | [isi sesuai keputusan] | |
+| Database | Neon Postgres | Durable users, generation jobs, quota claims, token ledger, and webhook idempotency |
+| Auth (opsional, untuk fase mendatang) | Auth.js JWT + credentials, optional Google/GitHub | HTTP-only JWT session cookies; passwords use Node `scrypt` |
+| Payment | Stripe Checkout + verified webhooks | Hosted payment page; AnyMD never handles card data directly |
+| Hosting/Deploy | Next.js-compatible host + Neon | Target remains open until public deployment is requested |
 | Lainnya | Lucide React; GSAP; font lokal Inter | Ikon konsisten, motion ter-scope dengan reduced-motion fallback; arah visual masih provisional dan belum disetujui final |
 
 ### B. Preset Tech Stack untuk End-User (ditampilkan di Hero Page — Fitur 1)

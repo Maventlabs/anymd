@@ -5,6 +5,15 @@
 /coverage/
 *.tsbuildinfo
 /next-env.d.ts
+/dist/
+/build/
+
+# Framework, hosting, and tool caches
+/.vercel/
+/.turbo/
+/.cache/
+/.eslintcache
+.npm/
 
 # Local configuration and credentials
 .env*
@@ -19,6 +28,7 @@
 /playwright-report/
 /blob-report/
 /.playwright-mcp/
+playwright/.cache/
 
 # Logs and package-manager noise
 *.log

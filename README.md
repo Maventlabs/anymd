@@ -43,6 +43,9 @@ flowchart LR
 - One-click copy and local Markdown downloads.
 - Responsive layouts tested on desktop and mobile Chromium.
 - Accessible navigation, status feedback, and keyboard interactions.
+- Auth.js credentials sessions with optional Google/GitHub providers.
+- Database-backed generation queue with one free HMAC-IP claim and token fallback.
+- Hosted Stripe Checkout integration with verified, idempotent webhook crediting.
 - Strict document validation before generated content reaches the UI.
 
 <img src="docs/assets/anymd-home-desktop.png" alt="AnyMD idea workspace on desktop" width="100%" />
@@ -60,26 +63,35 @@ flowchart TB
     subgraph Application
         Routes[App Router pages]
         Skills[Skills catalog API]
-        Generate[Document generation API]
+        Generate[Queued generation API]
+        Auth[Auth.js session API]
         Contract[Document contract validation]
     end
 
     Catalog[(Verified skill catalog)]
+    Database[(Neon Postgres)]
+    Stripe[Stripe Checkout]
     Service[Configured generation service]
 
     UI --> State
     State --> Routes
     Routes --> Skills
     Routes --> Generate
+    Routes --> Auth
     Skills --> Catalog
     Generate --> Service
+    Generate --> Database
+    Auth --> Database
+    Routes --> Stripe
     Service --> Contract
     Contract --> Preview
 ```
 
-The browser keeps the active draft in memory. Server routes handle catalog access
-and document generation, while a strict contract validates every generated bundle
-before it is returned to the interface.
+The browser keeps the active draft in memory. Auth.js owns server sessions, Neon
+Postgres stores users, queue state, quota claims, and token ledger entries, and
+Stripe handles card collection through hosted Checkout. Server routes handle
+catalog access and queued generation, while a strict contract validates every
+generated bundle before it is returned to the interface.
 
 ## Local Development
 
@@ -114,6 +126,7 @@ npm run test:e2e
 | `npm run typecheck` | Generate route types and run TypeScript checks |
 | `npm run build` | Create a production build |
 | `npm run test:e2e` | Test critical desktop and mobile journeys |
+| `npm audit --omit=dev` | Check runtime dependencies for known vulnerabilities |
 
 ## Project Structure
 
@@ -122,8 +135,9 @@ anymd/
 ├── app/              # Pages, metadata, and route handlers
 ├── components/       # Product journey and reusable interface pieces
 ├── data/             # Verified fallback catalog data
+├── db/               # SQL migrations for AnyMD-owned persistence
 ├── e2e/              # Browser journey tests
-├── lib/              # Validation, generation, and domain logic
+├── lib/              # Validation, generation, auth, billing, and domain logic
 ├── public/           # Brand and interface assets
 └── tests/            # Unit and API tests
 ```
@@ -134,6 +148,7 @@ anymd/
 - User-provided content is treated as untrusted input.
 - Public errors are sanitized before they reach the browser.
 - Content Security Policy and browser hardening headers are enabled.
+- Production app URLs are explicit for Stripe redirects; request Host headers are not trusted for checkout origins.
 - Sensitive local files are excluded from Git.
 
 ## Contributing

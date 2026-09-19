@@ -4,14 +4,35 @@ import { generateDocuments, parseGenerateRequest } from "../lib/generator";
 test.setTimeout(60_000);
 
 async function mockDocumentGeneration(page: Page) {
+  let generationInput: ReturnType<typeof parseGenerateRequest> | null = null;
   await page.route("**/api/generate", async (route) => {
     const input = parseGenerateRequest(route.request().postDataJSON());
+    generationInput = input;
+    await route.fulfill({
+      status: 202,
+      contentType: "application/json",
+      body: JSON.stringify({
+        job: { id: "job-e2e", status: "queued" },
+        billing: "free",
+      }),
+    });
+  });
+  await page.route("**/api/generate/job-e2e", async (route) => {
+    if (!generationInput) throw new Error("Generation input was not captured");
     await route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify(
-        generateDocuments(input, [], "2026-09-18T12:00:00.000Z"),
-      ),
+      body: JSON.stringify({
+        job: {
+          id: "job-e2e",
+          status: "succeeded",
+          result: generateDocuments(
+            generationInput,
+            [],
+            "2026-09-18T12:00:00.000Z",
+          ),
+        },
+      }),
     });
   });
 }
@@ -225,4 +246,61 @@ test("an empty recommendation set remains valid", async ({
   await expect(
     page.getByRole("button", { name: "prd.md", exact: true }),
   ).toBeVisible();
+});
+
+test("a terminal queue failure exposes a retryable recovery state", async ({
+  page,
+}) => {
+  await page.route("**/api/generate", (route) =>
+    route.fulfill({
+      status: 202,
+      contentType: "application/json",
+      body: JSON.stringify({ job: { id: "job-failed", status: "queued" } }),
+    }),
+  );
+  await page.route("**/api/generate/job-failed", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        job: { id: "job-failed", status: "failed", errorCode: "REQUEST_FAILED" },
+      }),
+    }),
+  );
+  await reachSkills(page);
+  await page.getByRole("button", { name: "Continue with recommendations" }).click();
+  await page.getByRole("button", { name: "Generate documents" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: "The documents could not be assembled." }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
+});
+
+test("an exhausted quota exposes the token purchase recovery state", async ({
+  page,
+}) => {
+  await page.route("**/api/generate", (route) =>
+    route.fulfill({
+      status: 429,
+      contentType: "application/json",
+      body: JSON.stringify({
+        error: {
+          code: "QUOTA_EXHAUSTED",
+          message: "Your free generation is used and your token balance is empty.",
+        },
+      }),
+    }),
+  );
+  await reachSkills(page);
+  await page.getByRole("button", { name: "Continue with recommendations" }).click();
+  await page.getByRole("button", { name: "Generate documents" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: "Your free generation is used." }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Buy tokens" })).toHaveAttribute(
+    "href",
+    "/pricing",
+  );
 });

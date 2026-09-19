@@ -15,12 +15,18 @@ document contract, and do not present unfinished roadmap items as shipped.
    npm test
    npm run lint
    npm run typecheck
-   npm run build
-   npm run test:e2e
+    npm run build
+    npm run test:e2e
+    npm audit --omit=dev
+    git diff --check
    ```
 
 6. Update the product roadmap and relevant `docs/qa/` evidence when behavior or
-   phase status changes.
+phase status changes.
+
+The current consolidated verification and deferred-work record is
+`docs/qa/final.md`; older phase files are historical evidence for the phase they
+describe.
 
 ## Project Rules
 

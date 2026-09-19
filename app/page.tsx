@@ -23,12 +23,14 @@ import {
   Terminal,
 } from "lucide-react";
 import BrandLogo from "@/components/brand-logo";
+import SignOutButton from "@/components/sign-out-button";
 import HeroLaser from "@/components/hero-laser";
 import HeroTrail from "@/components/hero-trail";
 import IdeaWizard from "@/components/idea-wizard";
 import LandingMotion from "@/components/landing-motion";
 import SiteShowcase from "@/components/site-showcase";
 import SplitText from "@/components/split-text";
+import { auth } from "@/auth";
 import {
   Accordion,
   AccordionContent,
@@ -39,7 +41,7 @@ import {
 const faqs = [
   [
     "What can I do in this preview?",
-    "Write an idea in any language, choose optional tech preferences, answer adaptive questions, pick a visual direction, review automatic skill recommendations, and generate structured Markdown documents with the configured AI provider. Exports, persistence, and billing are not implemented yet.",
+    "Write an idea in any language, choose optional tech preferences, answer adaptive questions, pick a visual direction, review automatic skill recommendations, and generate structured Markdown documents with the configured AI provider. Drafts stay local until generation; authenticated jobs and token purchases are handled server-side.",
   ],
   [
     "Is this another AI app builder?",
@@ -68,7 +70,8 @@ const stackRows = [
   ["Hosting", "Vercel / Railway / Fly.io / Your own server"],
 ];
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
   return (
     <LandingMotion>
       <a className="skip-link" href="#main">
@@ -78,11 +81,13 @@ export default function Home() {
         <a className="wordmark" href="#" aria-label="AnyMD home">
           <BrandLogo className="wordmark-image" />
         </a>
-        <nav aria-label="Main navigation">
-          <a href="#how-it-works">How it works</a>
-          <a href="#output">The output</a>
-          <a href="#principles">Our approach</a>
-        </nav>
+           <nav aria-label="Main navigation">
+             <a href="#how-it-works">How it works</a>
+             <a href="#output">The output</a>
+             <a href="#principles">Our approach</a>
+             <a href="/pricing">Tokens</a>
+              {session?.user ? <SignOutButton /> : <a href="/login">Log in</a>}
+           </nav>
         <a className="nav-cta" href="#idea">
           Start with an idea <ArrowUpRight aria-hidden="true" />
         </a>
@@ -445,16 +450,17 @@ export default function Home() {
               className="section-title"
             />
             <p data-reveal>
-              This preview keeps your idea in React state in this browser tab.
-              It does not send it to an AI provider, database, or analytics
-              service. Refresh or close the tab and the draft is gone.
+              Your working draft stays in React state in this browser tab until
+              you submit it. Generation sends the selected brief to the
+              configured server-side provider and stores the job result so the
+              queue can retry, recover, and enforce quota safely.
             </p>
             <div className="privacy-flow" data-reveal>
               <span>Your idea</span>
               <span aria-hidden="true">-&gt;</span>
-              <span>This tab only</span>
+              <span>This tab until submit</span>
               <span aria-hidden="true">-&gt;</span>
-              <span>Cleared on refresh</span>
+              <span>Queued server-side</span>
             </div>
             <div className="privacy-note" data-reveal>
               <LockKeyhole aria-hidden="true" />
