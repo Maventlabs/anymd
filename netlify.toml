@@ -7,3 +7,6 @@ NODE_VERSION = "22"
 NEXT_TELEMETRY_DISABLED = "1"
 SECRETS_SCAN_OMIT_KEYS = "ANYMD_AI_MODEL_ID"
 SECRETS_SCAN_OMIT_PATHS = ".next/cache/**"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
