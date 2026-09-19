@@ -9,6 +9,7 @@ import {
   type GeneratedBundle,
 } from "./generated-documents";
 import { GenerationQueueError, parseQueueRate } from "./generation-queue";
+import { getServerEnvSnapshot } from "./server-env";
 import { createTokenRepository } from "./tokens";
 
 export const generationJobStatuses = [
@@ -89,7 +90,9 @@ function boundedInteger(
   return value;
 }
 
-export function parseQueueConfig(env: QueueEnv = process.env): QueueConfig {
+export function parseQueueConfig(
+  env: QueueEnv = getServerEnvSnapshot(),
+): QueueConfig {
   return {
     maxAttempts: boundedInteger(env, "ANYMD_QUEUE_MAX_ATTEMPTS", 2, 1, 5),
     leaseMs: boundedInteger(env, "ANYMD_QUEUE_LEASE_MS", 120_000, 1_000, 600_000),

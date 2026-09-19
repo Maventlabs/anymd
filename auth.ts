@@ -8,6 +8,12 @@ import {
   upsertOAuthUser,
 } from "./lib/auth-users";
 import { verifyPassword } from "./lib/password";
+import { getServerEnv } from "./lib/server-env";
+
+const googleId = getServerEnv("AUTH_GOOGLE_ID");
+const googleSecret = getServerEnv("AUTH_GOOGLE_SECRET");
+const githubId = getServerEnv("AUTH_GITHUB_ID");
+const githubSecret = getServerEnv("AUTH_GITHUB_SECRET");
 
 const providers = [
   Credentials({
@@ -35,15 +41,16 @@ const providers = [
       };
     },
   }),
-  ...(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET
-    ? [Google({ clientId: process.env.AUTH_GOOGLE_ID, clientSecret: process.env.AUTH_GOOGLE_SECRET })]
+  ...(googleId && googleSecret
+    ? [Google({ clientId: googleId, clientSecret: googleSecret })]
     : []),
-  ...(process.env.AUTH_GITHUB_ID && process.env.AUTH_GITHUB_SECRET
-    ? [GitHub({ clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_SECRET })]
+  ...(githubId && githubSecret
+    ? [GitHub({ clientId: githubId, clientSecret: githubSecret })]
     : []),
 ];
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: getServerEnv("AUTH_SECRET"),
   trustHost: true,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },

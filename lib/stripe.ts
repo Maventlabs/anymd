@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { getServerEnvSnapshot } from "@/lib/server-env";
 
 export class StripeConfigError extends Error {
   constructor() {
@@ -7,8 +8,9 @@ export class StripeConfigError extends Error {
   }
 }
 
-export function getStripe(env: Record<string, string | undefined> = process.env) {
-  const key = env.STRIPE_SECRET_KEY?.trim();
+export function getStripe(env?: Record<string, string | undefined>) {
+  const runtimeEnv = env ?? getServerEnvSnapshot();
+  const key = runtimeEnv.STRIPE_SECRET_KEY?.trim();
   if (!key) throw new StripeConfigError();
   return new Stripe(key, {
     appInfo: { name: "AnyMD", version: "0.1.0" },
@@ -17,15 +19,16 @@ export function getStripe(env: Record<string, string | undefined> = process.env)
 
 export function getAppUrl(
   request: Request,
-  env: Record<string, string | undefined> = process.env,
+  env?: Record<string, string | undefined>,
 ) {
-  const configured = env.ANYMD_APP_URL?.trim();
+  const runtimeEnv = env ?? getServerEnvSnapshot();
+  const configured = runtimeEnv.ANYMD_APP_URL?.trim();
   if (configured) {
     const url = new URL(configured);
     if (url.protocol !== "http:" && url.protocol !== "https:")
       throw new StripeConfigError();
     return url.origin;
   }
-  if (env.NODE_ENV === "production") throw new StripeConfigError();
+  if (runtimeEnv.NODE_ENV === "production") throw new StripeConfigError();
   return new URL(request.url).origin;
 }

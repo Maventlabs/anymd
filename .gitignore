@@ -10,6 +10,7 @@
 
 # Framework, hosting, and tool caches
 /.vercel/
+/.netlify/
 /.turbo/
 /.cache/
 /.eslintcache

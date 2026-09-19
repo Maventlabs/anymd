@@ -8,6 +8,7 @@ import {
   type GeneratedBundle,
 } from "@/lib/generated-documents";
 import type { SkillCatalogEntry } from "@/lib/skills";
+import { getServerEnvSnapshot } from "@/lib/server-env";
 
 type ProviderEnv = Record<string, string | undefined>;
 
@@ -45,7 +46,7 @@ function required(env: ProviderEnv, key: string) {
 }
 
 export function readAiProviderConfig(
-  env: ProviderEnv = process.env,
+  env: ProviderEnv = getServerEnvSnapshot(),
 ): AiProviderConfig {
   const rawBaseUrl = required(env, "ANYMD_AI_BASE_URL");
   let baseUrl: URL;

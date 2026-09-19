@@ -21,7 +21,7 @@ import {
 } from "../lib/generated-documents";
 import { validGenerateRequest } from "./fixtures";
 
-process.env.ANYMD_IP_HASH_PEPPER ??= "test-only-ip-hash-pepper";
+process.env.ANYMD_IP_HASH_PEPPER ??= "unit-test-ip-hash-pepper";
 
 function hasCode(code: GenerateValidationError["code"]) {
   return (error: unknown) =>

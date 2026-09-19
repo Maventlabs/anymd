@@ -12,8 +12,8 @@ import { validGenerateRequest } from "./fixtures";
 const providerEnv = {
   ANYMD_AI_BASE_URL: "https://router.example.test/",
   ANYMD_AI_API_VERSION: "/v1/",
-  ANYMD_AI_MODEL_ID: "anymd",
-  ANYMD_AI_API_KEY: "server-secret",
+  ANYMD_AI_MODEL_ID: "unit-test-model-id",
+  ANYMD_AI_API_KEY: "unit-test-provider-key",
 };
 const selectedSkills = parseSkillsCatalog(snapshotCatalog).skills.filter(({ id }) =>
   validGenerateRequest.selectedSkillIds.includes(id),
@@ -34,8 +34,8 @@ test("reads and normalizes server-only AI provider configuration", () => {
   assert.deepEqual(readAiProviderConfig(providerEnv), {
     baseUrl: "https://router.example.test",
     apiVersion: "v1",
-    modelId: "anymd",
-    apiKey: "server-secret",
+    modelId: "unit-test-model-id",
+    apiKey: "unit-test-provider-key",
     retryDelayMs: 60_000,
   });
   assert.throws(
@@ -84,10 +84,10 @@ test("calls the OpenAI-compatible Chat Completions endpoint and validates its bu
   assert.deepEqual(result, generatedBundle);
   assert.equal(requestUrl, "https://router.example.test/v1/chat/completions");
   const headers = new Headers(requestInit?.headers);
-  assert.equal(headers.get("authorization"), "Bearer server-secret");
+  assert.equal(headers.get("authorization"), "Bearer unit-test-provider-key");
   assert.equal(headers.get("content-type"), "application/json");
   const body = JSON.parse(String(requestInit?.body));
-  assert.equal(body.model, "anymd");
+  assert.equal(body.model, "unit-test-model-id");
   assert.equal(body.messages[0].role, "system");
   assert.equal(body.messages[0].content, generatorSystemPrompt);
   assert.equal(body.messages[1].role, "user");
@@ -162,7 +162,7 @@ test("waits for the configured delay and retries one rate-limited request", asyn
 
 test("rejects provider failures and malformed model output", async () => {
   const rejectedFetch: typeof fetch = async () =>
-    Response.json({ error: { message: "upstream included server-secret" } }, { status: 503 });
+    Response.json({ error: { message: "upstream rejected the request" } }, { status: 503 });
   await assert.rejects(
     generateDocumentsWithProvider(
       validGenerateRequest,

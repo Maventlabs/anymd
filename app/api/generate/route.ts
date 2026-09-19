@@ -7,6 +7,7 @@ import {
   generateDocumentsWithProvider,
 } from "@/lib/ai-provider";
 import { auth } from "@/auth";
+import { getServerEnv } from "@/lib/server-env";
 import {
   clientIpHash,
   extractClientIp,
@@ -122,7 +123,7 @@ export async function handleQueuedGenerateRequest(
     try {
       const ip = extractClientIp(request, "x-forwarded-for");
       freeResult = await repository.enqueueFreeJob({
-        ipHash: clientIpHash(ip, process.env.ANYMD_IP_HASH_PEPPER ?? ""),
+        ipHash: clientIpHash(ip, getServerEnv("ANYMD_IP_HASH_PEPPER") ?? ""),
         request: input,
         userId,
         config,

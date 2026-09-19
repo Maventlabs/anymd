@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { createTokenRepository } from "@/lib/tokens";
 import { getStripe, StripeConfigError } from "@/lib/stripe";
+import { getServerEnv } from "@/lib/server-env";
 import { getTokenPackage, TokenPackageError } from "@/lib/token-packages";
 
 function metadataValue(metadata: Stripe.Metadata | null, key: string) {
@@ -9,7 +10,7 @@ function metadataValue(metadata: Stripe.Metadata | null, key: string) {
 }
 
 export async function POST(request: Request) {
-  const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
+  const secret = getServerEnv("STRIPE_WEBHOOK_SECRET")?.trim();
   if (!secret) return new Response("Webhook is not configured", { status: 503 });
   const signature = request.headers.get("stripe-signature");
   if (!signature) return new Response("Invalid webhook", { status: 400 });
