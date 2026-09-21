@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | AnyMD",
   },
   description:
-    "Clarify a product idea, choose relevant skills, and create a PRD.md and AGENTS.md for your coding agent.",
+    "AnyMD is a PRD generator for coding agents. Turn rough product ideas into clear requirements, AGENTS.md context, and build-ready briefs.",
   applicationName: "AnyMD",
   keywords: [
     "product requirements document",
@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     "product planning",
   ],
   alternates: { canonical: "/" },
+  verification: {
+    google: "googlefc1cf9cb6fcfd597",
+  },
   robots: {
     index: true,
     follow: true,
@@ -40,15 +43,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "AnyMD",
+    url: "/",
     title: "AnyMD | Turn product ideas into build-ready briefs",
     description:
       "Clarify a product idea and create the Markdown context your coding agent needs to build it.",
+    images: [
+      {
+        url: "/brand/anymd-logo.png",
+        width: 1774,
+        height: 887,
+        alt: "AnyMD by Maventlabs",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "AnyMD | Turn product ideas into build-ready briefs",
     description:
       "Clarify a product idea and create the Markdown context your coding agent needs to build it.",
+    images: ["/brand/anymd-logo.png"],
   },
   icons: {
     icon: "/brand/anymd-mark.png",

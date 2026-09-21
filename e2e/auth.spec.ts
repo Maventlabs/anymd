@@ -8,15 +8,14 @@ test.describe("email authentication", () => {
     const password = "playwright-password";
 
     await page.goto("/signup");
-    await page.getByLabel("Name").fill("Playwright User");
+    await page.getByLabel("Nama").fill("Playwright User");
     await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill(password);
+    await page.getByLabel("Kata sandi").fill(password);
     const signupResponse = page.waitForResponse("**/api/auth/signup");
-    await page.getByRole("button", { name: "Create account" }).click();
-    await signupResponse;
-    await expect(page.getByRole("button", { name: "Working..." })).toHaveCount(0, {
-      timeout: 15_000,
-    });
+    await page.getByRole("button", { name: "Buat akun" }).click();
+    const response = await signupResponse;
+    expect(response.status()).toBe(201);
+    await expect(page).toHaveURL(/\/$/, { timeout: 15_000 });
     await expect(page.locator(".auth-error")).toHaveCount(0);
     await page.goto("/");
     await expect(page.getByText("Log out", { exact: true })).toHaveCount(1);

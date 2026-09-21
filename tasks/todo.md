@@ -5,8 +5,9 @@
 - [x] Add SQL migration for AnyMD-owned users and OAuth identities.
 - [x] Add password hashing and verification with Node `scrypt`.
 - [x] Add Auth.js route/config with JWT cookie sessions.
-- [x] Add automated Playwright coverage for signup, login, logout, and protected session behavior. (Desktop/mobile auth coverage passes.)
+- [x] Add automated Playwright coverage for signup, login, logout, and protected session behavior. (Selectors updated for the current Indonesian UI; live auth execution is blocked by a Neon connection timeout.)
 - [x] Add `/login` and `/signup` pages with responsive split-panel layout.
+- [x] Refresh login/signup split layout with transparent AnyMD branding and Google/GitHub provider actions. (Playwright-validated on desktop/mobile; provider credential verification remains environment-dependent.)
 
 ## Phase 4A3: Queue and Free Quota
 - [x] Add durable generation job schema and repository. (Main-branch migration is applied.)
@@ -24,13 +25,13 @@
 ## Phase 4A5: Integration
 - [x] Connect generation to free quota and paid token authorization. (Unit/API coverage passes.)
 - [x] Add quota exhausted and purchase recovery states. (Playwright coverage passes.)
-- [x] Add end-to-end authenticated generation flow. (Auth and generation E2E coverage passes.)
+- [x] Add end-to-end authenticated generation flow. (Generation E2E passes; authenticated signup remains environment-blocked by Neon connectivity.)
 
 ## Final
 - [ ] Redesign the full visual system after functional work is stable. (Still requires design-direction approval.)
 - [x] Rewrite product copy across the landing and active flow screens. (Preview, phase, and future-feature wording removed from user-facing copy.)
 - [x] Place the real pricing cards on the landing page. (The `/pricing` route remains available for direct access.)
-- [x] Add on-page SEO foundations and Netlify configuration. (Live domain and deployment credentials remain deferred.)
-- [x] Mark internal product documents as local-only and exclude them from the release commit. (They remain on disk and are staged for removal from the Git index.)
+- [x] Add on-page SEO foundations and Netlify configuration. (Live title, canonical, robots, sitemap, JSON-LD, Search Console verification, and social metadata were audited; redeploy is required for the latest working-tree assets and tags.)
+- [x] Keep product contracts and PRD output templates versioned. (The PRD/product documents are no longer ignored; only credentials, build output, and test artifacts remain excluded.)
 - [x] Keep Netlify secrets runtime-only and resolve false-positive scanning for the non-secret model identifier. (Production environment values still need to be replaced/configured in Netlify; generated `.next/cache` is explicitly omitted from the scanner because Next stores evaluated runtime values there.)
-- [x] Complete QA, security review, dependency audit, and production verification. (Local review and all automated gates pass; live Stripe/OAuth/provider/deployment checks remain deferred in `docs/qa/final.md`.)
+- [x] Complete QA, security review, dependency audit, and production verification. (Unit, lint, typecheck, build, header probes, audit, and 18/20 E2E checks pass; Neon auth connectivity and live Stripe/OAuth/provider/deployment checks remain deferred in `docs/qa/final.md`.)
