@@ -475,18 +475,18 @@ export default async function Home() {
             <SplitText
               tag="h2"
               id="privacy-title"
-              text="Your draft stays in this tab until you submit it."
+               text="Your draft stays in this browser until you submit it."
               className="section-title"
             />
             <p data-reveal>
-              Your working draft stays in this browser tab until you submit it.
-              Generation sends the selected brief to the server-side provider and
-              stores the job result so the queue can recover safely.
+               Your working draft stays in local browser storage until you submit
+               it. Generation sends the selected brief to the server-side provider
+               and stores the job result so the queue can recover safely.
             </p>
             <div className="privacy-flow" data-reveal>
               <span>Your idea</span>
               <span aria-hidden="true">-&gt;</span>
-              <span>This tab until submit</span>
+               <span>Local browser until submit</span>
               <span aria-hidden="true">-&gt;</span>
               <span>Queued server-side</span>
             </div>

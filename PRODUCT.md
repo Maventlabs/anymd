@@ -43,7 +43,7 @@ Users write an idea in any language, optionally record existing stack decisions,
 
 ## Evidence on Hand
 
-- Product requirements: `PRD-AnyMD-Product.md`.
+- Product requirements: `docs/PRD-AnyMD-Product.md` (private local roadmap, ignored by Git).
 - Phase 1-5 tests cover idea validation, stack retention, question branching, clarification progress, skill resolution, provider response normalization and retry, strict generated-bundle validation, public API errors, section rebuild, responsive raw/structured review, clipboard, and download.
 - No customer testimonials, production benchmarks, generated websites, or pricing evidence is available; future surfaces must not fabricate them.
 

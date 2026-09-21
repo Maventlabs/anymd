@@ -2,6 +2,10 @@ import { auth } from "@/auth";
 import { randomBytes } from "node:crypto";
 import { getAppUrl, getStripe, StripeConfigError } from "@/lib/stripe";
 import { getTokenPackage, TokenPackageError } from "@/lib/token-packages";
+import {
+  consumeRequestRateLimit,
+  rateLimitResponse,
+} from "@/lib/rate-limit";
 
 function errorResponse(code: string, status: number, message: string) {
   return Response.json({ error: { code, message } }, { status });
@@ -11,6 +15,9 @@ export async function POST(request: Request) {
   const session = await auth();
   const userId = session?.user?.id;
   if (!userId) return errorResponse("AUTH_REQUIRED", 401, "Sign in to purchase tokens.");
+
+  const rateLimit = await consumeRequestRateLimit(request, "checkout", userId);
+  if (!rateLimit.allowed) return rateLimitResponse(rateLimit);
 
   let value: unknown;
   try {

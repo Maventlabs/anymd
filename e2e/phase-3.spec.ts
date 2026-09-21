@@ -89,7 +89,7 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
     .getByRole("button", { name: "Continue with recommendations" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Recommendations saved for this tab." }),
+    page.getByRole("heading", { name: "Recommendations saved locally." }),
   ).toBeVisible();
 });
 

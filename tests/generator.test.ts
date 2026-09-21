@@ -413,6 +413,10 @@ function queueDependencies(
       timeoutMs: 60_000,
       ratePerMinute: 15,
     }),
+    consumeRateLimit: async () => ({
+      allowed: true,
+      retryAfterSeconds: 0,
+    }),
   };
 }
 

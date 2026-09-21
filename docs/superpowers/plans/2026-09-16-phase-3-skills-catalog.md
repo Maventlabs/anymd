@@ -99,7 +99,7 @@
 
 **Files:**
 - Create: `docs/qa/phase-3.md`
-- Modify: `PRD-AnyMD-Product.md`
+- Modify: `docs/PRD-AnyMD-Product.md` (private local roadmap)
 - Modify: `PRODUCT.md`
 
 **Interfaces:**

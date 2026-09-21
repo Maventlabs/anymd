@@ -5,7 +5,7 @@
 - [x] Add SQL migration for AnyMD-owned users and OAuth identities.
 - [x] Add password hashing and verification with Node `scrypt`.
 - [x] Add Auth.js route/config with JWT cookie sessions.
-- [x] Add automated Playwright coverage for signup, login, logout, and protected session behavior. (Selectors updated for the current Indonesian UI; live auth execution is blocked by a Neon connection timeout.)
+- [x] Add automated Playwright coverage for signup, login, logout, and protected session behavior. (Selectors updated for the current Indonesian UI; desktop and mobile auth tests pass when run independently.)
 - [x] Add `/login` and `/signup` pages with responsive split-panel layout.
 - [x] Refresh login/signup split layout with transparent AnyMD branding and Google/GitHub provider actions. (Playwright-validated on desktop/mobile; provider credential verification remains environment-dependent.)
 
@@ -25,13 +25,20 @@
 ## Phase 4A5: Integration
 - [x] Connect generation to free quota and paid token authorization. (Unit/API coverage passes.)
 - [x] Add quota exhausted and purchase recovery states. (Playwright coverage passes.)
-- [x] Add end-to-end authenticated generation flow. (Generation E2E passes; authenticated signup remains environment-blocked by Neon connectivity.)
+- [x] Add end-to-end authenticated generation flow. (Generation and auth E2E pass when Playwright projects run without sharing a test-server port.)
 
 ## Final
-- [ ] Redesign the full visual system after functional work is stable. (Still requires design-direction approval.)
+- [x] Redesign the full visual system after functional work is stable. (Blueprint Studio now aligns landing, auth, pricing, and generator surfaces on shared blue/white instrument tokens; desktop/mobile route checks pass.)
 - [x] Rewrite product copy across the landing and active flow screens. (Preview, phase, and future-feature wording removed from user-facing copy.)
 - [x] Place the real pricing cards on the landing page. (The `/pricing` route remains available for direct access.)
-- [x] Add on-page SEO foundations and Netlify configuration. (Live title, canonical, robots, sitemap, JSON-LD, Search Console verification, and social metadata were audited; redeploy is required for the latest working-tree assets and tags.)
-- [x] Keep product contracts and PRD output templates versioned. (The PRD/product documents are no longer ignored; only credentials, build output, and test artifacts remain excluded.)
-- [x] Keep Netlify secrets runtime-only and resolve false-positive scanning for the non-secret model identifier. (Production environment values still need to be replaced/configured in Netlify; generated `.next/cache` is explicitly omitted from the scanner because Next stores evaluated runtime values there.)
-- [x] Complete QA, security review, dependency audit, and production verification. (Unit, lint, typecheck, build, header probes, audit, and 18/20 E2E checks pass; Neon auth connectivity and live Stripe/OAuth/provider/deployment checks remain deferred in `docs/qa/final.md`.)
+- [x] Add on-page SEO foundations and Netlify configuration. (Live title, canonical, robots, sitemap, JSON-LD, Search Console verification, and social metadata were audited; the latest deploy is ready at `https://anymd-studio.netlify.app`.)
+- [x] Keep product contracts and PRD output templates versioned. (The generated-output template remains versioned; the private product roadmap is kept outside the root and ignored.)
+- [x] Keep Netlify secrets runtime-only and resolve false-positive scanning for the non-secret model identifier. (Local credentials are verified; production environment values remain unverified because authenticated Netlify logs/config access is unavailable.)
+- [x] Complete QA, security review, dependency audit, and production verification. (Unit, lint, typecheck, build, header probes, AI, database, Stripe Checkout, and local Auth.js checks pass; production OAuth remains blocked by `/api/auth/providers` HTTP 500.)
+- [x] Validate and synchronize the upstream skills catalog contract. (Remote `skills.json` now returns AnyMD schema v1 with 25 entries at version `2026.09.21`; the reviewed snapshot metadata is synchronized.)
+- [x] Add shared Neon-backed rate-limit policies for signup, generation, and checkout. (Migration is applied to Neon `anymd.main`; all three platform-control tables are present.)
+- [x] Add opt-in analytics and one-time privacy-safe generation feedback endpoints. (Only allowlisted scalar analytics properties are accepted; anonymous identity uses a long-lived httpOnly cookie hash.)
+- [x] Persist the temporary product draft in browser IndexedDB; do not use Upstash or remote storage for draft state. (Versioned local storage now hydrates `DraftProvider`, debounces writes, clears on reset, and falls back to memory when IndexedDB is unavailable.)
+- [x] Verify draft persistence with focused unit tests and desktop/mobile Chromium refresh coverage.
+- [x] Replace the upstream repository-index `skills.json` with an AnyMD-compatible individual-skill catalog before enabling remote catalog loading by default. (Remote and local snapshot entries match; production uses the remote catalog when reachable.)
+- [x] Run final tests, typecheck, lint, build, and Neon main-schema verification after the platform-controls changes. (74 tests pass; typecheck, lint, build, and all three Neon tables verified.)

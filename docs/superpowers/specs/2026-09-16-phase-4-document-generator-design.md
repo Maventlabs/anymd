@@ -2,11 +2,11 @@
 
 **Status:** Approved direction, pending written-spec review
 **Date:** 16 September 2026
-**Related roadmap:** `PRD-AnyMD-Product.md`, Phase 4
+**Related roadmap:** `docs/PRD-AnyMD-Product.md`, Phase 4
 
 ## Objective
 
-Phase 4 turns the completed in-memory AnyMD journey into a deterministic document bundle containing `prd.md`, `AGENTS.md`, and an optional `CLAUDE.md` bridge. `PRD-Template-Output-AnyMD.md` is the authoritative structure for the generated `prd.md`; `PRD-AnyMD-Product.md` is only the roadmap for building AnyMD itself. The output must be useful before an AI provider is connected, stable enough to test exactly, and structured so Phase 4A can replace individual section builders with AI generation without changing the UI or public output contract.
+Phase 4 turns the completed in-memory AnyMD journey into a deterministic document bundle containing `prd.md`, `AGENTS.md`, and an optional `CLAUDE.md` bridge. `PRD-Template-Output-AnyMD.md` is the authoritative structure for the generated `prd.md`; `docs/PRD-AnyMD-Product.md` is only the roadmap for building AnyMD itself. The output must be useful before an AI provider is connected, stable enough to test exactly, and structured so Phase 4A can replace individual section builders with AI generation without changing the UI or public output contract.
 
 Success means a user can complete idea entry, clarification, and skill selection, generate both primary documents, inspect their sections, and rebuild one section without changing any other section or the document structure.
 
@@ -354,7 +354,7 @@ e2e/phase-4.spec.ts              Desktop/mobile critical journey and overflow ch
 docs/qa/phase-4.md               Verification evidence and known limits
 ```
 
-Existing files may be modified only where the flow connects: `components/skill-selection.tsx`, `app/globals.css`, `PRD-AnyMD-Product.md`, and `PRODUCT.md`.
+Existing files may be modified only where the flow connects: `components/skill-selection.tsx`, `app/globals.css`, `docs/PRD-AnyMD-Product.md`, and `PRODUCT.md`.
 
 ## Code Style
 

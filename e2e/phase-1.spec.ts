@@ -72,3 +72,18 @@ test("landing preserves the idea-to-clarification journey", async ({
     fullPage: true,
   });
 });
+
+test("draft survives a browser refresh", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const idea =
+    "A focused workspace that helps independent studios turn client feedback into clear product decisions.";
+  await page.getByLabel("Describe your product idea").fill(idea);
+  await page.getByRole("button", { name: "Continue to clarification" }).click();
+  await expect(page).toHaveURL(/\/clarify$/);
+
+  await page.reload();
+  await page.goto("/");
+  await expect(page.getByLabel("Describe your product idea")).toHaveValue(idea);
+});

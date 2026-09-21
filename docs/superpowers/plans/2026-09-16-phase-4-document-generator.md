@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - `PRD-Template-Output-AnyMD.md` is the authoritative structure for generated `prd.md`.
-- `PRD-AnyMD-Product.md` is the AnyMD roadmap, not an output template.
+- `docs/PRD-AnyMD-Product.md` is the AnyMD roadmap, not an output template.
 - Phase 4 makes no AI-provider request; provider env integration remains Phase 4A.
 - Default outputs remain `prd.md` and `AGENTS.md`; `CLAUDE.md` is opt-in and contains exactly `@AGENTS.md\n`.
 - Generation remains memory-only and deterministic for identical normalized input and generation date.
@@ -107,7 +107,7 @@
 
 **Files:**
 - Create: `docs/qa/phase-4.md`
-- Modify: `PRD-AnyMD-Product.md`
+- Modify: `docs/PRD-AnyMD-Product.md` (private local roadmap)
 - Modify: `PRODUCT.md`
 - Modify: `docs/superpowers/plans/2026-09-16-phase-4-document-generator.md`
 

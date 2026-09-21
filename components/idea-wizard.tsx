@@ -185,8 +185,8 @@ export default function IdeaWizard() {
                   </div>
                 </div>
               </details>
-              <span className="privacy-chip">
-                 <LockKeyhole aria-hidden="true" /> Draft stays in this tab
+               <span className="privacy-chip">
+                  <LockKeyhole aria-hidden="true" /> Draft stays in this browser
               </span>
             </div>
             <button
@@ -229,8 +229,8 @@ export default function IdeaWizard() {
         </div>
       </form>
       <p className="prototype-note">
-        Your draft stays in this tab until you submit it. Next, AnyMD asks focused
-        questions, recommends skills, and prepares your documents.
+         Your draft stays in this browser until you submit it. Next, AnyMD asks
+         focused questions, recommends skills, and prepares your documents.
       </p>
     </div>
   );

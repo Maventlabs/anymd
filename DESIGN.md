@@ -1,6 +1,6 @@
 # AnyMD Design System
 
-> Fase 1: blueprint-to-interface
+> Blueprint Studio: shared product system
 
 ## Visual Thesis
 
@@ -45,6 +45,7 @@ AnyMD should feel like a rough product thought becoming an executable interface 
 - Website previews: Magic UI Marquee, two rows, 16:9 placeholder frames until real images exist.
 - FAQ: shadcn Accordion using the section's white-on-blue color roles.
 - Advanced stack: compact disclosure panel with horizontal provider choices and visible labels.
+- Shared surfaces: auth, pricing, and generated-document routes reuse the same blue/white instrument language, thin rules, square work surfaces, and explicit state strips.
 
 ## Motion
 
@@ -76,3 +77,15 @@ AnyMD should feel like a rough product thought becoming an executable interface 
 - Do not use generic equal-card grids as the page structure.
 - Do not invent customer proof, pricing, benchmarks, or generated examples.
 - Do not turn AnyMD into an AI app builder in the copy.
+
+## Blueprint Studio Tokens
+
+- `--blueprint-ink`: `#006EFF` for actions, rules, headings, and blue sections.
+- `--blueprint-paper`: `#FFFFFF` for primary surfaces and inverse content.
+- `--blueprint-soft`: `#E8F1FF` for quiet input, notices, and document code surfaces.
+- `--blueprint-line`: a low-opacity voltage-blue rule for structure.
+- `--blueprint-line-strong`: a stronger voltage-blue rule for field and workbench boundaries.
+- `--blueprint-radius`: `12px` for instrument surfaces; pills remain limited to small controls.
+- `--blueprint-shadow`: an offset blue shadow reserved for the emphasized pricing package and primary composer.
+
+Auth uses the same white form / blue brand split as the rest of the product. Pricing reads as a token ledger with one emphasized package. Generation reads as a document workbench with a summary rail, document sections, and explicit status messaging. All three surfaces preserve the existing responsive and reduced-motion rules.

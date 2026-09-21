@@ -93,29 +93,59 @@ test("sorts by category, featured priority, then name", () => {
 });
 
 test("uses a valid remote catalog", async () => {
-  const result = await loadSkillsCatalog(async () =>
-    Response.json(validRemote, { status: 200 }),
-  );
-  assert.equal(result.meta.source, "remote");
-  assert.equal(result.meta.catalogVersion, "remote-test");
-  assert.deepEqual(result.data.map(({ id }) => id), ["remote-skill"]);
-  assert.equal(result.meta.fallbackReason, undefined);
+  const previous = process.env.ANYMD_SKILLS_CATALOG_URL;
+  process.env.ANYMD_SKILLS_CATALOG_URL = "https://catalog.example/skills.json";
+  try {
+    const result = await loadSkillsCatalog(async () =>
+      Response.json(validRemote, { status: 200 }),
+    );
+    assert.equal(result.meta.source, "remote");
+    assert.equal(result.meta.catalogVersion, "remote-test");
+    assert.deepEqual(result.data.map(({ id }) => id), ["remote-skill"]);
+    assert.equal(result.meta.fallbackReason, undefined);
+  } finally {
+    if (previous === undefined) delete process.env.ANYMD_SKILLS_CATALOG_URL;
+    else process.env.ANYMD_SKILLS_CATALOG_URL = previous;
+  }
 });
 
 test("falls back to the snapshot for unavailable or invalid remote data", async () => {
-  const unavailable = await loadSkillsCatalog(async () =>
-    Promise.reject(new Error("secret network detail")),
-  );
-  assert.equal(unavailable.meta.source, "snapshot");
-  assert.equal(unavailable.meta.fallbackReason, "REMOTE_UNAVAILABLE");
-  assert.equal(unavailable.data.length, 25);
+  const previous = process.env.ANYMD_SKILLS_CATALOG_URL;
+  process.env.ANYMD_SKILLS_CATALOG_URL = "https://catalog.example/skills.json";
+  try {
+    const unavailable = await loadSkillsCatalog(async () =>
+      Promise.reject(new Error("secret network detail")),
+    );
+    assert.equal(unavailable.meta.source, "snapshot");
+    assert.equal(unavailable.meta.fallbackReason, "REMOTE_UNAVAILABLE");
+    assert.equal(unavailable.data.length, 25);
 
-  const invalid = await loadSkillsCatalog(async () =>
-    Response.json({ ...validRemote, schemaVersion: 99 }),
-  );
-  assert.equal(invalid.meta.source, "snapshot");
-  assert.equal(invalid.meta.fallbackReason, "INVALID_REMOTE_CATALOG");
-  assert.equal(JSON.stringify(invalid).includes("secret network detail"), false);
+    const invalid = await loadSkillsCatalog(async () =>
+      Response.json({ ...validRemote, schemaVersion: 99 }),
+    );
+    assert.equal(invalid.meta.source, "snapshot");
+    assert.equal(invalid.meta.fallbackReason, "INVALID_REMOTE_CATALOG");
+    assert.equal(JSON.stringify(invalid).includes("secret network detail"), false);
+  } finally {
+    if (previous === undefined) delete process.env.ANYMD_SKILLS_CATALOG_URL;
+    else process.env.ANYMD_SKILLS_CATALOG_URL = previous;
+  }
+});
+
+test("uses the reviewed snapshot when no remote catalog is configured", async () => {
+  const previous = process.env.ANYMD_SKILLS_CATALOG_URL;
+  delete process.env.ANYMD_SKILLS_CATALOG_URL;
+  try {
+    const result = await loadSkillsCatalog(async () => {
+      throw new Error("remote fetch should not run without explicit configuration");
+    });
+    assert.equal(result.meta.source, "snapshot");
+    assert.equal(result.meta.fallbackReason, undefined);
+    assert.equal(result.data.length, 25);
+  } finally {
+    if (previous === undefined) delete process.env.ANYMD_SKILLS_CATALOG_URL;
+    else process.env.ANYMD_SKILLS_CATALOG_URL = previous;
+  }
 });
 
 test("formats installed-skill requirements without implying MCP access", () => {

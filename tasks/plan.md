@@ -18,10 +18,10 @@
 
 ### Phase 4A2: Identity and Persistence
 - Complete for the current scope: AnyMD-owned users/OAuth identities, Auth.js JWT sessions, credentials signup/login, optional Google/GitHub configuration, and responsive `/login` and `/signup` pages are implemented.
-- Remaining verification: optional OAuth only when provider credentials are configured.
+- Remaining verification: production OAuth callback behavior; local provider configuration is present and the production providers endpoint currently returns HTTP 500.
 
 ### Phase 4A3: Queue and Free Quota
-- Implementation slice is complete in source; worker-focused tests and Playwright verification pass. Live migration verification remains environment-dependent.
+- Implementation slice is complete in source; worker-focused tests and Playwright verification pass. The queue migration is live on Neon `anymd.main`.
 - Enforce one free generation per HMAC IP hash atomically with a unique database constraint and a single SQL statement.
 - Use a provider-neutral queue contract; the first local/dev implementation is database-backed and does not depend on Upstash.
 - Expose `POST /api/generate` as `202` with a job ID and `GET /api/generate/[jobId]` as the polling/status contract.
@@ -39,9 +39,9 @@
 - Redesign landing/auth/pricing surfaces as one coherent system.
 - Final visual redesign remains paused until a new direction is approved; the current `DESIGN.md` is provisional.
 - Copy and SEO pass: landing, clarification, skills, pricing, and generation copy now describe shipped behavior without preview, phase, or future-feature claims. The real `PricingTable` appears on the landing page and remains available at `/pricing`.
-- SEO foundations: root/page metadata, canonical URLs, Open Graph/Twitter metadata, JSON-LD, `robots.txt`, and `sitemap.xml` are implemented. Netlify build configuration is present in `netlify.toml`; live deployment still requires the public domain and credentials.
+- SEO foundations: root/page metadata, canonical URLs, Open Graph/Twitter metadata, JSON-LD, `robots.txt`, and `sitemap.xml` are implemented. Netlify build configuration is present in `netlify.toml`; the latest known public deploy is ready at `https://anymd-studio.netlify.app`.
 - Run unit/API/E2E/build/lint/typecheck/audit checks. (Local gates pass; see `docs/qa/final.md`.)
-- Perform security review for auth, IP hashing, webhook handling, rate limits, secrets, and data retention. (Local review documented; durable production rate limiting and credential-backed verification remain deferred.)
+- Perform security review for auth, IP hashing, webhook handling, rate limits, secrets, and data retention. (Durable rate limiting, opt-in analytics, and one-time feedback are implemented; credential-backed verification remains deferred.)
 
 ## Checkpoints
 
@@ -52,21 +52,21 @@
 
 ## Deferred Credential and Decision Gates
 
-- Stripe secret and webhook credentials: required for live Checkout and webhook replay.
-- Google/GitHub OAuth credentials: required for provider verification.
-- AI provider credentials: required for live model generation verification.
-- External `skills-vault` access: required to publish the structured catalog upstream.
+- Stripe secret and webhook credentials: local Checkout authentication is verified; live session creation and webhook replay remain unexecuted.
+- Google/GitHub OAuth credentials: local provider configuration is verified; production provider verification is blocked by the production providers endpoint returning HTTP 500.
+- AI provider credentials: minimal live Chat Completions verification passed.
+- External `skills-vault` access: complete for the currently published individual-skill catalog; remote and local snapshot entries match.
 - Public hosting credentials/domain: required for deployment verification.
-- Maintainer decision: choose the open-source license.
-- Product/design direction: approve the final visual redesign direction.
-- Phase 8 feedback and analytics: deferred pending an explicit event/feedback schema plus consent and retention decisions; no silent tracking was added.
+- Maintainer decision: use the AnyMD Non-Commercial License in `LICENSE`.
+- Product/design direction: Blueprint Studio direction approved and implemented across landing, auth, pricing, and generator surfaces.
+- Phase 8 feedback and analytics: implemented with explicit event allowlisting, opt-in consent, retention-indexed tables, and one-time feedback keys.
 
 ## Verification Result
 
-- `npm test`: 66 passed.
+- `npm test`: 74 passed.
 - `npm run lint`: passed.
 - `npm run typecheck`: passed.
 - `npm run build`: passed.
-- `npm run test:e2e`: 19 passed across desktop and mobile Chromium; the single mobile auth failure was caused by a Neon connection timeout during signup. Targeted copy/pricing specs pass: 6 passed across desktop and mobile Chromium.
+- `npm run test:e2e`: 22 passed across desktop and mobile Chromium after updating the Phase 3 assertion for truthful local-persistence copy. Targeted visual route checks show no horizontal overflow at 390px or 1440px.
 - `npm audit --omit=dev`: 0 vulnerabilities.
 - `git diff --check`: passed; only Windows line-ending warnings were reported.

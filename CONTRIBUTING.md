@@ -41,9 +41,10 @@ describe.
 
 ## Adding a Skill
 
-The public catalog is expected at
-`https://github.com/vetrns/skills-vault/blob/main/skills.json`. Each entry must
-match the schema enforced by `lib/skills.ts` and include:
+The skills reference is maintained at
+`https://github.com/vetrns/skills-vault/blob/main/skills.json`. The current
+published file is an AnyMD-compatible individual-skill catalog. Each entry
+must match the schema enforced by `lib/skills.ts` and include:
 
 - a lowercase kebab-case `id`
 - a user-facing `name` and specific `description`
@@ -52,8 +53,8 @@ match the schema enforced by `lib/skills.ts` and include:
 - `featured` or `standard` priority
 
 Validate catalog changes with `npm test`. Update `data/skills.snapshot.json` only
-after the upstream catalog is reviewed; this file is the last-known-good fallback,
-not an independent source of truth.
+after the upstream catalog is reviewed; this file is the versioned fallback when
+the remote catalog is unavailable.
 
 ## Pull Request Checklist
 
@@ -65,6 +66,7 @@ not an independent source of truth.
 
 ## License
 
-A project license has not been selected yet. Contributions should not assume MIT,
-Apache-2.0, GPL, or another license until the maintainer records that decision and
-adds a root license file.
+The project uses the AnyMD Non-Commercial License in `LICENSE`. Commercial use,
+commercial distribution, paid hosted services, resale, sublicensing, or
+incorporation into a commercial product require prior written permission from
+the copyright holder.

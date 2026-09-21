@@ -2,11 +2,11 @@
 
 > Historical evidence captured before the later identity, queue, quota, token,
 > and Stripe slices. For the current overall status, see `docs/qa/final.md` and
-> `PRD-AnyMD-Product.md`.
+> `docs/PRD-AnyMD-Product.md` (private local roadmap, ignored by Git).
 
 ## Scope
 
-Phase 4 turns the completed memory-only idea, clarification, stack, and skill selection into a structured document bundle containing `prd.md`, `AGENTS.md`, and an optional `CLAUDE.md` bridge. Phase 4A1 sends the validated structural seed to a server-only OpenAI-compatible provider for refinement while preserving the same `GeneratedBundle` contract. Phase 5 adds exact raw Markdown review, clipboard actions, and browser-local file downloads to the responsive `/generate` surface.
+Phase 4 turns the completed browser-local idea, clarification, stack, and skill selection into a structured document bundle containing `prd.md`, `AGENTS.md`, and an optional `CLAUDE.md` bridge. Phase 4A1 sends the validated structural seed to a server-only OpenAI-compatible provider for refinement while preserving the same `GeneratedBundle` contract. Phase 5 adds exact raw Markdown review, clipboard actions, and browser-local file downloads to the responsive `/generate` surface.
 
 ## Verified Behavior
 

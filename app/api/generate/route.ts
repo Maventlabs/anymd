@@ -19,6 +19,10 @@ import {
   type GenerationJobRepository,
 } from "@/lib/generation-jobs";
 import { loadSkillsCatalog } from "@/lib/skills";
+import {
+  consumeRequestRateLimit,
+  rateLimitResponse,
+} from "@/lib/rate-limit";
 
 const publicErrors = {
   INVALID_REQUEST: "The generation request is invalid.",
@@ -40,6 +44,7 @@ type QueueGenerateDependencies = {
   getSession?: () => Promise<{ user?: { id?: string } } | null>;
   createRepository?: () => GenerationJobRepository;
   getConfig?: typeof parseQueueConfig;
+  consumeRateLimit?: typeof consumeRequestRateLimit;
 };
 
 export async function handleGenerateRequest(
@@ -113,7 +118,13 @@ export async function handleQueuedGenerateRequest(
       return errorResponse("UNKNOWN_SKILL");
 
     const session = await (dependencies.getSession ?? auth)();
-    const userId = session?.user?.id ?? null;
+    const userId = session?.user?.id ?? undefined;
+    const rateLimit = await (
+      dependencies.consumeRateLimit ?? consumeRequestRateLimit
+    )(request, "generate", userId);
+    if (!rateLimit.allowed) return rateLimitResponse(rateLimit);
+
+    const authenticatedUserId = userId ?? null;
     const repository =
       (dependencies.createRepository ?? createGenerationJobRepository)();
     const config = (dependencies.getConfig ?? parseQueueConfig)();
@@ -125,14 +136,14 @@ export async function handleQueuedGenerateRequest(
       freeResult = await repository.enqueueFreeJob({
         ipHash: clientIpHash(ip, getServerEnv("ANYMD_IP_HASH_PEPPER") ?? ""),
         request: input,
-        userId,
+        userId: authenticatedUserId,
         config,
       });
     } catch (error) {
       if (
         !(error instanceof GenerationQueueError) ||
         error.code !== "IP_UNAVAILABLE" ||
-        !userId
+        !authenticatedUserId
       )
         throw error;
     }
@@ -146,9 +157,9 @@ export async function handleQueuedGenerateRequest(
         { status: 202 },
       );
 
-    if (userId) {
+    if (authenticatedUserId) {
       const paidResult = await repository.enqueuePaidJob({
-        userId,
+        userId: authenticatedUserId,
         request: input,
         amount: 1,
         config,
@@ -163,7 +174,7 @@ export async function handleQueuedGenerateRequest(
         );
     }
 
-    if (!userId)
+    if (!authenticatedUserId)
       return Response.json(
         {
           error: {

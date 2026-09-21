@@ -160,9 +160,9 @@ function resultFrom(
 export async function loadSkillsCatalog(
   fetcher: CatalogFetch = globalThis.fetch as CatalogFetch,
 ): Promise<CatalogResult> {
-  const url =
-    process.env.ANYMD_SKILLS_CATALOG_URL ??
-    "https://raw.githubusercontent.com/vetrns/skills-vault/main/skills.json";
+  const url = process.env.ANYMD_SKILLS_CATALOG_URL;
+  if (!url) return resultFrom(parsedSnapshot, "snapshot");
+
   let response: Response;
   try {
     response = await fetcher(url, {

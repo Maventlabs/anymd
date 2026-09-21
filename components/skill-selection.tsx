@@ -78,8 +78,8 @@ export default function SkillSelection() {
           <span className="quiet">03 / Skills</span>
           <h1>Start with your product idea first.</h1>
           <p>
-            Skill recommendations use a completed brief in this tab. A refresh
-            clears the draft, so return to the idea composer to begin again.
+             Skill recommendations use a completed brief saved locally in this
+             browser. Return to the idea composer to begin again.
           </p>
           <Link href="/" className="pill">
             Describe your idea <ArrowRight aria-hidden="true" />
@@ -113,7 +113,7 @@ export default function SkillSelection() {
         {complete ? (
           <section className="skills-complete" aria-labelledby="skills-complete-title">
             <span className="quiet">03 / Skills complete</span>
-            <h1 id="skills-complete-title">Recommendations saved for this tab.</h1>
+             <h1 id="skills-complete-title">Recommendations saved locally.</h1>
             <p>
               {recommended.length
                 ? `${recommended.length} recommended skill${recommended.length === 1 ? "" : "s"} will guide the AGENTS.md instructions.`
@@ -128,7 +128,7 @@ export default function SkillSelection() {
             ) : null}
             <aside className="skills-phase-note">
               The configured AI provider will refine a structured PRD and AGENTS.md
-              from the answers saved in this tab.
+               from the answers saved locally in this browser.
             </aside>
             <div className="skills-actions">
               <button className="pill" onClick={() => setComplete(false)}>
@@ -231,8 +231,8 @@ export default function SkillSelection() {
         )}
       </main>
       <p className="clarify-privacy">
-        Saved only in this tab. Nothing is installed and no MCP connection is
-        assumed.
+         Saved locally in this browser. Nothing is installed and no MCP connection
+         is assumed.
       </p>
     </div>
   );

@@ -24,6 +24,10 @@
 *.p12
 *.pfx
 
+# Private product planning
+/PRD-AnyMD-Product.md
+/docs/PRD-AnyMD-Product.md
+
 # Test and browser artifacts
 /test-results/
 /playwright-report/

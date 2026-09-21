@@ -2,7 +2,7 @@
 
 **Status:** Approved for planning
 **Date:** 2026-09-16
-**Related requirements:** `PRD-AnyMD-Product.md`, Feature 3 and Phase 3
+**Related requirements:** `docs/PRD-AnyMD-Product.md`, Feature 3 and Phase 3
 
 ## 1. Objective
 

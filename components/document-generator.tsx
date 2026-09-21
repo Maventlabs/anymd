@@ -186,7 +186,8 @@ export default function DocumentGenerator() {
           <h1>Complete your brief first.</h1>
           <p>
             Generated documents depend on a completed clarification and skill
-            selection in this tab. Refreshing clears that memory-only draft.
+             selection saved locally in this browser. Return to the idea composer
+             to begin again.
           </p>
           <Link href="/" className="pill">
             Start with an idea <ArrowRight aria-hidden="true" />
@@ -283,7 +284,7 @@ export default function DocumentGenerator() {
             <h1>Your product brief, assembled.</h1>
           </div>
           <p>
-            Structured from this tab, then refined by the configured AI provider
+             Structured from your local browser draft, then refined by the configured AI provider
             without changing the AnyMD output contract.
           </p>
         </div>
@@ -312,7 +313,7 @@ export default function DocumentGenerator() {
                   ? "Create an account to use token generation after the free quota."
                   : error === "QUOTA_EXHAUSTED"
                     ? "Buy a token pack to continue generating documents."
-                    : "Your draft is still safe in this tab. Retry document generation."}
+                     : "Your draft is still safe in this browser. Retry document generation."}
             </p>
             <div className="generate-error-actions">
               {error === "AUTH_REQUIRED" ? (

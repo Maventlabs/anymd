@@ -124,8 +124,8 @@ export default function ClarificationFlow() {
                  Describe your product first.
               </h1>
               <p>
-                There is no idea in this tab yet. Drafts live only in memory, so
-                refreshing clears them. Add your idea on the home page to begin.
+                 There is no idea in this browser yet. Add your idea on the home
+                 page to begin.
               </p>
               <Link
                 href="/"
@@ -144,8 +144,8 @@ export default function ClarificationFlow() {
                  Review your brief.
               </h1>
               <p>
-                Review the details below. Everything stays editable in this tab
-                until you refresh.
+                 Review the details below. Everything stays editable in this
+                 browser until you submit it.
               </p>
               <section className="review-item" aria-labelledby="review-idea">
                 <div className="review-label">
@@ -413,7 +413,8 @@ export default function ClarificationFlow() {
           )}
         </div>
         <p className="clarify-privacy">
-          Saved only in this tab. Refreshing clears your idea and answers.
+           Saved locally in this browser. Nothing is sent to an AI provider until
+           you continue to generation.
           Nothing is sent to an AI provider.
         </p>
       </main>
