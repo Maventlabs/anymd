@@ -2,8 +2,15 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   continueDraft,
+  isValidStackChoice,
+  getRecommendedStack,
+  hasCompleteStack,
+  stackCategories,
+  stackOptionIcons,
   stackOptions,
   validateIdea,
+  validateCustomStackName,
+  CUSTOM_STACK_OPTION,
   type Draft,
 } from "../lib/idea";
 
@@ -50,4 +57,36 @@ test("invalid input stays at the idea step and no preferences are required", () 
     }).step,
     "clarification",
   );
+});
+
+test("each stack category has ten named options plus Open and Custom choices", () => {
+  for (const options of Object.values(stackOptions)) {
+    assert.equal(options.at(-2), "Open");
+    assert.equal(options.at(-1), CUSTOM_STACK_OPTION);
+    assert.ok(options.slice(0, -1).length >= 10);
+    assert.equal(new Set(options).size, options.length);
+  }
+});
+
+test("every catalog option has a real or intentional fallback icon", () => {
+  for (const category of stackCategories) {
+    for (const option of stackOptions[category]) {
+      assert.ok(stackOptionIcons[category][option]);
+    }
+  }
+});
+
+test("accepts custom stack names without treating the Custom trigger as a value", () => {
+  assert.equal(validateCustomStackName("  Drizzle ORM  "), null);
+  assert.equal(isValidStackChoice("Database", "Drizzle ORM"), true);
+  assert.equal(isValidStackChoice("Database", "Open"), true);
+  assert.equal(isValidStackChoice("Database", CUSTOM_STACK_OPTION), false);
+  assert.equal(isValidStackChoice("Database", ""), false);
+  assert.ok(validateCustomStackName("x".repeat(81)));
+});
+
+test("recommended stacks stay inside the curated catalog", () => {
+  const stack = getRecommendedStack("Mobile App", "Production product");
+  assert.equal(stack.Frontend, "React + Vite");
+  assert.ok(hasCompleteStack(stack));
 });

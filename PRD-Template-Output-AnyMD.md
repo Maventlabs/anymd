@@ -12,6 +12,35 @@
 >
 > **Kontrak companion file:** `AGENTS.md` MUST memuat rekomendasi skill otomatis, membedakan skill dari ketersediaan MCP/credential, melarang placeholder/dead interaction/simulated success, dan meminta agent melanjutkan ke phase berikutnya setelah acceptance criteria serta verification phase saat ini lulus. Pause hanya untuk credential, destructive/irreversible action, real payment, production change, atau unresolved product decision.
 
+> **Kontrak eksekusi:** `SESSION.md` adalah ledger eksekusi yang mutable. Agent MUST membaca `prd.md`, `AGENTS.md`, dan `SESSION.md` sebelum bekerja, memperbarui `SESSION.md` setelah setiap task/phase, dan memakai evidence sebelumnya untuk menghindari pengulangan E2E yang tidak perlu.
+
+> **Completion rule:** a task may be checked only after the complete user journey works end-to-end through its real configured provider or durable boundary, including success, failure, persistence, and verification evidence. Local adapters, isolated unit tests, and compile-only slices are implementation prework.
+
+> **Production breadth-first:** kerjakan thin vertical slice untuk seluruh fitur `High/P0` terlebih dahulu melalui boundary nyata, lalu lakukan depth pass untuk hardening, edge case, performance, dan polish. Dependency yang blocking boleh dikerjakan lebih dulu. Jangan menyelesaikan satu fitur secara mendalam sementara fitur `High/P0` lain belum memiliki alur end-to-end yang dapat diverifikasi.
+
+> **Tool contract:** agent MUST memakai skill dan MCP yang relevan serta tersedia untuk task. Agent MUST membedakan skill terinstal, MCP yang tersedia, credential yang valid, dan provider yang benar-benar berhasil dipanggil. Jika tool tidak tersedia, catat fallback dan jangan mengklaim tool tersebut telah digunakan.
+
+## 0. Hierarki Eksekusi & Prioritas
+
+Urutan otoritas dari paling tinggi ke paling rendah:
+
+1. Product goal dan measurable outcomes
+2. Fitur dan sub-fitur
+3. Development phases
+4. Tasks
+5. Acceptance criteria
+6. Verification evidence
+
+Setiap item memakai skala yang sama:
+
+| Label | Padanan | Arti |
+|---|---|---|
+| `High` | `P0` | Release-blocking; wajib selesai untuk core journey |
+| `Medium` | `P1` | Penting, tetapi tidak memblokir core release |
+| `Low` | `P2` | Optional enhancement atau polish |
+
+Parent tidak boleh dicentang sebelum seluruh child yang relevan selesai dan evidence-nya tercatat di `SESSION.md`. Agent tidak boleh berhenti hanya karena unit test, mock provider, local adapter, compile, atau build lulus.
+
 ---
 
 ## 1. Product Overview
@@ -79,13 +108,18 @@ Sub-fitur:
 ### Phase 1: [Nama Fase, misal "MVP Core"]
 **Target selesai:** [tanggal opsional]
 **Terkait fitur:** [rujuk ke Fitur di section 3]
+**Prioritas:** [High/P0 | Medium/P1 | Low/P2]
+**Mode eksekusi:** [Breadth pass | Depth pass | QA | Security]
 
 - [ ] Task 1
+  - Priority: [High/P0 | Medium/P1 | Low/P2]
   - Note: [catatan tambahan, blocker, atau keputusan teknis — opsional]
 - [ ] Task 2
+  - Priority: [High/P0 | Medium/P1 | Low/P2]
 - [ ] Task 3
+  - Priority: [High/P0 | Medium/P1 | Low/P2]
 
-**Anggap fase ini selesai kalau:** [1 kalimat kondisi konkret]
+**Anggap fase ini selesai kalau:** [1 kalimat kondisi konkret] dan setiap task memenuhi Completion rule melalui provider atau durable boundary yang benar-benar dikonfigurasi.
 
 ### Phase 2: [Nama Fase]
 **Terkait fitur:** [rujukan fitur]
@@ -100,12 +134,14 @@ Sub-fitur:
 
 - [ ] Unit test untuk logic inti (business logic, bukan UI)
 - [ ] Integration test untuk endpoint API utama
-- [ ] Manual test alur end-to-end (happy path + minimal 1 edge case per fitur P0)
+- [ ] Contract test untuk provider dan boundary durable yang dipakai fitur P0
+- [ ] E2E test alur end-to-end pada production code path (happy path + failure + persistence + minimal 1 edge case per fitur P0)
 - [ ] Verifikasi acceptance criteria setiap sub-fitur P0 terpenuhi
 - [ ] Test responsif dasar (mobile & desktop) jika ada UI
 - [ ] Verifikasi setiap kontrol dan interaksi benar-benar bekerja end-to-end; tidak ada decorative placeholder, dead button, fake interaction, atau simulated success
+- [ ] Catat commit, environment, provider, MCP/skills, command, timestamp, dan evidence di `SESSION.md`
 
-**Anggap fase ini selesai kalau:** Seluruh fitur P0 lolos acceptance criteria dan tidak ada bug blocking yang diketahui.
+**Anggap fase ini selesai kalau:** Seluruh fitur P0 lolos acceptance criteria dan Completion rule, tidak ada bug blocking yang diketahui, serta evidence E2E/persistence sudah dicatat.
 
 ### Phase Security: Keamanan Aplikasi
 **Terkait fitur:** Seluruh fitur yang menangani input user, auth, atau data
@@ -115,6 +151,7 @@ Sub-fitur:
 - [ ] Rate limiting pada endpoint publik yang rawan disalahgunakan
 - [ ] Review permission/akses data (user hanya bisa akses data miliknya sendiri, jika relevan)
 - [ ] Cek dependency/library pihak ketiga dari kerentanan yang diketahui
+- [ ] Review analytics consent, identity hashing, event retention, dan akses metric
 
 **Anggap fase ini selesai kalau:** Tidak ada credential yang ter-expose, input tervalidasi, dan akses data sesuai kepemilikan.
 
@@ -220,18 +257,73 @@ flowchart LR
 
 ---
 
-## 9. Prompt Inisiasi untuk Agent
+## 10. Observability, Testing & Product Metrics
+
+> Section ini menjelaskan cara mengukur apakah website benar-benar dipakai dan bekerja. Local execution hanya memvalidasi instrumentasi dan query dengan fixture sintetis; MAU/DAU nyata memerlukan deployment ke environment dengan durable event store.
+
+### Testing Architecture
+
+- **Unit:** validasi input, business rules, metric definitions, privacy filters, dan pure functions.
+- **Integration:** route/API, database writes, queue, auth/session, webhook, dan event collector.
+- **Contract:** format provider, MCP response, skills contract, webhook payload, dan generated document schema.
+- **E2E:** user journey nyata melalui production code path dengan success, failure, persistence, dan recovery.
+- **Smoke:** configured provider dan durable boundary benar-benar reachable pada deployed environment.
+- **Release evidence:** catat commit, environment, tool/skill/MCP, command, result, dan timestamp di `SESSION.md`.
+
+### Event Contract
+
+| Event | Kapan dicatat | Properties yang diperbolehkan |
+|---|---|---|
+| `page_view` | Halaman dibuka setelah consent | `route`, `device_class`, `referrer_class` |
+| `signup_completed` | Signup berhasil | `auth_method` |
+| `generation_started` | Request generation diterima | `feature_count`, `skill_count` |
+| `generation_completed` | Bundle tervalidasi dan tersedia | `duration_ms`, `document_count` |
+| `checkout_started` | Checkout session berhasil dibuat | `package_id` |
+| `feedback_submitted` | Feedback berhasil disimpan | `rating` |
+
+Jangan kirim raw IP, prompt, document content, query, email, atau PII yang tidak diperlukan. Event hanya boleh dikumpulkan setelah consent eksplisit.
+
+### Metric Definitions
+
+- **DAU:** `COUNT(DISTINCT actor_key)` untuk active events pada satu hari UTC.
+- **MAU:** `COUNT(DISTINCT actor_key)` untuk active events pada rolling 30 hari.
+- **Traffic:** total `page_view`, unique `actor_key`, route distribution, dan referrer class.
+- **Activation:** actor yang menyelesaikan `generation_completed` dibagi actor yang memulai flow.
+- **Generation reliability:** success rate, failure rate, retry rate, dan p95 duration.
+- **Payment funnel:** checkout started, completed webhook, credited purchase, dan failed/recovered payment.
+
+`actor_key` harus berupa authenticated user ID atau salted anonymous ID. Raw IP tidak boleh menjadi identity metric.
+
+### Local vs Deployed Verification
+
+- Local: jalankan schema validation, event collector tests, metric query tests, dan synthetic fixtures.
+- Staging/production: verifikasi event benar-benar masuk ke durable store dan query menghasilkan metric.
+- Synthetic local traffic tidak boleh dilaporkan sebagai MAU/DAU production.
+- Catat timezone, rolling window, retention policy, consent state, dan data source bersama hasil metric.
+- Default retention: 90 hari, dapat diubah melalui keputusan produk dan konfigurasi deployment.
+
+**Anggap observability selesai kalau:** event schema tervalidasi, consent/privacy checks lulus, event masuk ke durable boundary, metric query dapat direproduksi, dan deployed smoke evidence tercatat.
+
+---
+
+## 11. Prompt Inisiasi untuk Agent
 
 > Bukan file terpisah — teks ini di-copy langsung ke AI coding agent. Dijaga pendek dan padat.
 
 ```
 Baca prd.md dan AGENTS.md di root proyek ini, lalu mulai kerjakan
-Phase 1 sesuai daftar task di prd.md. Ikuti instruksi skill di
-AGENTS.md (MUST digunakan jika terinstal dan relevan), dan laporkan
-mana yang akan dipakai. Implementasikan hanya perilaku yang bekerja
-end-to-end. Setelah acceptance criteria dan verification suatu phase
-lulus, lanjutkan otomatis ke phase berikutnya. Pastikan Phase QA dan
-Phase Security dikerjakan sebelum proyek dianggap selesai.
+Phase 1 sesuai daftar task di prd.md. Baca SESSION.md sebelum mulai dan
+perbarui setelah setiap task atau phase. Ikuti instruksi skill di
+AGENTS.md (MUST digunakan jika terinstal dan relevan) dan gunakan MCP
+yang relevan jika tersedia; laporkan tool yang benar-benar dipakai.
+Kerjakan production breadth-first melalui provider dan durable boundary
+nyata. Jangan mencentang task berdasarkan local adapter, mock, unit test,
+compile, atau build saja. Setelah Completion rule, acceptance criteria,
+dan verification phase saat ini lulus, lanjutkan otomatis ke phase
+berikutnya. Jangan mengulang E2E yang sudah dibuktikan kecuali source,
+config, provider, environment, failure, atau release gate berubah.
+Pastikan Phase QA, Phase Security, dan Observability dikerjakan sebelum
+proyek dianggap selesai.
 ```
 
 ---
@@ -241,4 +333,5 @@ Phase Security dikerjakan sebelum proyek dianggap selesai.
 | Tanggal | Perubahan |
 |---|---|
 | 18 September 2026 | Menambahkan kontrak bahasa/Unicode, enam preset tema, functional-only output, rekomendasi skill otomatis, dan auto-continue antar-phase. |
+| 22 September 2026 | Menambahkan hierarchy eksekusi, priority mapping, production breadth-first, Completion rule, MCP/skills evidence, SESSION.md contract, dan observability/MAU/DAU requirements. |
 | [tanggal] | Draft awal |

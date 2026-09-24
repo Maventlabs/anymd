@@ -60,4 +60,19 @@ test("maps a verified purchase credit to an applied mutation", async () => {
   assert.deepEqual(result, { userId: "user-1", balance: 50, delta: 50, applied: true });
   assert.match(fake.statements[0], /stripe_webhook_events/);
   assert.match(fake.statements[0], /ON CONFLICT \(user_id\) DO UPDATE/);
+  assert.match(fake.statements[0], /\(50\)::integer AS delta/);
+});
+
+test("maps a generation refund to an applied mutation", async () => {
+  const fake = fakeSql([
+    [{ user_id: "user-1", balance: 60, delta: 10, outcome: "APPLIED" }],
+  ]);
+  const result = await createTokenRepository(fake.query).refund(
+    "user-1",
+    10,
+    "refund-1",
+  );
+
+  assert.deepEqual(result, { userId: "user-1", balance: 60, delta: 10, applied: true });
+  assert.match(fake.statements[0], /\(10\)::integer AS delta/);
 });

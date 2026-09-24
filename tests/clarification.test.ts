@@ -12,7 +12,7 @@ import {
 } from "../lib/clarification";
 
 test("language and visual direction join the core questions with stable IDs", () => {
-  assert.equal(visibleQuestions({}).length, 11);
+  assert.equal(visibleQuestions({}).length, 14);
   const web = visibleQuestions({ platform: "Web" }).map((q) => q.id);
   assert.ok(web.includes("browsers"));
   assert.ok(!web.includes("mobile-os"));
@@ -20,11 +20,14 @@ test("language and visual direction join the core questions with stable IDs", ()
   assert.ok(mobile.includes("mobile-os"));
   assert.ok(!mobile.includes("browsers"));
   const both = visibleQuestions({ platform: "Both", auth: "Multiple roles" });
-  assert.equal(both.length, 14);
+  assert.equal(both.length, 17);
   assert.equal(new Set(both.map((q) => q.id)).size, both.length);
   assert.deepEqual(
     both.map((q) => q.id),
     [
+      "product-type",
+      "scale",
+      "stack-mode",
       "problem",
       "audience",
       "platform",
@@ -56,7 +59,7 @@ test("accepts any named document language and only approved theme IDs", () => {
 });
 
 test("text validation trims and counts Unicode code points at boundaries", () => {
-  const question = visibleQuestions({})[0];
+  const question = visibleQuestions({}).find(({ id }) => id === "problem")!;
   assert.ok(validateAnswer(question, "   "));
   assert.ok(validateAnswer(question, "😀".repeat(9)));
   assert.equal(validateAnswer(question, `  ${"😀".repeat(10)}  `), null);

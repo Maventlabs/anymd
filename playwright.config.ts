@@ -4,8 +4,8 @@ const baseURL = "http://127.0.0.1:3011";
 
 export default defineConfig({
   testDir: "./e2e",
-  fullyParallel: true,
-  workers: 2,
+  fullyParallel: false,
+  workers: 1,
   reporter: "line",
   use: {
     baseURL,

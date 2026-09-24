@@ -5,6 +5,9 @@ export const analyticsEventNames = [
   "signup_completed",
   "generation_started",
   "generation_completed",
+  "clarification_completed",
+  "stack_selected",
+  "skills_selected",
   "checkout_started",
   "feedback_submitted",
 ] as const;
@@ -54,6 +57,14 @@ export function getOrCreateAnonymousId(request: Request) {
 export function anonymousIdHash(value: string, pepper: string) {
   if (pepper.length < 16) throw new Error("ANYMD_IP_HASH_PEPPER is not configured");
   return createHash("sha256").update(`${pepper}:${value}`).digest("hex");
+}
+
+export function analyticsActorKey(
+  userId: string | null,
+  anonymousId: string,
+  pepper: string,
+) {
+  return userId ? `user:${userId}` : `anon:${anonymousIdHash(anonymousId, pepper)}`;
 }
 
 export function anonymousCookieHeader(value: string, secure: boolean) {

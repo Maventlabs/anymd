@@ -10,6 +10,9 @@ export const validGenerateRequest: GenerateDocumentsRequest = {
     Hosting: "Vercel",
   },
   answers: {
+    "product-type": "Web App",
+    scale: "Production product",
+    "stack-mode": "Manual selection",
     problem:
       "Project decisions, approvals, and feedback are scattered across email threads.",
     audience:

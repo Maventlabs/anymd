@@ -19,6 +19,9 @@ export type DraftStorageRecord = {
 };
 
 const questionIds = new Set<QuestionId>([
+  "product-type",
+  "scale",
+  "stack-mode",
   "problem",
   "audience",
   "platform",
@@ -67,7 +70,7 @@ function isClarification(value: unknown): value is Clarification {
     isStringRecord(value.answers) &&
     Array.isArray(value.completed) &&
     value.completed.every(isQuestionId) &&
-    (value.current === "review" || isQuestionId(value.current))
+    (value.current === "review" || value.current === "stack" || isQuestionId(value.current))
   );
 }
 

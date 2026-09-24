@@ -88,6 +88,8 @@ test("calls the OpenAI-compatible Chat Completions endpoint and validates its bu
   assert.equal(headers.get("content-type"), "application/json");
   const body = JSON.parse(String(requestInit?.body));
   assert.equal(body.model, "unit-test-model-id");
+  assert.deepEqual(body.response_format, { type: "json_object" });
+  assert.equal(body.stream, true);
   assert.equal(body.messages[0].role, "system");
   assert.equal(body.messages[0].content, generatorSystemPrompt);
   assert.equal(body.messages[1].role, "user");
@@ -96,6 +98,34 @@ test("calls the OpenAI-compatible Chat Completions endpoint and validates its bu
   assert.match(body.messages[1].content, /templateBundle/);
   assert.match(body.messages[1].content, /document-header/);
   assert.ok(requestInit?.signal instanceof AbortSignal);
+});
+
+test("reads a GeneratedBundle returned as a tool-call argument", async () => {
+  const fakeFetch: typeof fetch = async () =>
+    Response.json({
+      choices: [
+        {
+          message: {
+            tool_calls: [
+              {
+                function: {
+                  arguments: JSON.stringify(generatedBundle),
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+  const result = await generateDocumentsWithProvider(
+    validGenerateRequest,
+    selectedSkills,
+    generatedAt,
+    { env: providerEnv, fetch: fakeFetch },
+  );
+
+  assert.deepEqual(result, generatedBundle);
 });
 
 test("assembles a GeneratedBundle from forced SSE response chunks", async () => {
@@ -120,6 +150,72 @@ test("assembles a GeneratedBundle from forced SSE response chunks", async () => 
       ].join("\n\n"),
       { headers: { "content-type": "text/event-stream" } },
     );
+
+  const result = await generateDocumentsWithProvider(
+    validGenerateRequest,
+    selectedSkills,
+    generatedAt,
+    { env: providerEnv, fetch: fakeFetch },
+  );
+
+  assert.deepEqual(result, generatedBundle);
+});
+
+test("retries one malformed provider response before failing", async () => {
+  let calls = 0;
+  const fakeFetch: typeof fetch = async () => {
+    calls += 1;
+    if (calls === 1)
+      return Response.json({
+        choices: [{ message: { content: "<tool_call>not-json</tool_call>" } }],
+      });
+    return Response.json({
+      choices: [{ message: { content: JSON.stringify(generatedBundle) } }],
+    });
+  };
+
+  const result = await generateDocumentsWithProvider(
+    validGenerateRequest,
+    selectedSkills,
+    generatedAt,
+    { env: providerEnv, fetch: fakeFetch },
+  );
+
+  assert.deepEqual(result, generatedBundle);
+  assert.equal(calls, 2);
+});
+
+test("normalizes model-added wrapper whitespace from document sections", async () => {
+  const malformedBundle = structuredClone(generatedBundle);
+  const session = malformedBundle.documents.find(
+    ({ filename }) => filename === "SESSION.md",
+  );
+  assert.ok(session);
+  session.markdown += "\n";
+
+  const fakeFetch: typeof fetch = async () =>
+    Response.json({
+      choices: [{ message: { content: JSON.stringify(malformedBundle) } }],
+    });
+
+  const result = await generateDocumentsWithProvider(
+    validGenerateRequest,
+    selectedSkills,
+    generatedAt,
+    { env: providerEnv, fetch: fakeFetch },
+  );
+
+  assert.deepEqual(result, generatedBundle);
+});
+
+test("keeps server generation metadata when the model changes it", async () => {
+  const malformedBundle = structuredClone(generatedBundle);
+  malformedBundle.generatedAt = "2026-09-23T15:31:01.314Z";
+
+  const fakeFetch: typeof fetch = async () =>
+    Response.json({
+      choices: [{ message: { content: JSON.stringify(malformedBundle) } }],
+    });
 
   const result = await generateDocumentsWithProvider(
     validGenerateRequest,

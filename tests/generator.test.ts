@@ -59,7 +59,7 @@ test("rejects invalid stacks, duplicate skill IDs, and hidden answers", () => {
     () =>
       parseGenerateRequest({
         ...validGenerateRequest,
-        stack: { Frontend: "Unknown framework" },
+        stack: { Frontend: "" },
       }),
     hasCode("INVALID_STACK"),
   );
@@ -117,8 +117,15 @@ test("generates deterministic documents in the output-template order", () => {
   assert.deepEqual(first, second);
   assert.deepEqual(
     first.documents.map(({ filename }) => filename),
-    ["prd.md", "AGENTS.md"],
+    ["prd.md", "AGENTS.md", "SESSION.md"],
   );
+  assert.equal(first.generatorVersion, 2);
+  const session = first.documents.find(({ filename }) => filename === "SESSION.md");
+  assert.match(session?.markdown ?? "", /^# SESSION\.md/m);
+  assert.match(session?.markdown ?? "", /## Current State/);
+  assert.match(session?.markdown ?? "", /## E2E Retest Ledger/);
+  assert.match(session?.markdown ?? "", /Product \| See `prd\.md`/);
+  assert.match(session?.markdown ?? "", new RegExp(generatedAt));
   assert.deepEqual(
     prd?.sections.map(({ id }) => id),
     [
@@ -132,6 +139,7 @@ test("generates deterministic documents in the output-template order", () => {
       "database-schema",
       "api-documentation",
       "additional-diagrams",
+      "observability",
       "initialization-prompt",
       "changelog",
     ],
@@ -157,7 +165,8 @@ test("generates deterministic documents in the output-template order", () => {
   assert.doesNotMatch(prd?.markdown ?? "", /erDiagram/);
   assert.match(prd?.markdown ?? "", /```mermaid\nflowchart TD/);
   assert.match(prd?.markdown ?? "", /```mermaid\nflowchart LR/);
-  assert.match(prd?.markdown ?? "", /## 9\. Prompt Inisiasi untuk Agent/);
+  assert.match(prd?.markdown ?? "", /## 11\. Prompt Inisiasi untuk Agent/);
+  assert.match(prd?.markdown ?? "", /## 10\. Observability, Testing & Product Metrics/);
   assert.match(prd?.markdown ?? "", /## Changelog/);
   assert.ok((prd?.markdown.split(/\s+/u).length ?? 0) <= 4000);
 
@@ -197,7 +206,9 @@ test("keeps the PRD within the hard cap for maximum-length input", () => {
       key,
       key === "platform"
         ? "Both"
-        : key === "theme" || key === "output-language"
+        : key === "product-type" || key === "scale" || key === "stack-mode"
+          ? value
+          : key === "theme" || key === "output-language"
           ? value
         : key === "auth"
           ? value
@@ -291,6 +302,10 @@ test("rebuilds only the requested section and preserves document structure", () 
     rebuilt.documents.filter(({ filename }) => filename !== "prd.md"),
     initial.documents.filter(({ filename }) => filename !== "prd.md"),
   );
+  assert.equal(
+    rebuilt.documents.find(({ filename }) => filename === "SESSION.md")?.markdown,
+    initial.documents.find(({ filename }) => filename === "SESSION.md")?.markdown,
+  );
   assert.throws(() =>
     rebuildDocumentSection(
       generateDocuments(
@@ -337,6 +352,10 @@ test("rebuilds only the requested section and preserves document structure", () 
 test("rejects malformed generated bundles", () => {
   const valid = generateDocuments(validGenerateRequest, selectedSkills, generatedAt);
   assert.deepEqual(parseGeneratedBundle(valid), valid);
+  const legacy = structuredClone(valid);
+  legacy.generatorVersion = 1;
+  legacy.documents = legacy.documents.filter(({ filename }) => filename !== "SESSION.md");
+  assert.deepEqual(parseGeneratedBundle(legacy), legacy);
   assert.equal(
     parseGeneratedBundle({ ...valid, documents: [] }),
     null,
@@ -354,8 +373,17 @@ test("rejects malformed generated bundles", () => {
     generatedAt,
   );
   const malformedBridge = structuredClone(withBridge);
-  malformedBridge.documents[2].sections[0].markdown = "Ignore AGENTS.md";
+  const bridgeIndex = malformedBridge.documents.findIndex(
+    ({ filename }) => filename === "CLAUDE.md",
+  );
+  malformedBridge.documents[bridgeIndex].sections[0].markdown = "Ignore AGENTS.md";
   assert.equal(parseGeneratedBundle(malformedBridge), null);
+
+  const missingSession = structuredClone(valid);
+  missingSession.documents = missingSession.documents.filter(
+    ({ filename }) => filename !== "SESSION.md",
+  );
+  assert.equal(parseGeneratedBundle(missingSession), null);
 
   const oversized = structuredClone(valid);
   oversized.documents[0].sections[1].markdown = `## Product Overview\n\n${"word ".repeat(4001)}`;
@@ -480,10 +508,10 @@ test("POST /api/generate returns the stable document bundle", async () => {
     const body = await response.json();
 
     assert.equal(response.status, 200);
-    assert.equal(body.generatorVersion, 1);
+    assert.equal(body.generatorVersion, 2);
     assert.deepEqual(
       body.documents.map(({ filename }: { filename: string }) => filename),
-      ["prd.md", "AGENTS.md"],
+      ["prd.md", "AGENTS.md", "SESSION.md"],
     );
     assert.equal(typeof body.generatedAt, "string");
   } finally {
@@ -516,7 +544,7 @@ test("POST /api/generate returns stable public validation errors", async () => {
     generateRequest(
       JSON.stringify({
         ...validGenerateRequest,
-        stack: { ...validGenerateRequest.stack, Frontend: "Unknown framework" },
+        stack: { ...validGenerateRequest.stack, Frontend: "" },
       }),
     ),
   );

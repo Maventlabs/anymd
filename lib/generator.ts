@@ -6,6 +6,7 @@ import {
 } from "@/lib/clarification";
 import {
   stackOptions,
+  isValidStackChoice,
   validateIdea,
   type Stack,
 } from "@/lib/idea";
@@ -62,6 +63,9 @@ const requestKeys = [
   "stack",
 ].sort();
 const questionIds: QuestionId[] = [
+  "product-type",
+  "scale",
+  "stack-mode",
   "problem",
   "audience",
   "platform",
@@ -93,9 +97,10 @@ function parseStack(value: unknown): Stack {
     if (!(key in stackOptions) || typeof selected !== "string")
       throw new GenerateValidationError("INVALID_STACK");
     const category = key as keyof typeof stackOptions;
-    if (!(stackOptions[category] as readonly string[]).includes(selected))
+    const normalized = selected.trim();
+    if (!isValidStackChoice(category, normalized))
       throw new GenerateValidationError("INVALID_STACK");
-    stack[category] = selected;
+    stack[category] = normalized;
   }
   return stack;
 }
@@ -499,16 +504,51 @@ ${optionalArchitecture}
   );
 }
 
+function buildObservability() {
+  return section(
+    "observability",
+    "Observability, Testing & Product Metrics",
+    `## 10. Observability, Testing & Product Metrics
+
+Local tests validate instrumentation and metric definitions with synthetic fixtures. Durable event storage and real traffic metrics must be verified in the deployed environment.
+
+### Testing architecture
+
+- Unit: validation, business rules, metric definitions, and privacy filters.
+- Integration: routes, database writes, queues, auth/session, webhooks, and event collection.
+- Contract: provider responses, MCP responses, skills, webhooks, and generated documents.
+- E2E: success, failure, persistence, and recovery through the production code path.
+- Smoke: configured providers and durable boundaries reachable in the deployed environment.
+- Release evidence: record commit, environment, commands, tools, result, and timestamp in ` + "`SESSION.md`" + `.
+
+### Event contract
+
+| Event | When | Allowed properties |
+|---|---|---|
+| ` + "`page_view`" + ` | After consent | route, device_class, referrer_class |
+| ` + "`signup_completed`" + ` | Signup succeeds | auth_method |
+| ` + "`clarification_completed`" + ` | Brief review opens skills | answer_count |
+| ` + "`stack_selected`" + ` | Stack review completes | stack_count |
+| ` + "`skills_selected`" + ` | Recommendations are saved | skill_count |
+| ` + "`generation_started`" + ` | Generation is submitted | feature_count, skill_count |
+| ` + "`generation_completed`" + ` | Bundle is available | duration_ms, document_count, status |
+| ` + "`checkout_started`" + ` | Checkout session is created | package_id |
+| ` + "`feedback_submitted`" + ` | Feedback is saved | rating |
+
+Never send raw IPs, prompts, document content, queries, email addresses, or unnecessary personal data. Consent is required before collection. DAU and MAU use distinct authenticated IDs or salted anonymous IDs over UTC windows; local traffic must not be reported as production traffic.`,
+  );
+}
+
 function buildInitializationPrompt() {
   return section(
     "initialization-prompt",
     "Prompt Inisiasi untuk Agent",
-    `## 9. Prompt Inisiasi untuk Agent
+    `## 11. Prompt Inisiasi untuk Agent
 
-> Bukan file terpisah. Copy teks berikut ke coding agent setelah \`prd.md\` dan \`AGENTS.md\` tersedia.
+    > Bukan file terpisah. Copy teks berikut ke coding agent setelah \`prd.md\`, \`AGENTS.md\`, dan \`SESSION.md\` tersedia.
 
 \`\`\`text
-Baca prd.md dan AGENTS.md di root proyek ini, lalu mulai kerjakan Phase 1 sesuai daftar task di prd.md. Ikuti instruksi skill di AGENTS.md (MUST digunakan jika terinstal), dan laporkan mana yang akan dipakai. Pastikan Phase QA dan Phase Security ikut dikerjakan sebelum proyek dianggap selesai.
+    Baca prd.md, AGENTS.md, dan SESSION.md di root proyek ini, lalu mulai kerjakan Phase 1 sesuai daftar task di prd.md. Ikuti instruksi skill di AGENTS.md (MUST digunakan jika terinstal), gunakan MCP yang benar-benar tersedia, dan laporkan evidence yang benar-benar diperoleh. Pastikan Phase QA, Phase Security, dan Observability ikut dikerjakan sebelum proyek dianggap selesai.
 \`\`\``,
   );
 }
@@ -537,6 +577,7 @@ function buildPrdSections(request: GenerateDocumentsRequest, generatedAt: string
     buildDatabaseSchema(),
     buildApiDocumentation(request),
     buildAdditionalDiagrams(request),
+    buildObservability(),
     buildInitializationPrompt(),
     buildChangelog(generatedAt),
   ];
@@ -670,6 +711,117 @@ ${request.answers.roles ? `- Roles: ${clip(request.answers.roles)}` : ""}
   return sections;
 }
 
+function buildSessionSections(
+  request: GenerateDocumentsRequest,
+  generatedAt: string,
+) {
+  return [
+    {
+      id: "session-ledger",
+      title: "SESSION.md",
+      markdown: `# SESSION.md
+
+This is the execution ledger for the current product build. It is mutable
+state, not product requirements. Keep historical evidence concise and update
+the current state after every task or phase.
+
+## Current State
+
+| Field | Value |
+|---|---|
+ | Product | See \`prd.md\` for the product brief. |
+| Current phase | Generation handoff |
+| Current task | Review generated product documents |
+| Priority | High/P0 |
+| Execution mode | Breadth pass |
+| Status | Not started |
+| Next action | Read prd.md, AGENTS.md, and SESSION.md before implementation |
+| Last verified commit | unknown |
+| Last verified environment | local draft |
+| Last updated | ${generatedAt} |
+
+## Execution Rules
+
+- Read \`prd.md\`, \`AGENTS.md\`, and this file before working.
+- Follow production breadth-first order for all \`High/P0\` features.
+- Continue automatically after a phase passes its acceptance and verification gates.
+- Do not repeat completed E2E runs unless source, config, provider, environment,
+  failure state, or release gate changed.
+- A local adapter, isolated unit test, compile, or build is prework, not completion.
+
+## Completion Evidence
+
+### Generation contract - Mandatory output
+
+| Field | Value |
+|---|---|
+| Priority | High/P0 |
+| Status | Prework |
+| Provider/boundary | AnyMD generated-document contract |
+| Environment | local draft |
+| Skills used | generator contract |
+| MCP tools used | none available |
+| Commands | not run |
+| E2E path | not run |
+| Persistence evidence | bundle generated in memory; durable persistence not verified |
+| Failure/recovery evidence | not run |
+| Timestamp | ${generatedAt} |
+
+**Evidence:**
+
+- Generated output includes \`prd.md\`, \`AGENTS.md\`, and this ledger.
+
+**Notes:**
+
+- This ledger records prework only; local unit tests and builds are not completion evidence.
+
+## E2E Retest Ledger
+
+| Journey | Environment | Commit | Result | Retest when |
+|---|---|---|---|---|
+| Authenticated generation and persistence | not run | unknown | not run | provider, source, config, or release gate changes |
+
+Do not rerun a passing journey without a listed retest condition. If a retest
+is required, add a new row rather than erasing the previous evidence.
+
+## Observability Evidence
+
+| Metric/event | Definition | Source | Window/timezone | Consent | Result |
+|---|---|---|---|---|---|
+| DAU | Distinct active \`actor_key\` per UTC day | not verified | not verified | required/confirmed | not run |
+| MAU | Distinct active \`actor_key\` in rolling 30 days | not verified | not verified | required/confirmed | not run |
+| Traffic | Page views and unique actors | not verified | not verified | required/confirmed | not run |
+
+Local synthetic fixtures may verify metric logic but must not be reported as
+production traffic or production MAU/DAU.
+
+## Decisions And Blockers
+
+### Decisions
+
+- SESSION.md is mandatory for new generator version 2 bundles; persisted version 1 bundles remain parseable.
+
+### Blockers
+
+- Durable Neon-backed E2E generation is pending provider connectivity and must not be represented as verified here.
+
+## Files Changed
+
+- prd.md - product requirements output
+- AGENTS.md - execution instructions output
+- SESSION.md - mutable execution ledger output
+
+## Handoff
+
+- Current state: New bundle contract generated; verification is pending.
+- Work completed: Mandatory SESSION.md ledger emitted with the two existing documents.
+- Remaining risk: Authenticated durable persistence and browser E2E are not verified.
+- Next action: Run focused contract tests, then full local gates before E2E retest.
+`,
+    },
+  ] satisfies DocumentSection[];
+}
+
 export function generateDocuments(
   request: GenerateDocumentsRequest,
   selectedSkills: SkillCatalogEntry[],
@@ -678,6 +830,7 @@ export function generateDocuments(
   const documents: GeneratedDocument[] = [
     renderDocument("prd.md", buildPrdSections(request, generatedAt)),
     renderDocument("AGENTS.md", buildAgentsSections(request, selectedSkills)),
+    renderDocument("SESSION.md", buildSessionSections(request, generatedAt)),
   ];
   if (request.includeClaudeBridge)
     documents.push(
@@ -685,7 +838,7 @@ export function generateDocuments(
         section("agents-import", "AGENTS.md import", "@AGENTS.md"),
       ]),
     );
-  return { documents, generatedAt, generatorVersion: 1 };
+  return { documents, generatedAt, generatorVersion: 2 };
 }
 
 export function rebuildDocumentSection(

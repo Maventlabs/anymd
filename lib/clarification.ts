@@ -1,6 +1,9 @@
 import { themePresetIds } from "@/lib/themes";
 
 export type QuestionId =
+  | "product-type"
+  | "scale"
+  | "stack-mode"
   | "problem"
   | "audience"
   | "platform"
@@ -26,6 +29,24 @@ export type Question = {
 };
 
 const questions: readonly Question[] = [
+  {
+    id: "product-type",
+    title: "What are you building?",
+    help: "Choose the product shape so the stack guidance fits the actual build.",
+    options: ["Website", "Web App", "Mobile App"],
+  },
+  {
+    id: "scale",
+    title: "What scale should the first release support?",
+    help: "Pick the ambition for this release, not the long-term wishlist.",
+    options: ["MVP", "Production product", "Complex platform"],
+  },
+  {
+    id: "stack-mode",
+    title: "How should we choose the stack?",
+    help: "Automatic uses the curated recommendation. Manual lets you choose every category.",
+    options: ["Automatic recommendation", "Manual selection"],
+  },
   {
     id: "problem",
     title: "What problem should this solve?",
@@ -133,10 +154,10 @@ export function validateAnswer(question: Question, value = ""): string | null {
 export type Clarification = {
   answers: Answers;
   completed: QuestionId[];
-  current: QuestionId | "review";
+  current: QuestionId | "stack" | "review";
 };
 export function emptyClarification(): Clarification {
-  return { answers: {}, completed: [], current: "problem" };
+  return { answers: {}, completed: [], current: "product-type" };
 }
 
 export function updateAnswer(
@@ -179,9 +200,10 @@ export function completedQuestions(state: Clarification): number {
 export function clarificationProgress(state: Clarification): number {
   const total = visibleQuestions(state.answers).length;
   const completed = completedQuestions(state);
+  const stackStep = state.current === "stack" || state.current === "review" ? 1 : 0;
   return Math.round(
-    ((completed + (state.current === "review" && completed === total ? 1 : 0)) /
-      (total + 1)) *
+    ((completed + stackStep + (state.current === "review" && completed === total ? 1 : 0)) /
+      (total + 2)) *
       100,
   );
 }

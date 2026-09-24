@@ -7,6 +7,10 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
 }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  const declineAnalytics = page.getByRole("button", { name: "Tidak sekarang" });
+  if (await declineAnalytics.isVisible().catch(() => false)) {
+    await declineAnalytics.click();
+  }
   await page
     .getByLabel("Describe your product idea")
     .fill(
@@ -17,7 +21,7 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
   await shapeIdea.click();
   await expect(page).toHaveURL(/\/clarify$/, { timeout: 15_000 });
 
-  for (let step = 0; step < 12; step += 1) {
+  for (let step = 0; step < 24; step += 1) {
     if (
       await page
         .getByRole("heading", { name: "Review your brief." })
@@ -31,6 +35,15 @@ test("Phase 3 chooses a theme and recommends skills automatically", async ({
     if (await themeHeading.isVisible().catch(() => false)) {
       await expect(page.locator(".theme-card")).toHaveCount(6);
       await page.getByRole("radio", { name: /Signal Black/ }).click();
+    } else if (
+      await page
+        .getByRole("heading", {
+          name: /Here is a considered starting stack\.|Choose the tools behind it\./,
+        })
+        .isVisible()
+        .catch(() => false)
+    ) {
+      await page.getByRole("button", { name: "Continue to questions" }).click();
     } else {
       const radio = page.getByRole("radio").first();
       if (await radio.isVisible().catch(() => false)) await radio.click();

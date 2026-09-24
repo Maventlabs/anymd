@@ -35,11 +35,23 @@ async function mockDocumentGeneration(page: Page) {
       }),
     });
   });
+  await page.route("**/api/generate/rebuild", async (route) => {
+    const payload = route.request().postDataJSON() as { bundle: unknown };
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(payload.bundle),
+    });
+  });
 }
 
 async function reachSkills(page: Page) {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  const declineAnalytics = page.getByRole("button", { name: "Tidak sekarang" });
+  if (await declineAnalytics.isVisible().catch(() => false)) {
+    await declineAnalytics.click();
+  }
   await page
     .getByLabel("Describe your product idea")
     .fill(
@@ -48,7 +60,7 @@ async function reachSkills(page: Page) {
   await page.getByRole("button", { name: "Continue to clarification" }).click();
   await expect(page).toHaveURL(/\/clarify$/);
 
-  for (let step = 0; step < 12; step += 1) {
+  for (let step = 0; step < 24; step += 1) {
     if (
       await page
         .getByRole("heading", { name: "Review your brief." })
@@ -56,6 +68,13 @@ async function reachSkills(page: Page) {
         .catch(() => false)
     )
       break;
+    const stackHeading = page.getByRole("heading", {
+      name: /Here is a considered starting stack\.|Choose the tools behind it\./,
+    });
+    if (await stackHeading.isVisible().catch(() => false)) {
+      await page.getByRole("button", { name: "Continue to questions" }).click();
+      continue;
+    }
     const radio = page.getByRole("radio").first();
     if (await radio.isVisible().catch(() => false)) await radio.click();
     else {
@@ -96,6 +115,7 @@ test("Phase 4 generates template documents without responsive overflow", async (
     page.getByRole("button", { name: "prd.md", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "AGENTS.md" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "SESSION.md" })).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Product Overview" }),
   ).toBeVisible();
@@ -133,6 +153,9 @@ test("Phase 4 generates template documents without responsive overflow", async (
   await expect(
     page.getByRole("heading", { name: "Responsive and accessibility rules" }),
   ).toBeVisible();
+  await page.getByRole("button", { name: "SESSION.md" }).click();
+  await expect(page.getByRole("heading", { name: "SESSION.md" })).toBeVisible();
+  await expect(page.locator(".document-markdown")).toContainText("## Current State");
 
   await page.getByRole("checkbox", { name: "Include Claude Code bridge" }).check();
   await expect(page.getByRole("button", { name: "CLAUDE.md" })).toBeVisible();
@@ -142,7 +165,9 @@ test("Phase 4 generates template documents without responsive overflow", async (
   await page.getByRole("button", { name: "prd.md" }).click();
   const sectionsBefore = await page.locator(".document-section").allTextContents();
   await page.getByRole("button", { name: "Rebuild Product Overview" }).click();
-  await expect(page.getByRole("status")).toContainText("Rebuilt Product Overview");
+   await expect(page.getByRole("status")).toContainText("Rebuilt Product Overview", {
+     timeout: 15_000,
+   });
   await expect.poll(() => page.locator(".document-section").allTextContents()).toEqual(
     sectionsBefore,
   );

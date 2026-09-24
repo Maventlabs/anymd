@@ -197,7 +197,7 @@ export function createTokenRepository(query: Sql = getSql()) {
           ON CONFLICT (user_id) DO UPDATE
           SET balance = public.token_accounts.balance + EXCLUDED.balance,
               updated_at = now()
-          RETURNING user_id, balance, ${amount} AS delta
+           RETURNING user_id, balance, (${amount})::integer AS delta
         )
         SELECT user_id, balance, delta, 'APPLIED' AS outcome
         FROM updated
@@ -223,7 +223,7 @@ export function createTokenRepository(query: Sql = getSql()) {
         WITH inserted AS (
           INSERT INTO public.token_ledger
             (id, user_id, kind, delta, idempotency_key, metadata)
-          SELECT ${randomUUID()}, ${userId}, 'refund', ${amount}, ${idempotencyKey}, ${JSON.stringify(metadata)}::jsonb
+           SELECT ${randomUUID()}, ${userId}, 'refund', ${amount}, ${idempotencyKey}, ${JSON.stringify(metadata)}::jsonb
           ON CONFLICT (idempotency_key) DO NOTHING
           RETURNING user_id, delta
         ), updated AS (
@@ -233,7 +233,7 @@ export function createTokenRepository(query: Sql = getSql()) {
           ON CONFLICT (user_id) DO UPDATE
           SET balance = public.token_accounts.balance + EXCLUDED.balance,
               updated_at = now()
-          RETURNING user_id, balance, ${amount} AS delta
+           RETURNING user_id, balance, (${amount})::integer AS delta
         )
         SELECT user_id, balance, delta, 'APPLIED' AS outcome FROM updated
         UNION ALL

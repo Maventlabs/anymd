@@ -5,6 +5,8 @@ import {
 } from "@/lib/generator";
 import { parseGeneratedBundle } from "@/lib/generated-documents";
 import { loadSkillsCatalog } from "@/lib/skills";
+import { GenerationQueueError } from "@/lib/generation-queue";
+import { consumeRequestRateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -19,6 +21,8 @@ function invalidRequest() {
 
 export async function POST(request: Request) {
   try {
+    const rateLimit = await consumeRequestRateLimit(request, "rebuild");
+    if (!rateLimit.allowed) return rateLimitResponse(rateLimit);
     let value: unknown;
     try {
       value = await request.json();
@@ -70,6 +74,11 @@ export async function POST(request: Request) {
       ),
     );
   } catch (error) {
+    if (error instanceof GenerationQueueError)
+      return Response.json(
+        { error: { code: error.code, message: "The rebuild request could not be accepted." } },
+        { status: error.code === "IP_UNAVAILABLE" ? 400 : 503 },
+      );
     if (error instanceof GenerateValidationError) return invalidRequest();
     return Response.json(
       {

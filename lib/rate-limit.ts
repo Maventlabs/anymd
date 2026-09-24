@@ -6,7 +6,7 @@ import {
   GenerationQueueError,
 } from "@/lib/generation-queue";
 
-export type RateLimitName = "auth" | "signup" | "generate" | "checkout";
+export type RateLimitName = "auth" | "signup" | "generate" | "checkout" | "rebuild";
 
 export type RateLimitPolicy = {
   name: RateLimitName;
@@ -24,6 +24,7 @@ const policies: Record<RateLimitName, RateLimitPolicy> = {
   signup: { name: "signup", limit: 5, windowMs: 15 * 60 * 1000 },
   generate: { name: "generate", limit: 30, windowMs: 60 * 1000 },
   checkout: { name: "checkout", limit: 10, windowMs: 15 * 60 * 1000 },
+  rebuild: { name: "rebuild", limit: 60, windowMs: 60 * 1000 },
 };
 
 export function getRateLimitPolicy(name: RateLimitName) {

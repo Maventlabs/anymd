@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   anonymousCookieHeader,
   anonymousIdHash,
+  analyticsActorKey,
   getOrCreateAnonymousId,
   parseAnalyticsEvent,
 } from "../lib/privacy-events";
@@ -42,4 +43,14 @@ test("reuses a valid anonymous cookie without exposing its raw value in the hash
   assert.equal(hash.length, 64);
   assert.doesNotMatch(hash, new RegExp(value));
   assert.match(anonymousCookieHeader(value, true), /HttpOnly/u);
+});
+
+test("uses authenticated IDs directly and hashes anonymous IDs", () => {
+  const anonymousId = "b".repeat(64);
+
+  assert.equal(analyticsActorKey("user-123", anonymousId, "a-long-server-only-pepper"), "user:user-123");
+  assert.equal(
+    analyticsActorKey(null, anonymousId, "a-long-server-only-pepper"),
+    `anon:${anonymousIdHash(anonymousId, "a-long-server-only-pepper")}`,
+  );
 });
