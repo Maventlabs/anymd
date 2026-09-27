@@ -30,7 +30,7 @@ describe.
 
 ## Project Rules
 
-- Preserve the default two-file output: `prd.md` and `AGENTS.md`.
+- Preserve the default three-file output: `prd.md`, `AGENTS.md`, and `SESSION.md`.
 - Keep the optional Claude bridge exactly `@AGENTS.md` followed by a newline.
 - Preserve stable section IDs and ordering unless the authoritative template changes.
 - Keep `prd.md` at or below the 4,000-word hard cap.

@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Turn a product idea into a clear brief and agent-ready Markdown documents.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    background_color: "#FAFAFA",
+    theme_color: "#FAFAFA",
     icons: [
       {
         src: "/brand/anymd-mark.png",

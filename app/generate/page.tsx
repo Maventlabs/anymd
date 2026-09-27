@@ -4,7 +4,7 @@ import DocumentGenerator from "@/components/document-generator";
 export const metadata: Metadata = {
   title: "Generate project documents",
   description:
-    "Generate and review the prd.md and AGENTS.md files for your coding agent.",
+    "Generate and review the prd.md, AGENTS.md, and SESSION.md files for your coding agent.",
   alternates: { canonical: "/generate" },
 };
 

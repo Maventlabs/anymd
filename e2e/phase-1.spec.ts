@@ -10,7 +10,7 @@ test("landing preserves the idea-to-clarification journey", async ({
 
   await expect(
     page.getByRole("heading", {
-      name: "Turn product ideas into build-ready briefs.",
+      name: "Turn ideas into build-ready briefs.",
     }),
   ).toBeVisible();
   await expect(page.locator("main > section")).toHaveCount(10);
@@ -18,22 +18,20 @@ test("landing preserves the idea-to-clarification journey", async ({
     page.getByRole("heading", { name: "Generate when your brief is ready." }),
   ).toBeVisible();
   await expect(page.locator(".pricing-card")).toHaveCount(3);
-  await expect(
-    page.locator(".prototype-note"),
-  ).toBeVisible();
+  await expect(page.locator(".hero-benefits li")).toHaveCount(4);
 
   const sections = page.locator("main > section");
   const expectedBands = [
     "band-white",
-    "band-blue",
-    "band-white",
-    "band-blue",
     "band-white",
     "band-white",
     "band-blue",
     "band-white",
+    "band-white",
     "band-blue",
     "band-white",
+    "band-white",
+    "band-blue",
   ];
   for (let index = 0; index < 10; index += 1) {
     await expect(sections.nth(index)).toHaveClass(
@@ -43,7 +41,7 @@ test("landing preserves the idea-to-clarification journey", async ({
 
   await expect(
     page.getByRole("img", {
-      name: /Illustrative Client portal product concept/,
+      name: /AnyMD clarification workspace/,
     }).first(),
   ).toBeVisible();
 
@@ -57,7 +55,7 @@ test("landing preserves the idea-to-clarification journey", async ({
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: "Turn product ideas into build-ready briefs.",
+      name: "Turn ideas into build-ready briefs.",
     }),
   ).toBeVisible();
   await page.screenshot({

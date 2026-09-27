@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import "@fontsource/inter/300.css";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/inter/700.css";
-import "@fontsource/inter/800.css";
+import "@fontsource-variable/geist";
+import "@fontsource/instrument-serif/400.css";
 import "./globals.css";
 import { DraftProvider } from "@/components/draft-provider";
+import AnalyticsConsent from "@/components/analytics-consent";
+import LayoutPreloader from "@/components/ui/layout-preloader";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -74,7 +73,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
-        <DraftProvider>{children}</DraftProvider>
+        <LayoutPreloader />
+        <DraftProvider>
+          {children}
+          <AnalyticsConsent />
+        </DraftProvider>
       </body>
     </html>
   );

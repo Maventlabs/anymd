@@ -6,8 +6,8 @@ export default function HeroLaser() {
   return (
     <div className="hero-laser" aria-hidden="true">
       <LaserFlow
-        color="#006eff"
-        backgroundColor="#ffffff"
+        color="#0a1730"
+        backgroundColor="#FAFAFA"
         horizontalBeamOffset={0}
         verticalBeamOffset={0.04}
         horizontalSizing={0.72}

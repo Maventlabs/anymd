@@ -616,7 +616,7 @@ export const LaserFlow: React.FC<Props> = ({
     uniforms.uFalloffStart.value = falloffStart;
     uniforms.uFogFallSpeed.value = fogFallSpeed;
 
-    const { r, g, b } = hexToRGB(color || '#FFFFFF');
+    const { r, g, b } = hexToRGB(color || '#FAFAFA');
     uniforms.uColor.value.set(r, g, b);
     const canvas = rendererRef.current?.domElement;
     if (canvas) {

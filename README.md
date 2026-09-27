@@ -19,6 +19,7 @@ two practical files:
 
 - `prd.md` describes the product, scope, priorities, architecture, and delivery plan.
 - `AGENTS.md` tells coding agents how to work on the project safely and consistently.
+- `SESSION.md` records mutable execution state, evidence, and handoff notes.
 
 Instead of starting with a blank document, users move through a focused sequence
 of clarification, skill matching, generation, review, and export.
@@ -158,5 +159,7 @@ small, include tests for behavior changes, and run every quality gate above.
 
 ## License
 
-No open-source license has been selected yet. Until a license file is added, no
-license rights are granted beyond applicable law.
+AnyMD uses the AnyMD Non-Commercial License in `LICENSE`. Commercial use,
+commercial distribution, paid hosted services, resale, sublicensing, or
+incorporation into a commercial product require prior written permission from
+the copyright holder.

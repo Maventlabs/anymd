@@ -1,91 +1,95 @@
 # AnyMD Design System
 
-> Blueprint Studio: shared product system
+> Product-first workspace: clear decisions, real interface proof, agent-ready output.
 
 ## Visual Thesis
 
-AnyMD should feel like a rough product thought becoming an executable interface in front of the user. The visual system uses only pure white and voltage blue, alternating at section scale rather than scattering accent colors across a neutral page. The compact idea composer is the main instrument. Opposing rows of 16:9 website previews show the destination without claiming that generation is already available.
+AnyMD should make the path from rough idea to a usable coding-agent brief visible. The landing hero puts the working idea composer in the far-left desktop column and the product promise beside it. Across marketing and app routes, cool light surfaces provide calm reading space; the existing voltage blue is reserved for action, progress, selection, and focus. Actual AnyMD screens, not CSS wireframes, show the product at work.
 
 ## Color Roles
 
 | Role | Value | Rule |
 | --- | --- | --- |
-| Voltage blue | `#006EFF` | Full section background or all foreground content on white |
-| Pure white | `#FFFFFF` | Full section background or all foreground content on blue |
-| Blue soft | `#E8F1FF` | Input hover and quiet UI state on white only |
-| Blue mid | `#80B7FF` | Secondary blue swatch and non-text decoration only |
+| Canvas | `#F5F7FA` | Cool neutral page background |
+| Surface | `#FFFFFF` | Forms, document panes, and screenshot frames |
+| Ink | `#172033` | Main headings and body text |
+| Secondary text | `#58677A` | Supporting prose and metadata; preserve contrast |
+| Structural line | `#D9E1EA` | Dividers, input borders, and panel boundaries |
+| AnyMD blue | `#006EFF` | Primary action, active state, progress, focus, and sparse markers |
+| Blue soft | `#E8F1FF` | Selected/quiet state surfaces only |
+| Action hover | `#0058CC` | Primary button hover/pressed state |
 
-- White sections use blue text, borders, icons, and controls.
-- Blue sections use white text, borders, icons, and controls.
-- Do not reintroduce cream, black, gray surfaces, decorative gradients, or unrelated accent colors.
-- Opacity variants may only be derived from the section foreground color.
+- Blue is an accent, not a default full-section background.
+- Never use low-contrast blue for body text; derive state tints from the approved roles.
+- Keep success, warning, and error colors semantic and readable.
+- Do not add decorative gradients, invented trust colors, or random accent colors.
 
 ## Typography
 
-- Family: Inter for display, body, labels, and controls.
-- Display: 700-800 weight, tight tracking between `-0.04em` and `-0.065em`.
-- Body: 400 weight, `1.58` line height, maximum measure `70ch`.
-- Utility labels: 700 weight, uppercase, compact tracking.
-- Do not use serif display typography on the Fase 1 landing page.
+- Use Geist Sans for navigation, UI, headings, body, labels, controls, and product interfaces. Use Instrument Serif 400 only for the landing hero's editorial tagline; never use it in forms, cards, dashboards, or app routes. Keep system monospace for code/Markdown only.
+- Hero H1: Geist Sans 700–800, `clamp(2.75rem, 4.8vw, 4.75rem)` desktop and `40–48px` mobile, line-height `0.95–1.0`, tracking near `-0.04em`.
+- Hero tagline: Instrument Serif 400, `clamp(2.4rem, 4.3vw, 4.25rem)` desktop and `36–44px` mobile, line-height near `0.98`.
+- Keep the landing hierarchy controlled: navbar `13–14px`, small brand `14–16px`, hero/body copy `15–18px`, composer `14–15px`, microcopy `12–13px`, section eyebrow `11–12px`, and section H2 `44–56px` desktop / `32–38px` mobile.
+- Hero H1-to-tagline spacing is `2–8px`, tagline-to-paragraph `20–26px`, and paragraph-to-composer `24–30px`. Body line-height is `1.5–1.65`; display headings use `0.95–1.05` with balanced wrapping.
+- Keep body copy within `65–75ch`; product headings should remain readable at 320px and 200% zoom.
+- Use centralized responsive type tokens, not per-section arbitrary sizes. Serif is limited to the hero editorial tagline; all landing section headings remain sans.
 
 ## Layout
 
-- Maximum content width: `1240px`.
-- Major sections alternate white and blue from top to bottom.
-- Desktop section padding: approximately `88-144px`; mobile: `72-96px`.
-- Hero centers one promise and one compact composer rather than presenting a dashboard.
-- The process uses a sticky narrative column with scrolling steps, adapted from UI Layouts Sticky Scroll.
-- The preview gallery uses two full-width Magic UI marquees in opposite directions.
+- Container max width: `1200px`; mobile gutter: `16px`; desktop gutter is fluid.
+- Spacing scale: `4, 8, 12, 16, 24, 32, 48, 64, 88px`.
+- Surface radius roles: `8px` controls, `12px` product panels, `16px` large screenshot frames.
+- Use purpose-driven asymmetric grids; do not repeat equal icon-card rows for every section.
+- App routes use `min-height: 100svh`, not fixed viewport height; content may scroll when a state needs space.
+- All layouts must remain contained at `320, 360, 390, 430, 768, 1024, 1280, 1440, and 1920px`.
 
-## Components
+## Component Roles
 
-- Hero atmosphere: ReactBits Laser Flow, blue on white, restrained opacity.
-- Heading reveal: ReactBits Split Text with scoped GSAP and reduced-motion fallback.
-- Idea composer: compact 21st.dev prompt-composer pattern adapted to existing AnyMD state.
-- Website previews: Magic UI Marquee, two rows, 16:9 placeholder frames until real images exist.
-- FAQ: shadcn Accordion using the section's white-on-blue color roles.
-- Advanced stack: compact disclosure panel with horizontal provider choices and visible labels.
-- Shared surfaces: auth, pricing, and generated-document routes reuse the same blue/white instrument language, thin rules, square work surfaces, and explicit state strips.
+- Hero composer: existing `IdeaWizard` state and submit behavior, restyled as a compact left-anchored input instrument.
+- Shared page reveals: scoped `PageMotion` with `useGSAP`, data-marked headings/prose/panels, and reduced-motion fallback.
+- Landing hero heading: existing GSAP `SplitText`, used selectively to avoid duplicate animation.
+- Intake: existing `ClarificationFlow` state machine within a progress/context rail and central question stage.
+- Showcase: existing Magic UI marquee structure adapted to GSAP and real route captures, with opposite directions and hover/focus pause.
+- FAQ and answer choices: existing Radix Accordion and RadioGroup remain the semantic primitives.
+- Document workbench: existing `DocumentGenerator` handlers and API bindings within tabs, summary rail, and responsive Markdown surfaces.
+- Navbar: custom AnyMD header with current auth/profile actions, anchor destinations, and a responsive accessible menu.
+
+## Landing Section Map
+
+Keep ten direct `main > section` elements for the existing E2E contract, in this order:
+
+1. Composer-left hero.
+2. Two-lane real-screenshot showcase.
+3. Idea-to-brief scroll story.
+4. Three output-file composition.
+5. Use cases and product scope.
+6. Skills versus MCP access.
+7. Visual direction preview.
+8. Draft handling and submission boundary.
+9. Transparent one-time token pricing.
+10. FAQ and closing action.
+
+Every section gets a different composition within this one design language. Do not add customer logos, testimonials, usage numbers, unsupported claims, or synthetic product screenshots.
 
 ## Motion
 
-- Motion follows the transformation from idea to interface: reveal, advance, handoff.
-- Headings reveal by word; supporting blocks rise with a short blur; structural rules draw left to right.
-- Preview rows move continuously in opposite directions and pause on hover.
-- Cursor trail exists only in the Process section and disappears on coarse pointers.
-- All animation is scoped, cleaned up on unmount, and disabled by `prefers-reduced-motion`.
-- Content remains visible without JavaScript.
+- GSAP is the sole animation engine for this redesign. Use `useGSAP`, scoped contexts, `gsap.matchMedia()`, and ScrollTrigger cleanup.
+- Animate visible heading, paragraph, label, card, and product panel entrances in semantic groups; vary stagger/order to establish hierarchy rather than making every element move simultaneously.
+- Use a single bounded pin/scrub scene in the landing workflow story on wide screens; keep native vertical scrolling on mobile.
+- The two screenshot lanes run as seamless GSAP timelines, one left-to-right and one right-to-left; pause on pointer hover and keyboard focus.
+- Keep motion on transforms and opacity. No scroll listeners, layout-property tweening, cursor trails, decorative infinite wobble, or delayed form/navigation actions.
+- Under `prefers-reduced-motion: reduce`, disable pin/scrub/reveal displacement/autoplay; keep all text, screenshots, controls, progress, and state visible.
+- Preserve the existing question-stage transition where it already owns current-state changes; do not double-animate it with page-entry motion.
 
-## Imagery
+## Imagery And Proof
 
-- Fase 1 uses labeled 16:9 website-preview placeholders.
-- Replace placeholders with real AnyMD-made website screenshots later without changing marquee geometry.
-- No background image is required for the current direction. If art is introduced later, it must be supplied as a user-approved 16:9 asset rather than improvised in CSS.
+- Landing showcase screenshots must be generated from the actual local AnyMD routes after the redesign, at a fixed desktop viewport and saved as optimized WebP assets.
+- Screenshots must retain the original route UI and readable proportions; captions name the route/state shown.
+- Use accurate text/output excerpts only. If no verified customer proof exists, use product evidence instead of invented logos, testimonials, metrics, or benchmarks.
 
-## Do
+## Do / Do Not
 
-- Let color own entire sections.
-- Keep the composer compact and immediately usable.
-- Use borders, type scale, and motion to create hierarchy.
-- Label synthetic or placeholder examples honestly.
-- Preserve keyboard focus, semantic headings, responsive behavior, and readable contrast.
-
-## Do Not
-
-- Do not add cream or dark sections.
-- Do not place blue body text directly on a blue section or white body text directly on white.
-- Do not use generic equal-card grids as the page structure.
-- Do not invent customer proof, pricing, benchmarks, or generated examples.
-- Do not turn AnyMD into an AI app builder in the copy.
-
-## Blueprint Studio Tokens
-
-- `--blueprint-ink`: `#006EFF` for actions, rules, headings, and blue sections.
-- `--blueprint-paper`: `#FFFFFF` for primary surfaces and inverse content.
-- `--blueprint-soft`: `#E8F1FF` for quiet input, notices, and document code surfaces.
-- `--blueprint-line`: a low-opacity voltage-blue rule for structure.
-- `--blueprint-line-strong`: a stronger voltage-blue rule for field and workbench boundaries.
-- `--blueprint-radius`: `12px` for instrument surfaces; pills remain limited to small controls.
-- `--blueprint-shadow`: an offset blue shadow reserved for the emphasized pricing package and primary composer.
-
-Auth uses the same white form / blue brand split as the rest of the product. Pricing reads as a token ledger with one emphasized package. Generation reads as a document workbench with a summary rail, document sections, and explicit status messaging. All three surfaces preserve the existing responsive and reduced-motion rules.
+- Do use typography, spacing, clear surfaces, real product captures, and one purposeful story interaction to distinguish sections.
+- Do preserve keyboard focus, labels, landmarks, form state, accessible names, status announcements, and existing route destinations.
+- Do not replace component handlers or application state to make a visual redesign easier.
+- Do not use generic hero wireframes, stock testimonial walls, dummy dashboard figures, scroll hijacking, or mixed old/new visible systems.

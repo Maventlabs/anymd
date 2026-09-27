@@ -1,0 +1,475 @@
+=== AUDIT V2: CONTEXT-AWARE ===
+rules parsed: 1381
+identical duplicate groups: 151 (safe: 142, unsafe-interleaved: 9)
+
+=== SAFE GROUPS (remove earlier, keep last) ===
+[(top)] .profile-details div
+  keep 4098-4098 | remove 403-405
+  decls: min-width: 0
+[(top)] .showcase
+  keep 5315-5315 | remove 4930-4930
+  decls: background: #fff
+[(top)] .showcase-heading
+  keep 6199-6207 | remove 6069-6077
+  decls: display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); justify-items: center; margin: 0 auto clamp(32px, 5vw, 52px); max-width: 860px; text-align: center
+[(top)] .showcase-heading > p
+  keep 6217-6217 | remove 5998-5998, 6087-6087
+  decls: max-width: 60ch
+[(top)] .skill-grid
+  keep 3864-3868 | remove 2335-2339
+  decls: display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr))
+[(top)] .skill-check svg
+  keep 3895-3895 | remove 2369-2372
+  decls: height: 15px; width: 15px
+[@media (max-width: 720px)] .hero-shell
+  keep 5327-5327 | remove 4942-4942
+  decls: min-height: 100svh; padding: 100px 16px 142px; width: 100%
+[@media (max-width: 720px)] .document-nav button
+  keep 4314-4314 | remove 2892-2894
+  decls: flex: 1 1 auto
+[@media (max-width: 720px)] .skills-actions
+  keep 4310-4310 | remove 2932-2935
+  decls: align-items: stretch; flex-direction: column
+[@media (max-width: 720px)] .pricing-page
+  keep 4318-4318 | remove 3421-3423
+  decls: padding-inline: 16px
+[(top)] .site-header[data-contrast] .nav-cta:hover
+  keep 6038-6041 | remove 5929-5932
+  decls: background: var(--accent); color: #fff
+[@media (max-width: 720px)] .site-header
+  keep 5326-5326 | remove 4941-4941
+  decls: position: fixed
+[(top)] .marquee-copy
+  keep 6607-6607 | remove 5899-5899
+  decls: padding-inline-end: var(--gap, 20px)
+[(top)] .showcase-capture
+  keep 6218-6218 | remove 5999-5999, 6088-6088
+  decls: display: flex; flex-direction: column
+[(top)] .showcase-capture-image
+  keep 6618-6621 | remove 5903-5903
+  decls: aspect-ratio: 1864 / 1000; background: #f5f7fa
+[(top)] .showcase-capture-image img
+  keep 6623-6623 | remove 5904-5904
+  decls: object-fit: contain
+[(top)] .showcase-capture figcaption
+  keep 6220-6226 | remove 6001-6007, 6090-6096
+  decls: display: flex; justify-content: center; min-height: 64px; padding: 14px 14px 0; text-align: center
+[@media (max-width: 720px)] .showcase-heading
+  keep 6107-6107 | remove 6018-6018
+  decls: gap: 16px; justify-items: center; margin-bottom: 32px; text-align: center
+[(top)] .hero.hero-video-surface
+  keep 4988-4998 | remove 4602-4612
+  decls: align-items: stretch; background: #1c2935; color: #fff; display: flex; isolation: isolate; min-height: 100svh; overflow: hidden; position: relative; scroll-margin-top: 0
+[(top)] .hero-background,
+.hero-video-scrim,
+.hero-cloud-transition
+  keep 5000-5006 | remove 4614-4620
+  decls: inset-inline: 0; pointer-events: none; position: absolute
+[(top)] .hero-background
+  keep 5008-5013 | remove 4622-4627
+  decls: background: url("/hero-poster.webp") center / cover no-repeat; inset-block: 0; overflow: hidden; z-index: 0
+[(top)] .hero-background video
+  keep 5015-5022 | remove 4629-4636
+  decls: height: 100%; inset: 0; object-fit: cover; object-position: center; position: absolute; width: 100%
+[(top)] .hero-video-scrim
+  keep 5024-5030 | remove 4638-4644
+  decls: background: linear-gradient(180deg, rgb(7 14 26 / 46%) 0%, rgb(7 14 26 / 34%) 34%, rgb(7 14 26 / 24%) 64%, rgb(7 14 26 / 12%) 84%, transparent 100%), linear-gradient(90deg, rgb(7 1
+[(top)] .hero-brand
+  keep 5053-5058 | remove 4668-4673
+  decls: align-items: center; display: flex; justify-content: center; margin-bottom: 1px
+[(top)] .hero-attribution strong
+  keep 5080-5080 | remove 4695-4695
+  decls: color: #fff; font-weight: 750
+[(top)] .hero-tagline
+  keep 5094-5106 | remove 4709-4721
+  decls: color: #fff; font-family: var(--font-editorial); font-size: var(--type-hero-h2); font-style: normal; font-weight: 400; letter-spacing: var(--tracking-editorial); line-height: var(-
+[(top)] .hero-description
+  keep 5108-5116 | remove 4723-4731
+  decls: color: rgb(255 255 255 / 91%); font-size: var(--type-hero-body); line-height: var(--leading-body); margin: 0; max-width: 58ch; text-shadow: 0 1px 14px rgb(5 13 24 / 34%); text-wrap
+[(top)] .hero .wizard
+  keep 5118-5128 | remove 4733-4743
+  decls: -webkit-backdrop-filter: blur(18px) saturate(145%); backdrop-filter: blur(18px) saturate(145%); background: rgb(255 255 255 / 94%); border-radius: 19px; border: 1px solid rgb(255 2
+[(top)] .hero .composer-input
+  keep 5130-5139 | remove 4745-4754
+  decls: align-items: center; border-radius: inherit; border: 0; display: grid; gap: 7px; grid-template-columns: 32px 36px minmax(0, 1fr) 44px; margin: 0; padding: 8px 10px
+[(top)] .hero .composer-input
+  keep 5842-5845 | remove 5659-5662
+  decls: grid-template-columns: 38px minmax(0, 1fr) 40px 46px; position: relative
+[(top)] .composer-brand-mark
+  keep 5141-5150 | remove 4756-4765
+  decls: background: #fff; border-radius: 9px; border: 1px solid var(--line); display: grid; height: 30px; overflow: hidden; place-items: center; width: 30px
+[(top)] .composer-brand-mark img
+  keep 5152-5152 | remove 4767-4767
+  decls: height: 27px; object-fit: contain; width: 27px
+[(top)] .hero .composer-add
+  keep 5154-5163 | remove 4769-4778
+  decls: background: transparent; border-radius: 50%; border: 0; color: #465369; display: grid; height: 36px; place-items: center; width: 36px
+[(top)] .hero .composer-add
+  keep 6525-6529 | remove 5882-5882
+  decls: background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 24%); color: #fff
+[(top)] .hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"]
+  keep 5165-5169 | remove 4780-4784
+  decls: background: var(--accent-soft); color: var(--accent)
+[(top)] .hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"]
+  keep 6531-6536 | remove 5554-5559
+  decls: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 42%); color: #fff
+[(top)] .hero .composer-add svg
+  keep 5171-5171 | remove 4786-4786
+  decls: height: 20px; width: 20px
+[(top)] .hero .composer-input textarea
+  keep 5173-5187 | remove 4788-4802
+  decls: background: transparent; border-radius: 0; border: 0; color: var(--ink); font-size: var(--type-composer); line-height: 1.45; max-height: 144px; min-height: 44px; min-width: 0; over
+[(top)] .hero .composer-input textarea
+  keep 6522-6522 | remove 5561-5561, 5880-5880
+  decls: color: #fff
+[(top)] .hero .composer-input textarea::placeholder
+  keep 5189-5189 | remove 4804-4804
+  decls: color: #647187; opacity: 1
+[(top)] .hero .composer-input textarea::placeholder
+  keep 6523-6523 | remove 5562-5562, 5881-5881
+  decls: color: rgb(255 255 255 / 76%)
+[(top)] .hero .composer-input textarea:focus-visible
+  keep 5190-5190 | remove 4805-4805
+  decls: outline-offset: -3px
+[(top)] .hero .send-button
+  keep 5192-5203 | remove 4807-4818
+  decls: background: var(--accent); border-radius: 13px; border: 1px solid var(--accent); box-shadow: none; color: #fff; display: grid; height: 44px; place-items: center; transition: backgr
+[(top)] .hero .send-button:hover:not(:disabled)
+  keep 5205-5208 | remove 4820-4823
+  decls: background: var(--accent-hover); transform: translateY(-1px)
+[(top)] .hero .send-button svg
+  keep 5210-5210 | remove 4825-4825
+  decls: height: 19px; width: 19px
+[(top)] .composer-meta
+  keep 5212-5222 | remove 4827-4837
+  decls: align-items: center; color: var(--muted); display: flex; font-size: var(--type-eyebrow); gap: 12px; justify-content: space-between; letter-spacing: var(--tracking-small); line-heig
+[(top)] .composer-meta
+  keep 6556-6556 | remove 5803-5803, 5889-5889
+  decls: color: rgb(255 255 255 / 78%)
+[(top)] .composer-count
+  keep 5224-5224 | remove 4839-4839
+  decls: font-variant-numeric: tabular-nums; white-space: nowrap
+[(top)] .composer-count
+  keep 6558-6558 | remove 5805-5805, 5891-5891
+  decls: color: rgb(255 255 255 / 74%)
+[(top)] .hero .error
+  keep 5225-5225 | remove 4840-4840
+  decls: color: #9b2430; margin: 0 16px 12px; text-decoration: none
+[(top)] .hero .starter-prompts[hidden]
+  keep 5226-5226 | remove 4841-4841
+  decls: display: none
+[(top)] .hero .starter-prompts
+  keep 5227-5227 | remove 4842-4842
+  decls: border-top: 1px solid var(--line); grid-template-columns: 1fr; margin: 0 12px; padding: 12px 4px 14px
+[(top)] .hero .starter-prompts > span
+  keep 5228-5228 | remove 4843-4843
+  decls: color: var(--muted); padding: 0
+[(top)] .hero-benefits
+  keep 5230-5243 | remove 4845-4858
+  decls: align-items: center; color: rgb(255 255 255 / 92%); display: flex; flex-wrap: wrap; font-size: var(--type-micro); gap: 11px clamp(14px, 2.2vw, 30px); justify-content: center; list-
+[(top)] .hero-benefits
+  keep 6616-6616 | remove 5656-5656, 5898-5898
+  decls: margin-top: 22px
+[(top)] .hero-benefits li
+  keep 5245-5245 | remove 4860-4860
+  decls: align-items: center; display: inline-flex; gap: 7px; white-space: nowrap
+[(top)] .hero-benefits svg
+  keep 5246-5246 | remove 4861-4861
+  decls: color: #fff; height: 15px; stroke-width: 2; width: 15px
+[(top)] .hero-ecosystem
+  keep 5248-5255 | remove 4863-4870
+  decls: align-items: center; display: flex; flex-direction: column; gap: 5px; margin-top: 2px; width: min(820px, 100%)
+[(top)] .hero-ecosystem-label
+  keep 5257-5265 | remove 4872-4880
+  decls: color: rgb(255 255 255 / 82%); font-size: var(--type-eyebrow); letter-spacing: var(--tracking-small); line-height: 1.3; max-width: 100%; text-align: center; text-shadow: 0 1px 12px
+[(top)] .hero-logo-marquee
+  keep 5267-5275 | remove 4882-4890
+  decls: --duration: 32s; --gap: clamp(28px, 4vw, 54px); color: #fff; mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%); min-height: 34px; padding: 0
+[(top)] .hero-logo-marquee .marquee-copy
+  keep 5901-5901 | remove 4892-4892, 5277-5277
+  decls: align-items: center; gap: var(--gap)
+[(top)] .hero-logo-item
+  keep 5278-5278 | remove 4893-4893
+  decls: align-items: center; color: rgb(255 255 255 / 92%); display: inline-flex; font-size: var(--type-micro); font-weight: 650; gap: 8px; text-shadow: 0 1px 12px rgb(5 13 24 / 38%); whit
+[(top)] .hero-logo-item svg
+  keep 5279-5279 | remove 4894-4894
+  decls: color: currentColor; flex: 0 0 19px; height: 19px; width: 19px
+[(top)] .hero-cloud-transition::before,
+.hero-cloud-transition::after
+  keep 5288-5295 | remove 4903-4910
+  decls: content: ""; left: -8%; pointer-events: none; position: absolute; right: -8%
+[(top)] .hero-cloud-transition::before
+  keep 5297-5307 | remove 4912-4922
+  decls: background: radial-gradient(ellipse 20% 70% at 8% 100%, rgb(255 255 255 / 82%) 0 28%, transparent 78%), radial-gradient(ellipse 26% 82% at 31% 100%, rgb(255 255 255 / 74%) 0 28%, t
+[(top)] .hero-cloud-transition::after
+  keep 5309-5313 | remove 4924-4928
+  decls: background: linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 68%) 48%, #fff 100%); bottom: 0; top: 44%
+[@media (max-height: 820px) and (min-width: 721px)] .hero-shell
+  keep 5317-5317 | remove 4932-4932
+  decls: padding-bottom: 138px; padding-top: 104px
+[@media (max-height: 820px) and (min-width: 721px)] .hero-stack
+  keep 5318-5318 | remove 4933-4933
+  decls: gap: 7px
+[@media (max-height: 820px) and (min-width: 721px)] .hero-brand-logo
+  keep 5319-5319 | remove 4934-4934
+  decls: height: 56px; width: 112px
+[@media (max-height: 820px) and (min-width: 721px)] .hero-tagline
+  keep 5321-5321 | remove 4936-4936
+  decls: font-size: var(--type-hero-h2)
+[@media (max-height: 820px) and (min-width: 721px)] .hero-ecosystem
+  keep 5322-5322 | remove 4937-4937
+  decls: gap: 3px
+[@media (max-width: 720px)] .hero-stack
+  keep 5328-5328 | remove 4943-4943
+  decls: gap: 8px; width: 100%
+[@media (max-width: 720px)] .hero-brand-logo
+  keep 5329-5329 | remove 4944-4944
+  decls: height: 54px; width: 108px
+[@media (max-width: 720px)] .hero-attribution
+  keep 5330-5330 | remove 4945-4945
+  decls: font-size: var(--type-brand)
+[@media (max-width: 720px)] .hero-description
+  keep 5333-5333 | remove 4948-4948
+  decls: font-size: var(--type-hero-body); line-height: var(--leading-body); max-width: 44ch
+[@media (max-width: 720px)] .hero .wizard
+  keep 5334-5334 | remove 4949-4949
+  decls: border-radius: 17px; margin-top: 4px; width: 100%
+[@media (max-width: 720px)] .hero .composer-input
+  keep 5335-5335 | remove 4950-4950
+  decls: gap: 4px; grid-template-columns: 28px 34px minmax(0, 1fr) 40px; padding: 6px
+[@media (max-width: 720px)] .hero .composer-input
+  keep 6625-6625 | remove 5829-5829, 5906-5906
+  decls: grid-template-columns: 34px minmax(0, 1fr) 36px 42px
+[@media (max-width: 720px)] .composer-brand-mark
+  keep 5336-5336 | remove 4951-4951
+  decls: height: 27px; width: 27px
+[@media (max-width: 720px)] .composer-brand-mark img
+  keep 5337-5337 | remove 4952-4952
+  decls: height: 24px; width: 24px
+[@media (max-width: 720px)] .hero .composer-add
+  keep 5338-5338 | remove 4953-4953
+  decls: height: 34px; width: 32px
+[@media (max-width: 720px)] .hero .composer-input textarea
+  keep 5339-5339 | remove 4954-4954
+  decls: font-size: var(--type-composer); min-height: 40px; padding: 8px 2px
+[@media (max-width: 720px)] .hero .send-button
+  keep 5340-5340 | remove 4955-4955
+  decls: border-radius: 12px; height: 40px; width: 40px
+[@media (max-width: 720px)] .composer-meta
+  keep 5341-5341 | remove 4956-4956
+  decls: font-size: var(--type-eyebrow); padding: 0 12px 8px
+[@media (max-width: 720px)] .hero-benefits
+  keep 5342-5342 | remove 4957-4957
+  decls: display: grid; font-size: var(--type-micro); gap: 9px 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: stretch; width: min(100%, 420px)
+[@media (max-width: 720px)] .hero-benefits li
+  keep 5343-5343 | remove 4958-4958
+  decls: min-width: 0; white-space: normal
+[@media (max-width: 720px)] .hero-benefits svg
+  keep 5344-5344 | remove 4959-4959
+  decls: flex: 0 0 14px; height: 14px; width: 14px
+[@media (max-width: 720px)] .hero-ecosystem
+  keep 5345-5345 | remove 4960-4960
+  decls: gap: 3px; margin-top: 2px; width: 100%
+[@media (max-width: 720px)] .hero-ecosystem-label
+  keep 5346-5346 | remove 4961-4961
+  decls: font-size: var(--type-eyebrow); max-width: 34ch
+[@media (max-width: 720px)] .hero-logo-marquee
+  keep 5347-5347 | remove 4962-4962
+  decls: --duration: 28s; --gap: 28px; min-height: 30px
+[@media (max-width: 720px)] .hero-logo-item
+  keep 5348-5348 | remove 4963-4963
+  decls: font-size: var(--type-micro); gap: 6px
+[@media (max-width: 720px)] .hero-logo-item svg
+  keep 5349-5349 | remove 4964-4964
+  decls: flex-basis: 16px; height: 16px; width: 16px
+[@media (max-width: 720px)] .hero-cloud-transition::before
+  keep 5351-5351 | remove 4966-4966
+  decls: filter: blur(18px)
+[@media (max-width: 360px)] .hero-shell
+  keep 5355-5355 | remove 4970-4970
+  decls: padding-bottom: 132px; padding-inline: 12px; padding-top: 94px
+[@media (max-width: 360px)] .hero-tagline
+  keep 5357-5357 | remove 4972-4972
+  decls: font-size: var(--type-hero-h2)
+[@media (max-width: 360px)] .hero .composer-input
+  keep 5358-5358 | remove 4973-4973
+  decls: gap: 3px; grid-template-columns: 25px 30px minmax(0, 1fr) 38px; padding: 5px
+[@media (max-width: 360px)] .hero .composer-input
+  keep 6632-6632 | remove 5836-5836, 5915-5915
+  decls: grid-template-columns: 30px minmax(0, 1fr) 34px 40px
+[@media (max-width: 360px)] .composer-brand-mark
+  keep 5359-5359 | remove 4974-4974
+  decls: height: 24px; width: 24px
+[@media (max-width: 360px)] .composer-brand-mark img
+  keep 5360-5360 | remove 4975-4975
+  decls: height: 22px; width: 22px
+[@media (max-width: 360px)] .hero .composer-add
+  keep 5361-5361 | remove 4976-4976
+  decls: height: 34px; width: 30px
+[@media (max-width: 360px)] .hero .send-button
+  keep 5362-5362 | remove 4977-4977
+  decls: height: 38px; width: 38px
+[@media (max-width: 360px)] .hero .composer-input textarea
+  keep 5363-5363 | remove 4978-4978
+  decls: font-size: var(--type-composer)
+[@media (prefers-reduced-motion: reduce)] .hero-background video
+  keep 5367-5367 | remove 4982-4982
+  decls: display: none
+[@media (prefers-reduced-motion: reduce)] .hero-logo-marquee
+  keep 5368-5368 | remove 4983-4983
+  decls: overflow-x: auto
+[(top)] .composer-context-heading
+  keep 6576-6576 | remove 5861-5861
+  decls: color: #fff; font-size: 0.8125rem; padding: 2px 4px 6px
+[(top)] .composer-context-close
+  keep 6577-6577 | remove 5862-5862
+  decls: color: rgb(255 255 255 / 72%); height: 28px; width: 28px
+[(top)] .composer-context-close:hover
+  keep 6578-6578 | remove 5710-5710, 5863-5863
+  decls: background: rgb(255 255 255 / 12%); color: #fff
+[(top)] .composer-context-actions strong
+  keep 6584-6584 | remove 5868-5868
+  decls: font-size: 0.8125rem
+[(top)] .composer-context-actions small
+  keep 6585-6585 | remove 5869-5869
+  decls: color: rgb(255 255 255 / 68%); font-size: 0.6875rem
+[(top)] .composer-context-message
+  keep 6587-6587 | remove 5871-5871
+  decls: background: rgb(180 35 50 / 40%); color: #fff
+[(top)] .composer-source-form
+  keep 6588-6588 | remove 5872-5872
+  decls: gap: 7px; padding: 3px
+[(top)] .composer-source-form label
+  keep 6589-6589 | remove 5873-5873
+  decls: color: rgb(255 255 255 / 72%); font-size: 0.6875rem
+[(top)] .composer-source-form input
+  keep 6590-6590 | remove 5874-5874
+  decls: background: rgb(255 255 255 / 9%); border-color: rgb(255 255 255 / 25%); color: #fff; font-size: 0.8125rem; min-height: 38px
+[(top)] .composer-source-form input::placeholder
+  keep 6591-6591 | remove 5781-5781, 5875-5875
+  decls: color: rgb(255 255 255 / 55%)
+[(top)] .composer-source-actions button
+  keep 6592-6592 | remove 5876-5876
+  decls: background: rgb(255 255 255 / 10%); color: #fff; font-size: 0.75rem; min-height: 32px
+[(top)] .composer-source-actions .composer-source-submit
+  keep 6593-6593 | remove 5784-5784, 5877-5877
+  decls: background: var(--accent); color: #fff
+[(top)] .hero .composer-voice-button:hover:not(:disabled)
+  keep 5885-5885 | remove 5800-5800
+  decls: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 38%); color: #fff
+[(top)] .hero .composer-voice-button.is-listening
+  keep 6550-6554 | remove 5801-5801, 5886-5886, 5960-5964, 6057-6061, 6146-6150, 6173-6177
+  decls: background: rgb(0 110 255 / 72%); border-color: rgb(255 255 255 / 48%); color: #fff
+[(top)] .composer-language
+  keep 6557-6557 | remove 5804-5804, 5890-5890
+  decls: color: rgb(255 255 255 / 88%)
+[(top)] .composer-image-reference
+  keep 6595-6599 | remove 5892-5892
+  decls: background: rgb(255 255 255 / 10%); border-color: rgb(255 255 255 / 24%); color: #fff
+[(top)] .composer-image-reference small
+  keep 6601-6601 | remove 5893-5893
+  decls: color: rgb(255 255 255 / 72%)
+[(top)] .composer-image-reference > button
+  keep 6602-6602 | remove 5894-5894
+  decls: background: rgb(255 255 255 / 10%); color: #fff
+[(top)] .composer-dictation-status
+  keep 6603-6603 | remove 5895-5895
+  decls: color: rgb(255 255 255 / 78%)
+[(top)] .composer-dictation-status.is-listening
+  keep 6604-6604 | remove 5827-5827, 5896-5896
+  decls: color: #fff
+[@media (max-width: 720px)] .hero .composer-voice-button
+  keep 6626-6626 | remove 5907-5907
+  decls: width: 36px
+[@media (max-width: 360px)] .hero .composer-voice-button
+  keep 6633-6633 | remove 5837-5837, 5916-5916
+  decls: width: 34px
+[(top)] .composer-context-note,.composer-context-message
+  keep 6586-6586 | remove 5870-5870
+  decls: color: rgb(255 255 255 / 70%); font-size: 0.6875rem; margin: 5px 4px 2px
+[(top)] .site-header[data-accent-background="brand"] .nav-cta
+  keep 6499-6504 | remove 5934-5939, 6043-6048, 6132-6137, 6159-6164, 6250-6255
+  decls: background: transparent; border-color: rgb(255 255 255 / 68%); box-shadow: none; color: #fff
+[(top)] .hero .composer-voice-button,
+.hero .composer-voice-button:hover:not(:disabled)
+  keep 6166-6171 | remove 5953-5958, 6050-6055, 6139-6144
+  decls: background: transparent; border-color: transparent; color: #fff
+[(top)] .showcase-heading .section-title,
+.showcase-heading > p
+  keep 6209-6214 | remove 5990-5995, 6079-6084
+  decls: margin-inline: auto; text-align: center; width: 100%
+[(top)] .showcase-heading .section-title
+  keep 6216-6216 | remove 5997-5997, 6086-6086
+  decls: max-width: 22ch
+[(top)] .showcase-caption
+  keep 6228-6235 | remove 6009-6016, 6098-6105
+  decls: font-size: 0.875rem; line-height: 1.45; margin-inline: auto; max-width: 42ch; text-align: center; text-wrap: balance
+[@media (max-width: 720px)] .showcase-heading .section-title,
+  .showcase-heading > p
+  keep 6108-6109 | remove 6019-6020
+  decls: text-align: center
+[@media (max-width: 720px)] .showcase-capture figcaption
+  keep 6240-6240 | remove 6021-6021, 6110-6110
+  decls: min-height: 60px; padding: 12px 8px 0
+[@media (max-width: 720px)] .showcase-caption
+  keep 6241-6241 | remove 6022-6022, 6111-6111
+  decls: font-size: 0.8125rem
+[(top)] .site-header[data-contrast] .wordmark-image
+  keep 6467-6467 | remove 6338-6340
+  decls: transition: filter 240ms ease
+[(top)] .site-header[data-contrast="light"]
+  keep 6444-6451 | remove 6342-6349
+  decls: --nav-control-border: rgb(255 255 255 / 36%); --nav-cta-border: rgb(255 255 255 / 70%); --nav-cta-foreground: #172033; --nav-cta-surface: rgb(255 255 255 / 92%); --nav-foreground: 
+[(top)] .site-header[data-contrast="dark"]
+  keep 6453-6460 | remove 6351-6358
+  decls: --nav-control-border: rgb(23 32 51 / 22%); --nav-cta-border: var(--accent); --nav-cta-foreground: #fff; --nav-cta-surface: var(--accent); --nav-foreground: #172033; --nav-hover-sur
+[(top)] .site-header[data-contrast="light"] .wordmark-image
+  keep 6468-6468 | remove 6360-6360
+  decls: filter: brightness(0) invert(1)
+[(top)] .site-header[data-contrast="dark"] .wordmark-image
+  keep 6469-6469 | remove 6361-6361
+  decls: filter: none
+[(top)] .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover,
+.site-header[data-contrast] .site-mobile-links > a:hover,
+.site-header[data-contrast] .site-mobile-actions > a:not(.nav-cta):hover,
+.site-header[data-contrast] .site-mobile-toggle:hover
+  keep 6481-6488 | remove 6363-6370
+  decls: background: transparent; color: var(--nav-foreground)
+[(top)] .site-header[data-contrast] .site-mobile-toggle
+  keep 6490-6490 | remove 6372-6374
+  decls: border-color: var(--nav-control-border)
+
+=== UNSAFE GROUPS (interleaved differing rule; manual review) ===
+[(top)] .site-header[data-contrast] .nav-cta
+  occurrences 6, 4, 9, 2, -, 6, 4, 9, 7, 5922-5927, 6031-6036
+  decls: background: var(--accent); border-color: var(--accent); color: #fff; transition: transform 150ms ease
+[(top)] .hero-logo-marquee
+  occurrences 6, 6, 0, 9, -, 6, 6, 1, 2, 5900-5900
+  decls: --duration: 42s; --gap: clamp(18px, 2.4vw, 30px)
+[(top)] .hero-logo-item
+  occurrences 6, 6, 1, 5, -, 6, 6, 1, 5, 5902-5902
+  decls: flex: 0 0 108px; gap: 7px; justify-content: center
+[@media (max-width: 720px)] .hero-logo-item
+  occurrences 6, 6, 2, 8, -, 6, 6, 2, 8, 5911-5911
+  decls: flex-basis: 96px; font-size: 0.75rem
+[(top)] .composer-context-actions > button:hover,
+.composer-context-actions > button:focus-visible
+  occurrences 6, 5, 8, 1, -, 6, 5, 8, 2, 5730-5733, 5865-5866
+  decls: background: rgb(255 255 255 / 12%)
+[(top)] .composer-context-actions > button > svg
+  occurrences 6, 5, 8, 3, -, 6, 5, 8, 3, 5735-5739
+  decls: color: #fff; height: 17px; width: 17px
+[@media (max-width: 360px)] .hero-logo-item
+  occurrences 6, 6, 3, 4, -, 6, 6, 3, 4, 5917-5917
+  decls: flex-basis: 90px; font-size: 0.6875rem
+[(top)] .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover
+  occurrences 6, 1, 5, 3, -, 6, 1, 5, 7, 5941-5945
+  decls: background: transparent; color: var(--nav-foreground)
+[(top)] .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover
+  occurrences 6, 2, 4, 5, -, 6, 2, 4, 8, 6026-6029, 6115-6118
+  decls: background: transparent

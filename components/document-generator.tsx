@@ -10,10 +10,12 @@ import {
   RefreshCw,
 } from "lucide-react";
 import BrandLogo from "@/components/brand-logo";
+import PageMotion from "@/components/page-motion";
 import { useDraft } from "@/components/draft-provider";
 import { completedQuestions, visibleQuestions } from "@/lib/clarification";
 import { validateIdea } from "@/lib/idea";
 import { parseGeneratedBundle } from "@/lib/generated-documents";
+import { trackAnalytics } from "@/lib/analytics-client";
 import type {
   GeneratedBundle,
   GeneratedDocument,
@@ -125,6 +127,9 @@ export default function DocumentGenerator() {
   const [retry, setRetry] = useState(0);
   const [rebuilding, setRebuilding] = useState<string | null>(null);
   const [status, setStatus] = useState("");
+  const [feedbackRating, setFeedbackRating] = useState<number | null>(null);
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [feedbackState, setFeedbackState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [previewMode, setPreviewMode] = useState<"sections" | "raw">(
     "sections",
   );
@@ -140,8 +145,10 @@ export default function DocumentGenerator() {
   useEffect(() => {
     if (!validDraft) return;
     const controller = new AbortController();
-     fetchDocuments(requestBody, controller.signal, setStatus)
+    trackAnalytics("generation_started");
+    fetchDocuments(requestBody, controller.signal, setStatus)
       .then((result) => {
+        trackAnalytics("generation_completed", { status: "success" });
         setBundle(result);
         setError(null);
         setLoading(false);
@@ -153,6 +160,7 @@ export default function DocumentGenerator() {
       })
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === "AbortError") return;
+        trackAnalytics("generation_completed", { status: "failure" });
         setError(
           reason instanceof Error &&
             (reason.message === "UNKNOWN_SKILL" ||
@@ -175,6 +183,7 @@ export default function DocumentGenerator() {
 
   if (!validDraft)
     return (
+      <PageMotion className="page-motion-root generate-motion-root">
       <div className="generate-shell shell">
         <header className="nav">
           <Link href="/" className="wordmark" aria-label="AnyMD home">
@@ -194,6 +203,7 @@ export default function DocumentGenerator() {
           </Link>
         </main>
       </div>
+      </PageMotion>
     );
 
   const activeDocument = bundle?.documents.find(
@@ -266,7 +276,28 @@ export default function DocumentGenerator() {
     setStatus(`Downloaded ${activeDocument.filename}.`);
   }
 
+  async function submitFeedback() {
+    if (!feedbackRating || feedbackState === "saving" || feedbackState === "saved") return;
+    setFeedbackState("saving");
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ rating: feedbackRating, comment: feedbackComment || undefined }),
+      });
+      if (!response.ok) throw new Error("Feedback request failed");
+      trackAnalytics("feedback_submitted", { rating: feedbackRating });
+      setFeedbackState("saved");
+    } catch {
+      setFeedbackState("error");
+    }
+  }
+
   return (
+    <PageMotion
+      className="page-motion-root generate-motion-root"
+      motionKey={`${bundle?.generatedAt ?? (error ?? (loading ? "loading" : "idle"))}:${activeFilename}:${previewMode}`}
+    >
     <div className="generate-shell shell">
       <a href="#generated-main" className="skip-link">
         Skip to generated documents
@@ -278,12 +309,12 @@ export default function DocumentGenerator() {
         <span className="quiet">Structured before sophisticated.</span>
       </header>
       <main id="generated-main" className="generate-main" aria-busy={loading}>
-        <div className="generate-heading">
+        <div className="generate-heading" data-gsap="group">
           <div>
-            <span className="quiet">04 / Document generator</span>
-            <h1>Your product brief, assembled.</h1>
+            <span className="quiet" data-gsap-item>04 / Document generator</span>
+            <h1 data-gsap-item>Your product brief, assembled.</h1>
           </div>
-          <p>
+          <p data-gsap-item>
              Structured from your local browser draft, then refined by the configured AI provider
             without changing the AnyMD output contract.
           </p>
@@ -416,7 +447,7 @@ export default function DocumentGenerator() {
             </div>
 
             <div className="document-layout">
-              <aside className="document-summary">
+              <aside className="document-summary" data-gsap="reveal">
                 <span className="quiet">Active document</span>
                 <strong>{activeDocument.filename}</strong>
                 <p>{activeDocument.sections.length} structured sections</p>
@@ -424,10 +455,11 @@ export default function DocumentGenerator() {
                   <ArrowLeft aria-hidden="true" /> Edit skills
                 </Link>
               </aside>
-              <div className="document-sections">
+              <div className="document-sections" data-gsap="group">
                 {previewMode === "raw" ? (
                   <article
                     className="document-section"
+                    data-gsap-item
                     aria-labelledby="raw-markdown-title"
                   >
                     <div className="document-section-header">
@@ -445,6 +477,7 @@ export default function DocumentGenerator() {
                   return (
                     <article
                       className="document-section"
+                      data-gsap-item
                       key={item.id}
                       aria-labelledby={`section-${activeDocument.filename}-${item.id}`}
                     >
@@ -493,6 +526,45 @@ export default function DocumentGenerator() {
             <p className="generate-status" role="status" aria-live="polite">
               {status}
             </p>
+            <section className="feedback-panel" aria-labelledby="feedback-title" data-gsap="reveal">
+              <div>
+                <span className="quiet">A quick signal</span>
+                <h2 id="feedback-title">Did this give you a useful starting point?</h2>
+              </div>
+              {feedbackState === "saved" ? (
+                <p role="status">Thanks. Your feedback was saved.</p>
+              ) : (
+                <>
+                  <div className="feedback-rating" role="group" aria-label="Rate the generated documents">
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <button
+                        key={rating}
+                        type="button"
+                        className="feedback-rating-button"
+                        aria-label={`${rating} out of 5`}
+                        aria-pressed={feedbackRating === rating}
+                        onClick={() => setFeedbackRating(rating)}
+                      >
+                        {rating}
+                      </button>
+                    ))}
+                  </div>
+                  <label className="feedback-comment">
+                    <span>Optional note</span>
+                    <textarea
+                      value={feedbackComment}
+                      maxLength={1000}
+                      onChange={(event) => setFeedbackComment(event.target.value)}
+                      placeholder="What should be clearer?"
+                    />
+                  </label>
+                  <button type="button" className="pill" disabled={!feedbackRating || feedbackState === "saving"} onClick={submitFeedback}>
+                    {feedbackState === "saving" ? "Saving…" : "Send feedback"}
+                  </button>
+                  {feedbackState === "error" ? <p role="alert">Feedback could not be saved. Try again.</p> : null}
+                </>
+              )}
+            </section>
           </>
         ) : null}
       </main>
@@ -502,5 +574,6 @@ export default function DocumentGenerator() {
         are persisted for queue recovery, not as a permanent document library.
       </p>
     </div>
+    </PageMotion>
   );
 }

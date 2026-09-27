@@ -10,6 +10,9 @@
 - Store IP quota keys as HMAC-SHA256 hashes with a server-only pepper. Never persist the raw IP.
 - Use Stripe Checkout for one-time token packages: 10 tokens for $2.99, 50 for $11.99, and 100 for $19.99. Credit tokens only from verified, idempotently handled webhooks.
 - Keep the current visual system while implementing behavior. Redesign the whole surface only after the functional phases are complete and before the final QA/security phase.
+- Generated project outputs default to three companion files: `prd.md` for product requirements, `AGENTS.md` for execution rules, and `SESSION.md` for mutable progress/evidence state.
+- Production execution is breadth-first across `High/P0` vertical slices, followed by depth/hardening. A task is not complete without real provider or durable-boundary evidence for success, failure, persistence, and verification.
+- Product metrics use consented first-party events. The first-visit consent popup gates instrumentation; deployed environments calculate DAU per UTC day and rolling 30-day MAU from salted actor keys, with a default 90-day retention policy.
 
 ## Phase Order
 
@@ -18,7 +21,8 @@
 
 ### Phase 4A2: Identity and Persistence
 - Complete for the current scope: AnyMD-owned users/OAuth identities, Auth.js JWT sessions, credentials signup/login, optional Google/GitHub configuration, and responsive `/login` and `/signup` pages are implemented.
-- Remaining verification: production OAuth callback behavior; local provider configuration is present and the production providers endpoint currently returns HTTP 500.
+- Production provider discovery and full OAuth callback were manually verified by the operator; local provider configuration and redirect initiation are also verified.
+- Profile slice: protected `/profile`, session-derived initials avatar, mobile navbar access, and deterministic client logout navigation are implemented. Authenticated desktop/mobile E2E passes against the configured Neon-backed app.
 
 ### Phase 4A3: Queue and Free Quota
 - Implementation slice is complete in source; worker-focused tests and Playwright verification pass. The queue migration is live on Neon `anymd.main`.
@@ -30,43 +34,57 @@
 
 ### Phase 4A4: Paid Tokens and Stripe
 - Complete for the current slice: token balance/ledger tables are live on Neon main, atomic debit/refund/purchase repository methods are implemented, Checkout Session creation covers all three packages, the raw-body webhook verifies signatures and deduplicates event IDs, and pricing UI redirects to hosted Checkout.
-- Remaining verification: replay an actual webhook through Stripe test mode; paid-token debit/refund integration is complete and covered by tests.
+- Real Stripe Sandbox Checkout and the resulting `checkout.session.completed` payload are verified locally with one `+10` ledger entry and the event ID `evt_1UJDAORl7uKWDdITNnBRDNon`. Automatic Stripe CLI forwarding remains unavailable because the current CLI-authenticated account/key lacks access to the app sandbox and required CLI session permissions; live payment mode stays intentionally deferred.
 
 ### Phase 4A5: Generation Integration
 - Complete. Authenticated generation uses free quota or token consumption, the job status contract is implemented, and sign-in/quota/purchase recovery states are covered by tests.
 
 ### Final Design, QA, and Security
 - Redesign landing/auth/pricing surfaces as one coherent system.
-- Final visual redesign remains paused until a new direction is approved; the current `DESIGN.md` is provisional.
+- Blueprint Studio is the current direction; the next UI/UX pass is an evidence-led audit and polish cycle.
 - Copy and SEO pass: landing, clarification, skills, pricing, and generation copy now describe shipped behavior without preview, phase, or future-feature claims. The real `PricingTable` appears on the landing page and remains available at `/pricing`.
 - SEO foundations: root/page metadata, canonical URLs, Open Graph/Twitter metadata, JSON-LD, `robots.txt`, and `sitemap.xml` are implemented. Netlify build configuration is present in `netlify.toml`; the latest known public deploy is ready at `https://anymd-studio.netlify.app`.
 - Run unit/API/E2E/build/lint/typecheck/audit checks. (Local gates pass; see `docs/qa/final.md`.)
-- Perform security review for auth, IP hashing, webhook handling, rate limits, secrets, and data retention. (Durable rate limiting, opt-in analytics, and one-time feedback are implemented; credential-backed verification remains deferred.)
+- Perform security review for auth, IP hashing, webhook handling, rate limits, secrets, analytics consent, and data retention. (Durable rate limiting, opt-in analytics contracts, consented event emission, durable actor keys, metric aggregation, and one-time feedback are implemented.)
+
+### Template Contract Hardening
+- Update the PRD template with execution hierarchy, priority mapping, breadth-first rules, Completion rule, MCP/skills evidence, and observability/testing requirements.
+- Add `AGENTS-Template-Output-AnyMD.md` and `SESSION-Template-Output-AnyMD.md` before changing the generated bundle implementation.
+- Extend the generator schema, provider prompt, parser, preview, download, and tests to produce and preserve `SESSION.md`.
+- Add real metric instrumentation and aggregation only after the template contract is accepted; do not claim MAU/DAU from local synthetic traffic. (Instrumentation and queries are deployed; production counts remain traffic-dependent.)
 
 ## Checkpoints
 
 - After Phase 4A2: signup, login, logout, optional OAuth configuration, and protected session reading pass tests and build.
 - After Phase 4A3: concurrent free-generation claims have one winner and job polling is deterministic.
 - After Phase 4A4: test webhook replay cannot double-credit tokens and checkout package mapping is fixed.
-- Before final redesign: all functional phases are complete and the existing UI remains regression-safe. Unit, lint, typecheck, build, and 20-case desktop/mobile E2E checks pass.
+- Before final redesign: all functional phases are complete and the existing UI remains regression-safe. Unit, lint, typecheck, build, and 28-case serial desktop/mobile E2E checks pass.
 
 ## Deferred Credential and Decision Gates
 
-- Stripe secret and webhook credentials: local Checkout authentication is verified; live session creation and webhook replay remain unexecuted.
-- Google/GitHub OAuth credentials: local provider configuration is verified; production provider verification is blocked by the production providers endpoint returning HTTP 500.
+- Stripe secret and webhook credentials: real sandbox Checkout plus signed replay of its real completion event are verified; live mode is intentionally deferred and automatic Stripe CLI forwarding remains unavailable for the current CLI account/key.
+- Google/GitHub OAuth credentials: local and production callback flows were manually verified by the operator.
 - AI provider credentials: minimal live Chat Completions verification passed.
 - External `skills-vault` access: complete for the currently published individual-skill catalog; remote and local snapshot entries match.
-- Public hosting credentials/domain: required for deployment verification.
+- Public hosting credentials/domain: production deployment and route probes are verified; authenticated build logs remain unavailable.
 - Maintainer decision: use the AnyMD Non-Commercial License in `LICENSE`.
 - Product/design direction: Blueprint Studio direction approved and implemented across landing, auth, pricing, and generator surfaces.
 - Phase 8 feedback and analytics: implemented with explicit event allowlisting, opt-in consent, retention-indexed tables, and one-time feedback keys.
 
 ## Verification Result
 
-- `npm test`: 74 passed.
+- `npm test`: 86 passed.
 - `npm run lint`: passed.
 - `npm run typecheck`: passed.
 - `npm run build`: passed.
-- `npm run test:e2e`: 22 passed across desktop and mobile Chromium after updating the Phase 3 assertion for truthful local-persistence copy. Targeted visual route checks show no horizontal overflow at 390px or 1440px.
+- `npm run test:e2e`: 28 serial desktop/mobile tests pass; targeted visual route checks show no horizontal overflow at 390px or 1440px.
 - `npm audit --omit=dev`: 0 vulnerabilities.
 - `git diff --check`: passed; only Windows line-ending warnings were reported.
+
+## Current Smoke Gate
+
+- Standalone real-provider smoke succeeded with HTTP 200 and a valid SSE bundle.
+- Authenticated Neon submission and polling passed with job `53493517-ef80-473f-b59e-b464c7f9d28b`: `202` queued, then persisted `succeeded` with `attemptCount=1` and `generatorVersion=2`.
+- The persisted result contains non-empty `prd.md`, `AGENTS.md`, and `SESSION.md` documents.
+- One earlier authenticated attempt returned `500 GENERATION_FAILED` during a transient Neon socket disconnect; the bounded retry path reached a terminal upstream `REQUEST_FAILED` without looping. No persistent queue or schema failure was found.
+- The authenticated generation and real sandbox Stripe Checkout/webhook smoke gates are complete. Automatic Stripe CLI forwarding is unavailable for the current CLI account/key; MAU/DAU is intentionally deferred until production traffic exists.

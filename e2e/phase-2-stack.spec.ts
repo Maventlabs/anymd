@@ -4,6 +4,10 @@ test.setTimeout(60_000);
 
 async function startClarification(page: Page) {
   await page.goto("/");
+  const declineAnalytics = page.getByRole("button", { name: "Tidak sekarang" });
+  if (await declineAnalytics.isVisible().catch(() => false)) {
+    await declineAnalytics.click();
+  }
   await page.evaluate(() => indexedDB.deleteDatabase("anymd-draft"));
   await page.reload();
   await page.getByLabel("Describe your product idea").fill(

@@ -1,36 +1,16 @@
-import { type ComponentPropsWithoutRef } from "react"
+"use client";
 
-import { cn } from "@/lib/utils"
+import { useRef, type ComponentPropsWithoutRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { cn } from "@/lib/utils";
 
 interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
-  /**
-   * Optional CSS class name to apply custom styles
-   */
-  className?: string
-  /**
-   * Whether to reverse the animation direction
-   * @default false
-   */
-  reverse?: boolean
-  /**
-   * Whether to pause the animation on hover
-   * @default false
-   */
-  pauseOnHover?: boolean
-  /**
-   * Content to be displayed in the marquee
-   */
-  children: React.ReactNode
-  /**
-   * Whether to animate vertically instead of horizontally
-   * @default false
-   */
-  vertical?: boolean
-  /**
-   * Number of times to repeat the content
-   * @default 4
-   */
-  repeat?: number
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  children: React.ReactNode;
+  vertical?: boolean;
+  repeat?: number;
 }
 
 export function Marquee({
@@ -42,33 +22,99 @@ export function Marquee({
   repeat = 4,
   ...props
 }: MarqueeProps) {
+  const root = useRef<HTMLDivElement>(null);
+  const timeline = useRef<gsap.core.Tween | null>(null);
+  const copies = Array.from({ length: Math.max(2, repeat) }, (_, index) => index);
+
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const track = root.current?.querySelector<HTMLElement>(".marquee-track");
+        const firstCopy = track?.querySelector<HTMLElement>(".marquee-copy");
+        if (!track || !firstCopy) return;
+
+        const readDuration = () => {
+          const raw = getComputedStyle(root.current!).getPropertyValue("--duration");
+          return Number.parseFloat(raw) || 40;
+        };
+        const getDistance = () =>
+          vertical ? firstCopy.offsetHeight : firstCopy.offsetWidth;
+
+        const animate = () => {
+          const distance = getDistance();
+          if (!distance) return;
+          timeline.current?.kill();
+          timeline.current = gsap.fromTo(
+            track,
+            vertical
+              ? { y: reverse ? -distance : 0 }
+              : { x: reverse ? -distance : 0 },
+            {
+              ...(vertical
+                ? { y: reverse ? 0 : -distance }
+                : { x: reverse ? 0 : -distance }),
+              duration: readDuration(),
+              repeat: -1,
+              ease: "none",
+            },
+          );
+        };
+
+        animate();
+        const observer = new ResizeObserver(animate);
+        observer.observe(firstCopy);
+        return () => {
+          observer.disconnect();
+          timeline.current?.kill();
+          timeline.current = null;
+        };
+      });
+      return () => media.revert();
+    },
+    { scope: root },
+  );
+
+  function pause() {
+    timeline.current?.pause();
+  }
+
+  function resume() {
+    timeline.current?.play();
+  }
+
   return (
     <div
       {...props}
+      ref={root}
       className={cn(
-        "group flex gap-(--gap) overflow-hidden p-2 [--duration:40s] [--gap:1rem]",
-        {
-          "flex-row": !vertical,
-          "flex-col": vertical,
-        },
-        className
+        "marquee-window",
+        vertical ? "marquee-window-vertical" : "",
+        className,
       )}
+      onPointerEnter={pauseOnHover ? pause : undefined}
+      onPointerLeave={pauseOnHover ? resume : undefined}
+      onFocusCapture={pauseOnHover ? pause : undefined}
+      onBlurCapture={(event) => {
+        if (
+          pauseOnHover &&
+          !event.currentTarget.contains(event.relatedTarget as Node | null)
+        ) {
+          resume();
+        }
+      }}
     >
-      {Array(repeat)
-        .fill(0)
-        .map((_, i) => (
+      <div className="marquee-track" aria-live="off">
+        {copies.map((copy) => (
           <div
-            key={i}
-            className={cn("flex shrink-0 justify-around gap-(--gap)", {
-              "animate-marquee flex-row": !vertical,
-              "animate-marquee-vertical flex-col": vertical,
-              "group-hover:[animation-play-state:paused]": pauseOnHover,
-              "[animation-direction:reverse]": reverse,
-            })}
+            className="marquee-copy"
+            aria-hidden={copy > 0 ? true : undefined}
+            key={copy}
           >
             {children}
           </div>
         ))}
+      </div>
     </div>
-  )
+  );
 }

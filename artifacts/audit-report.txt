@@ -1,0 +1,1404 @@
+=== AUDIT REPORT app/globals.css ===
+total lines: 6637, bytes: 156948
+
+--- R1. IDENTICAL DUPLICATE TOP-LEVEL RULES (same selector + same decls) ---
+SELECTOR .profile-details div x2 identical at lines 403-405, 4098-4098
+  decls: min-width: 0
+
+SELECTOR .showcase x2 identical at lines 4930-4930, 5315-5315
+  decls: background: #fff
+
+SELECTOR .showcase-heading x2 identical at lines 6069-6077, 6199-6207
+  decls: display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); justify-items: center; margin: 0 auto clamp(32px, 5vw, 52px); max-width: 860px; text-align: center
+
+SELECTOR .showcase-heading > p x3 identical at lines 5998-5998, 6087-6087, 6217-6217
+  decls: max-width: 60ch
+
+SELECTOR .skill-grid x2 identical at lines 2335-2339, 3864-3868
+  decls: display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr))
+
+SELECTOR .skill-check svg x2 identical at lines 2369-2372, 3895-3895
+  decls: height: 15px; width: 15px
+
+SELECTOR .site-header[data-contrast] .nav-cta x3 identical at lines 5922-5927, 6031-6036, 6492-6497
+  decls: background: var(--accent); border-color: var(--accent); color: #fff; transition: transform 150ms ease
+
+SELECTOR .site-header[data-contrast] .nav-cta:hover x2 identical at lines 5929-5932, 6038-6041
+  decls: background: var(--accent); color: #fff
+
+SELECTOR .marquee-copy x2 identical at lines 5899-5899, 6607-6607
+  decls: padding-inline-end: var(--gap, 20px)
+
+SELECTOR .showcase-capture x3 identical at lines 5999-5999, 6088-6088, 6218-6218
+  decls: display: flex; flex-direction: column
+
+SELECTOR .showcase-capture-image x2 identical at lines 5903-5903, 6618-6621
+  decls: aspect-ratio: 1864 / 1000; background: #f5f7fa
+
+SELECTOR .showcase-capture-image img x2 identical at lines 5904-5904, 6623-6623
+  decls: object-fit: contain
+
+SELECTOR .showcase-capture figcaption x3 identical at lines 6001-6007, 6090-6096, 6220-6226
+  decls: display: flex; justify-content: center; min-height: 64px; padding: 14px 14px 0; text-align: center
+
+SELECTOR .hero.hero-video-surface x2 identical at lines 4602-4612, 4988-4998
+  decls: align-items: stretch; background: #1c2935; color: #fff; display: flex; isolation: isolate; min-height: 100svh; overflow: hidden; position: relative; scroll-margin-top: 0
+
+SELECTOR .hero-background,
+.hero-video-scrim,
+.hero-cloud-transition x2 identical at lines 4614-4620, 5000-5006
+  decls: inset-inline: 0; pointer-events: none; position: absolute
+
+SELECTOR .hero-background x2 identical at lines 4622-4627, 5008-5013
+  decls: background: url("/hero-poster.webp") center / cover no-repeat; inset-block: 0; overflow: hidden; z-index: 0
+
+SELECTOR .hero-background video x2 identical at lines 4629-4636, 5015-5022
+  decls: height: 100%; inset: 0; object-fit: cover; object-position: center; position: absolute; width: 100%
+
+SELECTOR .hero-video-scrim x2 identical at lines 4638-4644, 5024-5030
+  decls: background: linear-gradient(180deg, rgb(7 14 26 / 46%) 0%, rgb(7 14 26 / 34%) 34%, rgb(7 14 26 / 24%) 64%, rgb(7 14 26 / 12%) 84%, transparent 100%), linear-gradient(90deg, rgb(7 14 26 / 10%) 0%, transparent 24%, transparent 76%, rgb(7 14 26 / 8%) 100%); inset-block: 0; z-index: 1
+
+SELECTOR .hero-brand x2 identical at lines 4668-4673, 5053-5058
+  decls: align-items: center; display: flex; justify-content: center; margin-bottom: 1px
+
+SELECTOR .hero-attribution strong x2 identical at lines 4695-4695, 5080-5080
+  decls: color: #fff; font-weight: 750
+
+SELECTOR .hero-tagline x2 identical at lines 4709-4721, 5094-5106
+  decls: color: #fff; font-family: var(--font-editorial); font-size: var(--type-hero-h2); font-style: normal; font-weight: 400; letter-spacing: var(--tracking-editorial); line-height: var(--leading-display); margin: 0; max-width: 24ch; text-shadow: 0 2px 18px rgb(5 13 24 / 35%); text-wrap: balance
+
+SELECTOR .hero-description x2 identical at lines 4723-4731, 5108-5116
+  decls: color: rgb(255 255 255 / 91%); font-size: var(--type-hero-body); line-height: var(--leading-body); margin: 0; max-width: 58ch; text-shadow: 0 1px 14px rgb(5 13 24 / 34%); text-wrap: pretty
+
+SELECTOR .hero .wizard x2 identical at lines 4733-4743, 5118-5128
+  decls: -webkit-backdrop-filter: blur(18px) saturate(145%); backdrop-filter: blur(18px) saturate(145%); background: rgb(255 255 255 / 94%); border-radius: 19px; border: 1px solid rgb(255 255 255 / 88%); box-shadow: 0 18px 48px rgb(7 17 31 / 22%), inset 0 1px 0 rgb(255 255 255 / 90%); color: var(--ink); margin: 0; width: min(720px, 100%)
+
+SELECTOR .hero .composer-input x2 identical at lines 4745-4754, 5130-5139
+  decls: align-items: center; border-radius: inherit; border: 0; display: grid; gap: 7px; grid-template-columns: 32px 36px minmax(0, 1fr) 44px; margin: 0; padding: 8px 10px
+
+SELECTOR .hero .composer-input x2 identical at lines 5659-5662, 5842-5845
+  decls: grid-template-columns: 38px minmax(0, 1fr) 40px 46px; position: relative
+
+SELECTOR .composer-brand-mark x2 identical at lines 4756-4765, 5141-5150
+  decls: background: #fff; border-radius: 9px; border: 1px solid var(--line); display: grid; height: 30px; overflow: hidden; place-items: center; width: 30px
+
+SELECTOR .composer-brand-mark img x2 identical at lines 4767-4767, 5152-5152
+  decls: height: 27px; object-fit: contain; width: 27px
+
+SELECTOR .hero .composer-add x2 identical at lines 4769-4778, 5154-5163
+  decls: background: transparent; border-radius: 50%; border: 0; color: #465369; display: grid; height: 36px; place-items: center; width: 36px
+
+SELECTOR .hero .composer-add x2 identical at lines 5882-5882, 6525-6529
+  decls: background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 24%); color: #fff
+
+SELECTOR .hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"] x2 identical at lines 4780-4784, 5165-5169
+  decls: background: var(--accent-soft); color: var(--accent)
+
+SELECTOR .hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"] x2 identical at lines 5554-5559, 6531-6536
+  decls: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 42%); color: #fff
+
+SELECTOR .hero .composer-add svg x2 identical at lines 4786-4786, 5171-5171
+  decls: height: 20px; width: 20px
+
+SELECTOR .hero .composer-input textarea x2 identical at lines 4788-4802, 5173-5187
+  decls: background: transparent; border-radius: 0; border: 0; color: var(--ink); font-size: var(--type-composer); line-height: 1.45; max-height: 144px; min-height: 44px; min-width: 0; overflow-y: auto; padding: 10px 5px; resize: none; width: 100%
+
+SELECTOR .hero .composer-input textarea x3 identical at lines 5561-5561, 5880-5880, 6522-6522
+  decls: color: #fff
+
+SELECTOR .hero .composer-input textarea::placeholder x2 identical at lines 4804-4804, 5189-5189
+  decls: color: #647187; opacity: 1
+
+SELECTOR .hero .composer-input textarea::placeholder x3 identical at lines 5562-5562, 5881-5881, 6523-6523
+  decls: color: rgb(255 255 255 / 76%)
+
+SELECTOR .hero .composer-input textarea:focus-visible x2 identical at lines 4805-4805, 5190-5190
+  decls: outline-offset: -3px
+
+SELECTOR .hero .send-button x2 identical at lines 4807-4818, 5192-5203
+  decls: background: var(--accent); border-radius: 13px; border: 1px solid var(--accent); box-shadow: none; color: #fff; display: grid; height: 44px; place-items: center; transition: background-color 150ms ease, transform 150ms ease; width: 44px
+
+SELECTOR .hero .send-button:hover:not(:disabled) x2 identical at lines 4820-4823, 5205-5208
+  decls: background: var(--accent-hover); transform: translateY(-1px)
+
+SELECTOR .hero .send-button svg x2 identical at lines 4825-4825, 5210-5210
+  decls: height: 19px; width: 19px
+
+SELECTOR .composer-meta x2 identical at lines 4827-4837, 5212-5222
+  decls: align-items: center; color: var(--muted); display: flex; font-size: var(--type-eyebrow); gap: 12px; justify-content: space-between; letter-spacing: var(--tracking-small); line-height: 1.2; padding: 0 15px 9px
+
+SELECTOR .composer-meta x3 identical at lines 5803-5803, 5889-5889, 6556-6556
+  decls: color: rgb(255 255 255 / 78%)
+
+SELECTOR .composer-count x2 identical at lines 4839-4839, 5224-5224
+  decls: font-variant-numeric: tabular-nums; white-space: nowrap
+
+SELECTOR .composer-count x3 identical at lines 5805-5805, 5891-5891, 6558-6558
+  decls: color: rgb(255 255 255 / 74%)
+
+SELECTOR .hero .error x2 identical at lines 4840-4840, 5225-5225
+  decls: color: #9b2430; margin: 0 16px 12px; text-decoration: none
+
+SELECTOR .hero .starter-prompts[hidden] x2 identical at lines 4841-4841, 5226-5226
+  decls: display: none
+
+SELECTOR .hero .starter-prompts x2 identical at lines 4842-4842, 5227-5227
+  decls: border-top: 1px solid var(--line); grid-template-columns: 1fr; margin: 0 12px; padding: 12px 4px 14px
+
+SELECTOR .hero .starter-prompts > span x2 identical at lines 4843-4843, 5228-5228
+  decls: color: var(--muted); padding: 0
+
+SELECTOR .hero-benefits x2 identical at lines 4845-4858, 5230-5243
+  decls: align-items: center; color: rgb(255 255 255 / 92%); display: flex; flex-wrap: wrap; font-size: var(--type-micro); gap: 11px clamp(14px, 2.2vw, 30px); justify-content: center; list-style: none; margin: 3px 0 0; padding: 0; text-shadow: 0 1px 12px rgb(5 13 24 / 30%); width: 100%
+
+SELECTOR .hero-benefits x3 identical at lines 5656-5656, 5898-5898, 6616-6616
+  decls: margin-top: 22px
+
+SELECTOR .hero-benefits li x2 identical at lines 4860-4860, 5245-5245
+  decls: align-items: center; display: inline-flex; gap: 7px; white-space: nowrap
+
+SELECTOR .hero-benefits svg x2 identical at lines 4861-4861, 5246-5246
+  decls: color: #fff; height: 15px; stroke-width: 2; width: 15px
+
+SELECTOR .hero-ecosystem x2 identical at lines 4863-4870, 5248-5255
+  decls: align-items: center; display: flex; flex-direction: column; gap: 5px; margin-top: 2px; width: min(820px, 100%)
+
+SELECTOR .hero-ecosystem-label x2 identical at lines 4872-4880, 5257-5265
+  decls: color: rgb(255 255 255 / 82%); font-size: var(--type-eyebrow); letter-spacing: var(--tracking-small); line-height: 1.3; max-width: 100%; text-align: center; text-shadow: 0 1px 12px rgb(5 13 24 / 36%)
+
+SELECTOR .hero-logo-marquee x2 identical at lines 4882-4890, 5267-5275
+  decls: --duration: 32s; --gap: clamp(28px, 4vw, 54px); color: #fff; mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%); min-height: 34px; padding: 0; width: min(760px, 100%)
+
+SELECTOR .hero-logo-marquee x2 identical at lines 5900-5900, 6609-6612
+  decls: --duration: 42s; --gap: clamp(18px, 2.4vw, 30px)
+
+SELECTOR .hero-logo-marquee .marquee-copy x3 identical at lines 4892-4892, 5277-5277, 5901-5901
+  decls: align-items: center; gap: var(--gap)
+
+SELECTOR .hero-logo-item x2 identical at lines 4893-4893, 5278-5278
+  decls: align-items: center; color: rgb(255 255 255 / 92%); display: inline-flex; font-size: var(--type-micro); font-weight: 650; gap: 8px; text-shadow: 0 1px 12px rgb(5 13 24 / 38%); white-space: nowrap
+
+SELECTOR .hero-logo-item x2 identical at lines 5902-5902, 6615-6615
+  decls: flex: 0 0 108px; gap: 7px; justify-content: center
+
+SELECTOR .hero-logo-item svg x2 identical at lines 4894-4894, 5279-5279
+  decls: color: currentColor; flex: 0 0 19px; height: 19px; width: 19px
+
+SELECTOR .hero-cloud-transition::before,
+.hero-cloud-transition::after x2 identical at lines 4903-4910, 5288-5295
+  decls: content: ""; left: -8%; pointer-events: none; position: absolute; right: -8%
+
+SELECTOR .hero-cloud-transition::before x2 identical at lines 4912-4922, 5297-5307
+  decls: background: radial-gradient(ellipse 20% 70% at 8% 100%, rgb(255 255 255 / 82%) 0 28%, transparent 78%), radial-gradient(ellipse 26% 82% at 31% 100%, rgb(255 255 255 / 74%) 0 28%, transparent 78%), radial-gradient(ellipse 24% 76% at 59% 100%, rgb(255 255 255 / 78%) 0 30%, transparent 78%), radial-gradient(ellipse 28% 90% at 86% 100%, rgb(255 255 255 / 82%) 0 26%, transparent 78%); filter: blur(24px
+
+SELECTOR .hero-cloud-transition::after x2 identical at lines 4924-4928, 5309-5313
+  decls: background: linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 68%) 48%, #fff 100%); bottom: 0; top: 44%
+
+SELECTOR .composer-context-heading x2 identical at lines 5861-5861, 6576-6576
+  decls: color: #fff; font-size: 0.8125rem; padding: 2px 4px 6px
+
+SELECTOR .composer-context-close x2 identical at lines 5862-5862, 6577-6577
+  decls: color: rgb(255 255 255 / 72%); height: 28px; width: 28px
+
+SELECTOR .composer-context-close:hover x3 identical at lines 5710-5710, 5863-5863, 6578-6578
+  decls: background: rgb(255 255 255 / 12%); color: #fff
+
+SELECTOR .composer-context-actions > button:hover,
+.composer-context-actions > button:focus-visible x3 identical at lines 5730-5733, 5865-5866, 6581-6582
+  decls: background: rgb(255 255 255 / 12%)
+
+SELECTOR .composer-context-actions > button > svg x2 identical at lines 5735-5739, 6583-6583
+  decls: color: #fff; height: 17px; width: 17px
+
+SELECTOR .composer-context-actions strong x2 identical at lines 5868-5868, 6584-6584
+  decls: font-size: 0.8125rem
+
+SELECTOR .composer-context-actions small x2 identical at lines 5869-5869, 6585-6585
+  decls: color: rgb(255 255 255 / 68%); font-size: 0.6875rem
+
+SELECTOR .composer-context-message x2 identical at lines 5871-5871, 6587-6587
+  decls: background: rgb(180 35 50 / 40%); color: #fff
+
+SELECTOR .composer-source-form x2 identical at lines 5872-5872, 6588-6588
+  decls: gap: 7px; padding: 3px
+
+SELECTOR .composer-source-form label x2 identical at lines 5873-5873, 6589-6589
+  decls: color: rgb(255 255 255 / 72%); font-size: 0.6875rem
+
+SELECTOR .composer-source-form input x2 identical at lines 5874-5874, 6590-6590
+  decls: background: rgb(255 255 255 / 9%); border-color: rgb(255 255 255 / 25%); color: #fff; font-size: 0.8125rem; min-height: 38px
+
+SELECTOR .composer-source-form input::placeholder x3 identical at lines 5781-5781, 5875-5875, 6591-6591
+  decls: color: rgb(255 255 255 / 55%)
+
+SELECTOR .composer-source-actions button x2 identical at lines 5876-5876, 6592-6592
+  decls: background: rgb(255 255 255 / 10%); color: #fff; font-size: 0.75rem; min-height: 32px
+
+SELECTOR .composer-source-actions .composer-source-submit x3 identical at lines 5784-5784, 5877-5877, 6593-6593
+  decls: background: var(--accent); color: #fff
+
+SELECTOR .hero .composer-voice-button:hover:not(:disabled) x2 identical at lines 5800-5800, 5885-5885
+  decls: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 38%); color: #fff
+
+SELECTOR .hero .composer-voice-button.is-listening x7 identical at lines 5801-5801, 5886-5886, 5960-5964, 6057-6061, 6146-6150, 6173-6177, 6550-6554
+  decls: background: rgb(0 110 255 / 72%); border-color: rgb(255 255 255 / 48%); color: #fff
+
+SELECTOR .composer-language x3 identical at lines 5804-5804, 5890-5890, 6557-6557
+  decls: color: rgb(255 255 255 / 88%)
+
+SELECTOR .composer-image-reference x2 identical at lines 5892-5892, 6595-6599
+  decls: background: rgb(255 255 255 / 10%); border-color: rgb(255 255 255 / 24%); color: #fff
+
+SELECTOR .composer-image-reference small x2 identical at lines 5893-5893, 6601-6601
+  decls: color: rgb(255 255 255 / 72%)
+
+SELECTOR .composer-image-reference > button x2 identical at lines 5894-5894, 6602-6602
+  decls: background: rgb(255 255 255 / 10%); color: #fff
+
+SELECTOR .composer-dictation-status x2 identical at lines 5895-5895, 6603-6603
+  decls: color: rgb(255 255 255 / 78%)
+
+SELECTOR .composer-dictation-status.is-listening x3 identical at lines 5827-5827, 5896-5896, 6604-6604
+  decls: color: #fff
+
+SELECTOR .composer-context-note,.composer-context-message x2 identical at lines 5870-5870, 6586-6586
+  decls: color: rgb(255 255 255 / 70%); font-size: 0.6875rem; margin: 5px 4px 2px
+
+SELECTOR .site-header[data-accent-background="brand"] .nav-cta x6 identical at lines 5934-5939, 6043-6048, 6132-6137, 6159-6164, 6250-6255, 6499-6504
+  decls: background: transparent; border-color: rgb(255 255 255 / 68%); box-shadow: none; color: #fff
+
+SELECTOR .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover x2 identical at lines 5941-5945, 6153-6157
+  decls: background: transparent; color: var(--nav-foreground)
+
+SELECTOR .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover x3 identical at lines 6026-6029, 6115-6118, 6245-6248
+  decls: background: transparent
+
+SELECTOR .hero .composer-voice-button,
+.hero .composer-voice-button:hover:not(:disabled) x4 identical at lines 5953-5958, 6050-6055, 6139-6144, 6166-6171
+  decls: background: transparent; border-color: transparent; color: #fff
+
+SELECTOR .showcase-heading .section-title,
+.showcase-heading > p x3 identical at lines 5990-5995, 6079-6084, 6209-6214
+  decls: margin-inline: auto; text-align: center; width: 100%
+
+SELECTOR .showcase-heading .section-title x3 identical at lines 5997-5997, 6086-6086, 6216-6216
+  decls: max-width: 22ch
+
+SELECTOR .showcase-caption x3 identical at lines 6009-6016, 6098-6105, 6228-6235
+  decls: font-size: 0.875rem; line-height: 1.45; margin-inline: auto; max-width: 42ch; text-align: center; text-wrap: balance
+
+SELECTOR .site-header[data-contrast] .wordmark-image x2 identical at lines 6338-6340, 6467-6467
+  decls: transition: filter 240ms ease
+
+SELECTOR .site-header[data-contrast="light"] x2 identical at lines 6342-6349, 6444-6451
+  decls: --nav-control-border: rgb(255 255 255 / 36%); --nav-cta-border: rgb(255 255 255 / 70%); --nav-cta-foreground: #172033; --nav-cta-surface: rgb(255 255 255 / 92%); --nav-foreground: #fff; --nav-hover-surface: rgb(255 255 255 / 12%)
+
+SELECTOR .site-header[data-contrast="dark"] x2 identical at lines 6351-6358, 6453-6460
+  decls: --nav-control-border: rgb(23 32 51 / 22%); --nav-cta-border: var(--accent); --nav-cta-foreground: #fff; --nav-cta-surface: var(--accent); --nav-foreground: #172033; --nav-hover-surface: rgb(23 32 51 / 8%)
+
+SELECTOR .site-header[data-contrast="light"] .wordmark-image x2 identical at lines 6360-6360, 6468-6468
+  decls: filter: brightness(0) invert(1)
+
+SELECTOR .site-header[data-contrast="dark"] .wordmark-image x2 identical at lines 6361-6361, 6469-6469
+  decls: filter: none
+
+SELECTOR .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover,
+.site-header[data-contrast] .site-mobile-links > a:hover,
+.site-header[data-contrast] .site-mobile-actions > a:not(.nav-cta):hover,
+.site-header[data-contrast] .site-mobile-toggle:hover x2 identical at lines 6363-6370, 6481-6488
+  decls: background: transparent; color: var(--nav-foreground)
+
+SELECTOR .site-header[data-contrast] .site-mobile-toggle x2 identical at lines 6372-6374, 6490-6490
+  decls: border-color: var(--nav-control-border)
+
+--- R2. SELECTORS APPEARING MULTIPLE TIMES WITH DIFFERENT DECLS (count: 198) ---
+:root
+  L22-74: --accent-hover: #0058cc; --accent-soft: #e8f1ff; --accent: #006eff; --blue-mid: #80b7ff; --blue-soft: #e8f1ff; --blue: #006eff; --canvas: #f5f7fa; --font-editorial: var(--font-serif); --font-ui: var(--font-sans); --ink: #172033; --leading-body: 1.55; --leading
+  L3076-3084: --blueprint-ink: #006eff; --blueprint-line-strong: rgb(0 110 255 / 58%); --blueprint-line: rgb(0 110 255 / 28%); --blueprint-paper: #ffffff; --blueprint-radius: 12px; --blueprint-shadow: 7px 7px 0 var(--blueprint-ink); --blueprint-soft: #e8f1ff
+
+.nav
+  L245-256: align-items: center; background: var(--white); border-bottom: 1px solid var(--line-blue); color: var(--blue); display: flex; gap: 28px; justify-content: space-between; min-height: 76px; position: relative; z-index: 20
+  L3094-3097: border-bottom-color: var(--blueprint-line-strong); min-height: 72px
+
+.profile-page
+  L314-318: background: var(--white); color: var(--blue); min-height: 100svh
+  L4085-4085: background: var(--canvas); color: var(--ink); min-height: 100svh
+
+.profile-header
+  L320-329: align-items: center; border-bottom: 1px solid var(--line-blue); display: flex; gap: 24px; justify-content: space-between; margin-inline: auto; min-height: 76px; width: min(1240px, calc(100% - 80px))
+  L4086-4086: align-items: center; border-bottom: 1px solid var(--line); display: flex; gap: 16px; justify-content: space-between; margin-inline: auto; min-height: 68px; width: min(1200px, calc(100% - 32px))
+
+.profile-header nav
+  L331-336: align-items: center; display: flex; font-size: 0.94rem; gap: 24px
+  L4087-4087: align-items: center; color: var(--muted); display: flex; font-size: 0.88rem; gap: 16px
+
+.profile-shell
+  L343-347: margin: 0 auto; padding-block: clamp(5rem, 12vw, 10rem); width: min(760px, calc(100% - 40px))
+  L4088-4088: margin: 0 auto; padding-block: clamp(40px, 8vh, 88px); width: min(840px, calc(100% - 32px))
+
+.profile-shell h1
+  L349-354: font-size: clamp(3.5rem, 9vw, 7.5rem); letter-spacing: -0.07em; line-height: 0.9; max-width: 10ch
+  L4089-4089: color: var(--ink); font-size: clamp(2.4rem, 4.5vw, 4rem); letter-spacing: -0.035em; line-height: 1.04; max-width: 16ch
+
+.profile-intro
+  L356-360: font-size: 1.05rem; margin-top: 24px; max-width: 42ch
+  L4090-4090: color: var(--muted); margin-top: 14px
+
+.profile-card
+  L362-368: border: 1px solid var(--line-blue); display: grid; gap: 36px; margin-top: 56px; padding: 28px
+  L4091-4091: background: var(--surface); border-radius: var(--radius-frame); border: 1px solid var(--line); display: grid; gap: 24px; margin-top: 32px; padding: clamp(16px, 3vw, 24px)
+
+.profile-identity
+  L370-374: align-items: center; display: flex; gap: 18px
+  L4092-4092: align-items: center; display: flex; gap: 14px; min-width: 0
+
+.profile-avatar
+  L376-383: background: var(--blue); color: var(--white); flex: 0 0 auto; font-size: 1.25rem; height: 72px; width: 72px
+  L4096-4096: background: var(--accent); border: 0; color: white; flex: 0 0 56px; font-size: 1rem; height: 56px; width: 56px
+
+.profile-identity h2
+  L385-387: font-size: clamp(1.4rem, 3vw, 2rem)
+  L4094-4094: color: var(--ink); font-size: 1.25rem; overflow-wrap: anywhere
+
+.profile-details
+  L394-401: border-top: 1px solid var(--line-blue); display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding-top: 24px
+  L4097-4097: border-top: 1px solid var(--line); display: grid; gap: 18px; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0; padding-top: 18px
+
+.profile-details dt
+  L407-413: font-size: 0.72rem; font-weight: 750; letter-spacing: 0.09em; margin-bottom: 6px; text-transform: uppercase
+  L4099-4099: color: var(--muted); font-size: 0.75rem; font-weight: 650; margin-bottom: 5px
+
+.profile-details dd
+  L415-419: line-height: 1.45; margin: 0; overflow-wrap: anywhere
+  L4100-4100: margin: 0
+
+.auth-page
+  L428-439: --auth-ink: #13201f; --auth-line: #d9e4e1; --auth-paper: #f8faf9; --auth-teal-deep: #236e70; --auth-teal: #2f8788; background: var(--auth-paper); color: var(--auth-ink); display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(420px, 0.96fr); min-height:
+  L3130-3137: --auth-ink: var(--blueprint-ink); --auth-line: var(--blueprint-line); --auth-paper: var(--blueprint-paper); --auth-teal-deep: #004eb8; --auth-teal: var(--blueprint-ink); background: var(--blueprint-paper)
+  L4053-4059: background: var(--canvas); color: var(--ink); display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr); min-height: 100svh
+
+.pricing-page
+  L441-446: background: #f8f8f5; color: #111; min-height: 100vh; padding: 28px 5vw 80px
+  L3223-3227: background: var(--blueprint-paper); min-height: 100svh; padding: 28px 5vw 80px
+  L4015-4020: background: var(--canvas); color: var(--ink); min-height: 100svh; padding: 24px max(16px, calc((100vw - 1200px) / 2)) 72px
+
+.pricing-header
+  L448-454: align-items: center; display: flex; justify-content: space-between; margin: 0 auto; max-width: 1180px
+  L3229-3233: border-bottom: 1px solid var(--blueprint-line-strong); max-width: 1180px; padding-bottom: 18px
+  L4022-4031: align-items: center; border-bottom: 1px solid var(--line); display: flex; gap: 16px; justify-content: space-between; margin-inline: auto; max-width: 1200px; min-height: 68px
+
+.pricing-header a:last-child
+  L456-461: color: #111; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase
+  L3235-3238: color: var(--blueprint-ink); font-weight: 700
+  L4033-4033: color: var(--muted); font-size: 0.88rem
+
+.pricing-hero
+  L463-467: margin: 100px auto 58px; max-width: 760px; text-align: center
+  L3240-3244: margin: 96px auto 64px; max-width: 820px; text-align: left
+  L4034-4034: margin: clamp(48px, 9vh, 96px) auto 42px; max-width: 760px; text-align: center
+
+.pricing-hero h1
+  L469-474: font-size: clamp(3.2rem, 8vw, 7rem); letter-spacing: -0.07em; line-height: 0.9; margin: 18px 0
+  L3246-3250: color: var(--blueprint-ink); font-size: clamp(3.4rem, 8vw, 7rem); max-width: 10ch
+  L4035-4035: color: var(--ink); font-size: clamp(2.3rem, 4.5vw, 4rem); letter-spacing: -0.035em; line-height: 1.04; margin: 0 auto; max-width: 16ch
+
+.pricing-hero p
+  L476-481: font-size: 1.05rem; line-height: 1.6; margin: 0 auto; max-width: 520px
+  L3252-3256: color: rgb(0 82 190 / 82%); margin: 26px 0 0; max-width: 560px
+  L4036-4036: color: var(--muted); margin: 14px auto 0; max-width: 54ch
+
+.pricing-wrap
+  L483-486: margin: 0 auto; max-width: 1180px
+  L3258-3260: max-width: 1180px
+  L4037-4037: margin: 0 auto; max-width: 1200px
+
+.pricing-grid
+  L488-492: display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr)
+  L3262-3264: gap: 14px
+  L4038-4038: display: grid; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr))
+
+.pricing-card-featured
+  L504-508: background: #1d42ff; border-color: #1d42ff; color: #fff
+  L3276-3278: box-shadow: var(--blueprint-shadow)
+  L4041-4041: background: linear-gradient(180deg, #fff 0%, #f3f7ff 100%); border: 2px solid var(--accent)
+
+.pricing-badge
+  L510-517: font-size: 0.64rem; letter-spacing: 0.08em; position: absolute; right: 14px; text-transform: uppercase; top: 14px
+  L3294-3299: border-radius: 5px; border: 1px solid currentColor; font-weight: 750; padding: 5px 8px
+  L4048-4048: color: #174d93; font-size: 0.7rem; font-weight: 650; max-width: 18ch; position: absolute; right: 16px; top: 16px
+
+.pricing-card h2
+  L526-530: font-size: 1.7rem; letter-spacing: -0.04em; margin: 48px 0 8px
+  L3280-3283: font-size: 1.8rem; margin-top: 48px
+  L4042-4042: color: var(--ink); font-size: 1.45rem; line-height: 1.15; margin: 38px 0 8px
+
+.pricing-price
+  L532-536: font-size: 3.6rem; letter-spacing: -0.07em; margin: 0
+  L3285-3287: font-weight: 750
+  L4043-4043: color: var(--ink); font-size: clamp(2.4rem, 4vw, 3.4rem); font-variant-numeric: tabular-nums; letter-spacing: -0.04em; margin: 0
+
+.pricing-detail
+  L538-543: line-height: 1.5; margin: 18px 0; min-height: 58px; opacity: 0.74
+  L4044-4044: color: var(--muted); font-size: 0.9rem; line-height: 1.5; margin: 12px 0 18px
+
+.pricing-card ul
+  L545-552: display: grid; font-size: 0.9rem; gap: 10px; list-style: none; margin: 0 0 28px; padding: 0
+  L4045-4045: color: var(--muted); display: grid; font-size: 0.88rem; gap: 8px; list-style: none; margin: 0 0 22px; padding: 0
+
+.pricing-card li
+  L554-558: align-items: center; display: flex; gap: 8px
+  L4046-4046: align-items: flex-start; display: flex; gap: 8px
+
+.pricing-card li svg
+  L560-562: width: 15px
+  L4047-4047: color: var(--accent); height: 16px; width: 16px
+
+.pricing-card button
+  L564-577: align-items: center; background: #111; border: 0; color: #fff; cursor: pointer; display: flex; font: inherit; gap: 10px; justify-content: space-between; margin-top: auto; padding: 14px 16px; width: 100%
+  L4049-4049: align-items: center; background: var(--accent); border-radius: 10px; border: 1px solid var(--accent); color: #fff; display: flex; font-weight: 650; font: inherit; gap: 10px; justify-content: space-between; margin-top: auto; min-height: 46px; padding: 10px 13px
+
+.pricing-card-featured button
+  L579-582: background: #fff; color: #111
+  L4050-4050: background: var(--accent); color: #fff
+
+.pricing-error
+  L589-593: color: #b42318; margin-top: 20px; text-align: center
+  L3308-3310: color: var(--blueprint-ink)
+  L4051-4051: color: #9b2430; margin-top: 16px; text-align: center
+
+.auth-panel-form
+  L606-611: align-items: center; background: var(--auth-paper); display: grid; padding: clamp(2rem, 7vw, 7.5rem)
+  L3139-3142: background: var(--blueprint-paper); padding: clamp(2rem, 7vw, 7.5rem)
+  L4061-4061: align-items: center; background: var(--surface); display: grid; padding: clamp(24px, 6vw, 80px)
+
+.auth-form-shell
+  L613-616: margin-inline: auto; width: min(100%, 430px)
+  L4062-4062: margin-inline: auto; width: min(100%, 440px)
+
+.auth-back
+  L618-626: align-items: center; color: #637674; display: inline-flex; font-size: 0.88rem; font-weight: 650; gap: 8px; margin-bottom: clamp(3rem, 8vw, 7rem)
+  L4063-4063: align-items: center; color: var(--muted); display: inline-flex; font-size: 0.88rem; gap: 8px; margin-bottom: clamp(28px, 6vh, 64px); min-height: 44px
+
+.auth-form-shell h1
+  L652-657: color: var(--auth-ink); font-size: clamp(2.6rem, 5.4vw, 5rem); line-height: 0.94; max-width: 12ch
+  L4065-4065: color: var(--ink); font-size: clamp(2.2rem, 4vw, 3.6rem); letter-spacing: -0.035em; line-height: 1.05; max-width: 16ch
+
+.auth-intro
+  L659-664: color: #637674; line-height: 1.55; margin-top: 20px; max-width: 34ch
+  L4066-4066: color: var(--muted); margin-top: 14px; max-width: 40ch
+
+.auth-form
+  L666-670: display: grid; gap: 16px; margin-top: 34px
+  L4067-4067: display: grid; gap: 16px; margin-top: 28px
+
+.auth-form label
+  L672-679: color: var(--auth-ink); display: grid; font-size: 0.8rem; font-weight: 700; gap: 8px; letter-spacing: 0.03em
+  L4068-4068: color: var(--ink); display: grid; font-size: 0.84rem; font-weight: 600; gap: 7px
+
+.auth-form input
+  L681-692: background: #ffffff; border-radius: 12px; border: 1px solid var(--auth-line); color: var(--auth-ink); font-size: 1rem; letter-spacing: normal; min-height: 50px; outline: none; padding: 13px 15px; width: 100%
+  L3156-3159: border-color: var(--blueprint-line-strong); border-radius: 8px
+  L4069-4069: background: var(--surface); border-radius: var(--radius-control); border: 1px solid #cbd5e1; color: var(--ink); font: inherit; min-height: 48px; min-width: 0; padding: 11px 13px; width: 100%
+
+.auth-form input:focus
+  L698-701: border-color: var(--auth-teal); box-shadow: 0 0 0 3px rgb(47 135 136 / 16%)
+  L3161-3164: border-color: var(--blueprint-ink); box-shadow: 0 0 0 3px rgb(0 110 255 / 16%)
+  L4070-4070: border-color: var(--accent); box-shadow: 0 0 0 3px rgb(0 110 255 / 16%); outline: none
+
+.auth-submit
+  L716-720: background: var(--auth-teal); color: #ffffff; margin-top: 5px
+  L3166-3169: background: var(--blueprint-ink); border-color: var(--blueprint-ink)
+  L4072-4072: background: var(--accent); color: #fff
+
+.auth-error
+  L727-734: background: #fff0ee; border-radius: 6px; border: 1px solid #c64b46; color: #9d302d; font-size: 0.9rem; padding: 12px 14px
+  L3171-3175: background: var(--blueprint-soft); border: 1px solid var(--blueprint-line-strong); color: var(--blueprint-ink)
+  L4073-4073: background: #fff3f4; border-radius: 9px; border: 1px solid #e9b9c0; color: #8f1e2d; padding: 12px 14px
+
+.auth-providers
+  L755-759: display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr))
+  L4074-4074: display: grid; gap: 10px; grid-template-columns: repeat(2,minmax(0,1fr))
+
+.auth-providers button
+  L761-765: background: #ffffff; border-color: var(--auth-line); color: var(--auth-ink)
+  L3177-3182: background: var(--blueprint-paper); border-color: var(--blueprint-line-strong); border-radius: 8px; color: var(--blueprint-ink)
+  L4075-4075: background: var(--surface); border-color: var(--line); color: var(--ink)
+
+.auth-providers button:hover:not(:disabled)
+  L767-771: background: #f1f8f6; border-color: var(--auth-teal); color: var(--auth-teal-deep)
+  L3184-3188: background: var(--blueprint-soft); border-color: var(--blueprint-ink); color: var(--blueprint-ink)
+
+.auth-switch
+  L778-783: color: #637674; font-size: 0.9rem; margin-top: 28px; text-align: center
+  L4076-4076: color: var(--muted); margin-top: 24px; text-align: center
+
+.auth-switch a
+  L785-790: color: var(--auth-teal-deep); font-weight: 750; text-decoration: underline; text-underline-offset: 4px
+  L4077-4077: color: var(--accent); font-weight: 650; text-decoration: underline; text-underline-offset: 3px
+
+.auth-panel-brand
+  L792-800: background: var(--auth-teal); color: #ffffff; display: flex; flex-direction: column; justify-content: space-between; min-height: 100svh; padding: clamp(2rem, 5vw, 4.5rem)
+  L3190-3195: background: var(--blueprint-ink); overflow: hidden; padding: clamp(2rem, 5vw, 4.5rem); position: relative
+  L4078-4078: background: var(--accent-soft); color: var(--ink); display: flex; flex-direction: column; justify-content: space-between; min-height: 100svh; padding: clamp(24px, 4vw, 56px)
+
+.auth-brand-logo
+  L807-811: filter: brightness(0) invert(1); height: auto; width: clamp(150px, 15vw, 230px)
+  L4079-4079: height: auto; width: clamp(140px, 15vw, 200px)
+
+.auth-brand-copy
+  L813-817: margin-block: auto; max-width: 30rem; padding-block: clamp(3rem, 11vh, 10rem)
+  L4080-4080: margin-block: auto; max-width: 32rem; padding-block: clamp(32px, 8vh, 72px)
+
+.auth-brand-kicker
+  L819-821: color: rgb(255 255 255 / 72%)
+  L3219-3221: color: rgb(255 255 255 / 78%)
+
+.auth-brand-copy h2
+  L823-828: color: #ffffff; font-size: clamp(2.7rem, 5.1vw, 5.6rem); line-height: 0.96; max-width: 10ch
+  L3215-3217: max-width: 9ch
+  L4081-4081: color: var(--ink); font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.05; max-width: 15ch
+
+.auth-brand-copy > p:last-child
+  L830-836: color: rgb(255 255 255 / 82%); font-size: clamp(1rem, 1.35vw, 1.15rem); line-height: 1.55; margin-top: 26px; max-width: 31ch
+  L4082-4082: color: var(--muted); margin-top: 18px; max-width: 38ch
+
+.auth-brand-footer
+  L838-841: color: rgb(255 255 255 / 72%); font-size: 0.85rem
+  L4083-4083: color: var(--muted); font-size: 0.82rem
+
+.hero
+  L888-891: min-height: 760px; overflow: hidden
+  L4103-4106: min-height: auto; overflow: visible
+
+.hero-shell
+  L893-897: isolation: isolate; padding-block: clamp(3.5rem, 7vw, 6.5rem) clamp(5rem, 9vw, 8rem); position: relative
+  L4108-4116: align-items: center; display: grid; gap: clamp(36px, 6vw, 88px); grid-template-areas: "composer copy"; grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr); min-height: min(720px, calc(100svh - 68px)); padding-block: clamp(40px, 7vh, 72px)
+
+.hero-copy
+  L911-917: margin-inline: auto; max-width: 1080px; position: relative; text-align: center; z-index: 1
+  L4118-4123: grid-area: copy; margin: 0; max-width: 560px; text-align: left
+
+.hero-copy > p
+  L941-946: font-size: clamp(1.05rem, 2vw, 1.28rem); font-weight: 450; margin: 34px auto 50px; max-width: 610px
+  L4133-4133: color: var(--muted); font-size: 1.05rem; margin: 22px 0 0; max-width: 52ch
+
+.wizard
+  L948-958: background: var(--white); border-radius: 22px; border: 2px solid var(--blue); box-shadow: 10px 12px 0 var(--blue); color: var(--blue); margin-inline: auto; position: relative; width: min(760px, calc(100% - 16px)); z-index: 4
+  L4135-4143: border-radius: var(--radius-frame); border: 1px solid var(--line); box-shadow: 0 18px 44px rgb(23 32 51 / 10%); color: var(--ink); grid-area: composer; margin: 0; width: 100%
+
+.composer-heading
+  L960-968: align-items: center; display: flex; font-size: 0.82rem; font-weight: 700; gap: 18px; justify-content: space-between; padding: 15px 18px 12px
+  L4145-4145: color: var(--ink)
+
+.composer-heading > span:last-child
+  L977-979: opacity: 0.68
+  L4146-4146: color: var(--muted); opacity: 1
+
+.composer-input
+  L981-985: border-radius: 14px; border: 1px solid var(--line-blue); margin: 0 10px
+  L4147-4147: border-color: var(--line)
+
+.composer-input textarea
+  L987-1000: background: transparent; border-radius: 14px 14px 0 0; border: 0; color: var(--blue); display: block; font-size: 1.08rem; line-height: 1.45; max-height: 260px; min-height: 92px; padding: 17px 18px 8px; resize: vertical; width: 100%
+  L4148-4148: color: var(--ink); min-height: 116px
+
+.composer-input textarea::placeholder
+  L1002-1004: color: rgb(0 110 255 / 56%)
+  L4149-4149: color: #5d6a7b
+
+.privacy-chip
+  L1025-1035: align-items: center; border-radius: 9px; border: 1px solid var(--line-blue); display: inline-flex; font-size: 0.8rem; font-weight: 650; gap: 7px; min-height: 34px; padding: 7px 10px
+  L1037-1040: border-color: transparent; opacity: 0.72
+  L4150-4150: color: var(--muted)
+
+.starter-prompts > span
+  L1085-1090: font-size: 0.74rem; font-weight: 700; padding-top: 7px; white-space: nowrap
+  L4151-4151: color: var(--muted)
+
+.prototype-note
+  L1111-1117: border-top: 1px solid var(--line-blue); font-size: 0.72rem; line-height: 1.45; opacity: 0.68; padding: 11px 18px 13px
+  L4152-4152: color: var(--muted); opacity: 1
+
+.showcase
+  L1120-1123: overflow: hidden; padding-block: clamp(5.5rem, 9vw, 8rem)
+  L4154-4157: overflow: hidden; padding-block: clamp(64px, 9vw, 112px)
+  L4930-4930: background: #fff
+  L5315-5315: background: #fff
+
+.showcase-heading
+  L1125-1131: align-items: end; display: grid; gap: 48px; grid-template-columns: 1fr minmax(260px, 390px); margin-bottom: 54px
+  L4159-4164: display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); margin-bottom: 38px
+  L5981-5988: gap: 20px; grid-template-columns: minmax(0, 1fr); justify-items: center; margin: 0 auto clamp(32px, 5vw, 52px); max-width: 860px; text-align: center
+  L6069-6077: display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); justify-items: center; margin: 0 auto clamp(32px, 5vw, 52px); max-width: 860px; text-align: center
+  L6199-6207: display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); justify-items: center; margin: 0 auto clamp(32px, 5vw, 52px); max-width: 860px; text-align: center
+
+.showcase-heading h2
+  L1138-1140: font-size: var(--type-section-h2)
+  L4166-4166: font-size: var(--type-section-h2); max-width: 17ch
+
+.showcase-heading > p
+  L1142-1147: align-self: end; color: rgb(255 255 255 / 82%); grid-column: 2; grid-row: 1 / span 2
+  L4167-4167: color: var(--muted); max-width: 58ch
+  L5998-5998: max-width: 60ch
+  L6087-6087: max-width: 60ch
+  L6217-6217: max-width: 60ch
+
+.showcase-marquees
+  L1149-1152: display: grid; gap: 18px
+  L4168-4168: display: grid; gap: 24px
+
+.preview-marquee
+  L1154-1158: --duration: 42s; --gap: 18px; padding: 0
+  L4170-4173: --duration: 46s; padding: 0
+
+.process-grid
+  L1308-1313: align-items: start; display: grid; gap: clamp(56px, 9vw, 130px); grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr)
+  L4185-4185: gap: clamp(40px, 7vw, 100px); grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr)
+
+.process-sticky
+  L1315-1318: position: sticky; top: 120px
+  L4186-4186: position: relative; top: auto
+
+.process-sticky h2
+  L1320-1322: font-size: clamp(3.5rem, 6vw, 5.6rem)
+  L4187-4187: font-size: var(--type-section-h2); max-width: 13ch
+
+.process-sticky > p
+  L1324-1328: font-size: 1.12rem; margin-top: 28px; max-width: 440px
+  L4188-4188: color: var(--muted); font-size: 1rem; margin-top: 20px; max-width: 48ch
+
+.output-heading
+  L1376-1382: align-items: end; display: grid; gap: 54px; grid-template-columns: minmax(0, 1fr) 360px; margin-bottom: 64px
+  L4199-4199: grid-template-columns: minmax(0, 1fr) minmax(240px, 360px)
+
+.output-heading > p
+  L1384-1387: color: rgb(255 255 255 / 80%); font-size: 1.05rem
+  L4200-4200: color: var(--muted)
+
+.sample-label
+  L1389-1394: display: block; font-size: 0.8rem; font-weight: 700; margin-top: 18px
+  L4201-4201: color: var(--muted); display: block; font-size: 0.78rem; margin-top: 10px
+
+.document
+  L1403-1407: border-radius: 16px; border: 1px solid var(--white); overflow: hidden
+  L4202-4202: border-color: var(--line); border-radius: var(--radius-panel); box-shadow: none
+
+.document-bar
+  L1417-1425: align-items: center; border-bottom: 1px solid var(--line-white); display: flex; font-size: 0.82rem; font-weight: 700; gap: 12px; padding: 16px 20px
+  L4203-4203: border-color: var(--line)
+
+.document-bar span:last-child
+  L1427-1430: margin-left: auto; opacity: 0.68
+  L4204-4204: color: var(--muted)
+
+.document-content
+  L1432-1434: padding: clamp(28px, 4.5vw, 48px)
+  L4205-4205: color: var(--ink)
+
+.output-note
+  L1489-1495: align-items: flex-start; display: flex; gap: 14px; margin: 48px auto 0; max-width: 700px
+  L4206-4206: color: var(--muted)
+
+.centered-heading
+  L1533-1537: margin-inline: auto; max-width: 920px; text-align: center
+  L4241-4241: margin: 0 auto 36px; max-width: 720px; text-align: center
+
+.centered-heading > p
+  L1539-1544: color: rgb(255 255 255 / 82%); font-size: 1.08rem; margin: 28px auto 0; max-width: 630px
+  L4243-4243: color: var(--muted); margin: 14px auto 0
+
+.capability-compare
+  L1546-1551: align-items: center; display: grid; gap: 20px; grid-template-columns: 1fr auto 1fr
+  L4217-4217: gap: 28px; grid-template-columns: repeat(2, minmax(0, 1fr))
+
+.capability-compare article
+  L1553-1558: border-radius: 14px; border: 2px solid var(--blue); min-height: 330px; padding: 30px
+  L4218-4218: background: transparent; border-radius: 0; border-top: 1px solid var(--line); border: 0; box-shadow: none; min-width: 0; padding: 22px 0
+
+.capability-compare article > svg
+  L1560-1564: height: 32px; margin-bottom: 72px; width: 32px
+  L4219-4219: color: var(--accent); height: 22px; margin-bottom: 18px; width: 22px
+
+.capability-compare article > span
+  L1566-1572: display: block; font-size: 0.75rem; font-weight: 750; margin-bottom: 10px; text-transform: uppercase
+  L4220-4220: display: none
+
+.capability-compare article p
+  L1574-1577: color: rgb(0 110 255 / 76%); margin-top: 18px
+  L4222-4222: color: var(--muted); font-size: 0.92rem
+
+.visual-layout
+  L1584-1586: align-items: center
+  L4224-4224: align-items: center; gap: clamp(36px, 7vw, 88px); grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr)
+
+.privacy-content
+  L1660-1662: text-align: center
+  L4232-4232: max-width: 920px
+
+.privacy-content .section-title
+  L1672-1675: margin-inline: auto; max-width: 980px
+  L4233-4233: max-width: 18ch
+
+.privacy-content > p
+  L1677-1681: font-size: 1.08rem; margin: 34px auto 0; max-width: 650px
+  L4234-4234: color: var(--muted); margin-top: 20px; max-width: 62ch
+
+.privacy-flow
+  L1683-1693: align-items: center; border-block: 1px solid var(--line-blue); display: flex; font-weight: 700; gap: 16px; justify-content: center; margin: 48px auto 0; max-width: 760px; padding-block: 22px
+  L4235-4235: border-block: 1px solid var(--line); gap: 16px; justify-content: flex-start; padding-block: 24px
+
+.privacy-note
+  L1695-1702: align-items: flex-start; display: flex; gap: 12px; margin: 28px auto 0; max-width: 650px; text-align: left
+  L4238-4238: background: transparent; border-radius: 0; border-top: 1px solid var(--line); border: 0; color: var(--muted)
+
+.faq-heading h2
+  L1720-1722: font-size: clamp(3.1rem, 5.6vw, 5.4rem)
+  L4245-4245: font-size: var(--type-section-h2); max-width: 14ch
+
+.faq-action
+  L1724-1728: border-top: 1px solid var(--line-white); margin-top: 56px; padding-top: 24px
+  L4246-4246: background: var(--surface); border-radius: var(--radius-panel); border: 1px solid var(--line); box-shadow: none
+
+.faq-action > span
+  L1730-1733: font-size: 0.82rem; font-weight: 700
+  L4247-4247: display: none
+
+.faq-action h3
+  L1735-1738: margin: 14px 0 24px; max-width: 440px
+  L4248-4248: font-size: 1.25rem; margin-bottom: 18px
+
+.faq-item
+  L1774-1776: border-color: var(--line-white) !important
+  L4249-4249: border-color: var(--line)
+
+.faq-content
+  L1795-1801: color: rgb(255 255 255 / 78%); font-size: 0.98rem; line-height: 1.6; max-width: 600px; padding-bottom: 24px !important
+  L4251-4251: color: var(--muted)
+
+.retained-stack dd
+  L2210-2213: font-weight: 700; margin: 4px 0
+  L2215-2219: align-items: center; display: flex; gap: 8px
+
+.skill-category
+  L2320-2325: border-bottom: 1px solid var(--line-blue); border: 0; min-width: 0; padding: 42px 0
+  L3847-3853: border-bottom: 1px solid var(--line); border: 0; margin: 0; min-width: 0; padding: 26px 0
+
+.skill-category legend
+  L2327-2333: font-size: clamp(1.5rem, 2.5vw, 2.3rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 22px; width: 100%
+  L3855-3862: color: var(--ink); font-size: 1.18rem; font-weight: 650; letter-spacing: -0.02em; margin-bottom: 14px; width: 100%
+
+.skill-card
+  L2341-2352: background: var(--white); border-radius: 13px; border: 2px solid var(--line-blue); color: var(--blue); display: grid; gap: 8px 12px; grid-template-columns: 28px 1fr; min-width: 0; padding: 20px; text-align: left
+  L2354-2357: background: var(--blue-soft); border-color: var(--blue)
+  L3870-3881: background: var(--surface); border-radius: var(--radius-panel); border: 1px solid var(--line); color: var(--ink); display: grid; gap: 8px 12px; grid-template-columns: 28px minmax(0, 1fr); min-width: 0; padding: 16px; text-align: left
+
+.skill-check
+  L2359-2367: border-radius: 6px; border: 1px solid var(--blue); display: grid; grid-row: 1 / span 3; height: 24px; place-items: center; width: 24px
+  L3883-3893: background: var(--accent-soft); border-radius: 7px; border: 1px solid rgb(0 110 255 / 24%); color: var(--accent); display: grid; grid-row: 1 / span 3; height: 24px; place-items: center; width: 24px
+
+.skill-card strong
+  L2374-2376: font-size: 1rem
+  L3896-3896: font-size: 0.96rem; min-width: 0; overflow-wrap: anywhere
+
+.skill-card > span:not(.skill-check)
+  L2378-2381: font-size: 0.88rem; line-height: 1.5
+  L3897-3897: color: var(--muted); font-size: 0.86rem; line-height: 1.5; min-width: 0; overflow-wrap: anywhere
+
+.skill-card small
+  L2383-2388: font-size: 0.72rem; font-weight: 700; opacity: 0.68; overflow-wrap: anywhere
+  L3898-3898: color: var(--muted); font-size: 0.72rem; min-width: 0; overflow-wrap: anywhere
+
+.skills-actions
+  L2390-2396: align-items: center; display: flex; gap: 18px; justify-content: space-between; padding-top: 36px
+  L3915-3921: align-items: center; display: flex; gap: 12px; justify-content: space-between; padding-top: 24px
+
+.skills-actions > span
+  L2398-2401: font-size: 0.84rem; font-weight: 700
+  L3923-3923: color: var(--muted); font-size: 0.84rem
+
+.skills-complete
+  L2403-2407: margin-inline: auto; max-width: 820px; text-align: center
+  L3924-3924: margin-inline: auto; max-width: 760px; text-align: left
+
+.selected-skill-list
+  L2409-2417: display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; margin: 26px 0; padding: 0
+  L3927-3927: display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 20px 0; padding: 0
+
+.selected-skill-list li
+  L2419-2426: background: var(--blue-soft); border-radius: 7px; border: 1px solid var(--line-blue); font-size: 0.82rem; font-weight: 700; padding: 8px 11px
+  L3928-3928: background: var(--accent-soft); border-radius: 8px; border: 1px solid rgb(0 110 255 / 20%); color: #174d93; font-size: 0.82rem; padding: 7px 10px
+
+.document-toolbar
+  L2515-2519: border-bottom: 1px solid var(--line-blue); justify-content: space-between; padding-block: 20px
+  L3337-3340: border-bottom-color: var(--blueprint-line-strong); padding-block: 18px
+  L3930-3937: align-items: center; border-bottom: 1px solid var(--line); display: flex; gap: 14px; justify-content: space-between; padding-block: 16px
+
+.document-nav button
+  L2521-2527: border-radius: 999px; border: 1px solid var(--line-blue); font-weight: 700; min-height: 42px; padding: 9px 14px
+  L3949-3957: background: var(--surface); border-radius: 9px; border: 1px solid var(--line); color: var(--muted); font-weight: 600; min-height: 42px; padding: 9px 13px
+
+.document-nav button[aria-pressed="true"]
+  L2529-2533: background: var(--blue); border-color: var(--blue); color: var(--white)
+  L3354-3357: background: var(--blueprint-ink); border-color: var(--blueprint-ink)
+  L3959-3963: background: var(--accent); border-color: var(--accent); color: #fff
+
+.document-layout
+  L2563-2569: align-items: start; display: grid; gap: 28px; grid-template-columns: minmax(170px, 220px) minmax(0, 1fr); padding-top: 28px
+  L3965-3971: align-items: start; display: grid; gap: 22px; grid-template-columns: minmax(170px, 220px) minmax(0, 1fr); padding-top: 22px
+
+.document-summary
+  L2571-2579: border-block: 1px solid var(--line-blue); display: grid; gap: 10px; min-width: 0; padding: 18px 0; position: sticky; top: 24px
+  L3359-3361: border-block-color: var(--blueprint-line-strong)
+  L3973-3982: border-block: 1px solid var(--line); color: var(--ink); display: grid; gap: 8px; min-width: 0; padding: 16px 0; position: sticky; top: 88px
+
+.document-summary strong,
+.document-summary p
+  L2581-2584: overflow-wrap: anywhere
+  L3984-3985: min-width: 0; overflow-wrap: anywhere
+
+.document-summary .text-link
+  L2586-2592: align-items: center; display: inline-flex; gap: 8px; margin-top: 10px; width: fit-content
+  L3987-3987: align-items: center; display: inline-flex; gap: 7px; margin-top: 8px; width: fit-content
+
+.document-sections
+  L2594-2598: display: grid; gap: 16px; min-width: 0
+  L3988-3988: display: grid; gap: 14px; min-width: 0
+
+.document-section
+  L2600-2605: border-radius: 14px; border: 2px solid var(--line-blue); min-width: 0; padding: clamp(18px, 3vw, 28px)
+  L3363-3366: background: var(--blueprint-paper); border-width: 1px
+  L3990-3996: background: var(--surface); border-radius: var(--radius-panel); border: 1px solid var(--line); min-width: 0; padding: clamp(16px, 2.5vw, 26px)
+
+.document-section-header
+  L2607-2611: align-items: flex-start; justify-content: space-between; margin-bottom: 18px
+  L3998-4005: align-items: flex-start; display: flex; gap: 12px; justify-content: space-between; margin-bottom: 14px; min-width: 0
+
+.document-section-header h2
+  L2613-2618: font-size: clamp(1.45rem, 2.8vw, 2.25rem); line-height: 1.05; margin-top: 5px; overflow-wrap: anywhere
+  L4008-4008: color: var(--ink); font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.15; margin-top: 4px; overflow-wrap: anywhere
+
+.document-markdown
+  L2632-2649: background: var(--blue-soft); border-radius: 8px; border: 1px solid var(--line-blue); color: var(--blue); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.78rem; line-height: 1.65; margin: 0; max-height: 520px; max-width: 100%; min-
+  L3368-3371: background: var(--blueprint-soft); border-color: var(--blueprint-line)
+  L4009-4009: background: #f5f7fa; border-radius: 9px; border: 1px solid var(--line); color: #243247; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.78rem; line-height: 1.6; margin: 0; max-height: 520px; max-width: 100%; min-width: 0; overflow-
+
+.generate-status
+  L2651-2657: font-size: 0.82rem; font-weight: 700; margin: 18px 0 0 auto; min-height: 1.5em; text-align: right
+  L3373-3375: color: var(--blueprint-ink)
+  L4010-4010: color: var(--muted); font-size: 0.82rem; margin: 14px 0 0; min-height: 1.5em; text-align: right
+
+.feedback-panel
+  L2659-2666: background: var(--blue-soft); border: 1px solid var(--line-blue); display: grid; gap: 16px; margin-top: 32px; padding: 22px
+  L4011-4011: background: var(--surface); border-radius: var(--radius-panel); border: 1px solid var(--line); display: grid; gap: 14px; margin-top: 24px; padding: 18px
+
+.feedback-panel h2
+  L2668-2671: font-size: clamp(1.35rem, 2.5vw, 2rem); margin-top: 6px
+  L4012-4012: color: var(--ink); font-size: clamp(1.2rem, 2.4vw, 1.7rem); margin-top: 4px
+
+.feedback-comment textarea
+  L2700-2709: background: var(--white); border-radius: 8px; border: 1px solid var(--line-blue); color: var(--ink); font: inherit; min-height: 90px; padding: 12px; resize: vertical
+  L4013-4013: background: var(--surface); border-radius: 9px; border: 1px solid var(--line); color: var(--ink); font: inherit; min-height: 96px; padding: 12px; width: 100%
+
+.pricing-card,
+.pricing-card-featured
+  L3266-3274: background: var(--blueprint-paper); border-radius: var(--blueprint-radius); border: 1px solid var(--blueprint-line-strong); color: var(--blueprint-ink); min-height: 430px; padding: 28px
+  L4039-4040: background: var(--surface); border-radius: var(--radius-frame); border: 1px solid var(--line); color: var(--ink); display: flex; flex-direction: column; min-height: 370px; min-width: 0; padding: 22px; position: relative
+
+.site-header[data-contrast] .nav-cta
+  L3584-3601: align-items: center; background: rgb(255 255 255 / 88%); border-radius: 12px; border: 1px solid #d9e1ea; box-shadow: 0 2px 8px rgb(23 32 51 / 8%); color: var(--ink); display: inline-flex; flex: 0 0 auto; font-size: 0.84rem; font-weight: 700; gap: 9px; justify-
+  L5922-5927: background: var(--accent); border-color: var(--accent); color: #fff; transition: transform 150ms ease
+  L6031-6036: background: var(--accent); border-color: var(--accent); color: #fff; transition: transform 150ms ease
+  L6376-6381: background: var(--nav-cta-surface); border-color: var(--nav-cta-border); color: var(--nav-cta-foreground); transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease, transform 150ms ease
+  L6492-6497: background: var(--accent); border-color: var(--accent); color: #fff; transition: transform 150ms ease
+
+.site-header[data-contrast] .nav-cta:hover
+  L3605-3608: background: #fff; transform: translateY(-1px)
+  L5929-5932: background: var(--accent); color: #fff
+  L6038-6041: background: var(--accent); color: #fff
+
+.marquee-copy
+  L4178-4178: display: flex; flex: none; gap: 20px; padding-inline-end: var(--gap, 20px); width: max-content
+  L5899-5899: padding-inline-end: var(--gap, 20px)
+  L6607-6607: padding-inline-end: var(--gap, 20px)
+
+.showcase-capture
+  L4179-4179: margin: 0; width: clamp(280px, 41vw, 520px)
+  L5999-5999: display: flex; flex-direction: column
+  L6088-6088: display: flex; flex-direction: column
+  L6218-6218: display: flex; flex-direction: column
+
+.showcase-capture-image
+  L4180-4180: aspect-ratio: 1864 / 1000; background: var(--surface); border-radius: var(--radius-frame); border: 1px solid var(--line); overflow: hidden
+  L5903-5903: aspect-ratio: 1864 / 1000; background: #f5f7fa
+  L6618-6621: aspect-ratio: 1864 / 1000; background: #f5f7fa
+
+.showcase-capture-image img
+  L4181-4181: display: block; height: 100%; object-fit: contain; width: 100%
+  L5904-5904: object-fit: contain
+  L6623-6623: object-fit: contain
+
+.showcase-capture figcaption
+  L4182-4182: color: var(--ink); display: flex; font-size: 0.85rem; gap: 16px; justify-content: space-between; padding: 12px 2px 0
+  L6001-6007: display: flex; justify-content: center; min-height: 64px; padding: 14px 14px 0; text-align: center
+  L6090-6096: display: flex; justify-content: center; min-height: 64px; padding: 14px 14px 0; text-align: center
+  L6220-6226: display: flex; justify-content: center; min-height: 64px; padding: 14px 14px 0; text-align: center
+
+.hero.hero-video-surface
+  L4602-4612: align-items: stretch; background: #1c2935; color: #fff; display: flex; isolation: isolate; min-height: 100svh; overflow: hidden; position: relative; scroll-margin-top: 0
+  L4988-4998: align-items: stretch; background: #1c2935; color: #fff; display: flex; isolation: isolate; min-height: 100svh; overflow: hidden; position: relative; scroll-margin-top: 0
+  L5486-5488: --hero-cloud-height: clamp(165px, 25vh, 260px)
+
+.hero-stack
+  L4658-4666: align-items: center; display: flex; flex-direction: column; gap: clamp(7px, 1.05vh, 12px); margin-inline: auto; text-align: center; width: min(100%, 940px)
+  L5043-5051: align-items: center; display: flex; flex-direction: column; gap: clamp(7px, 1.1vh, 12px); margin-inline: auto; text-align: center; width: min(100%, 940px)
+  L5395-5395: gap: 0
+
+.hero-brand
+  L4668-4673: align-items: center; display: flex; justify-content: center; margin-bottom: 1px
+  L5053-5058: align-items: center; display: flex; justify-content: center; margin-bottom: 1px
+  L5396-5396: margin-bottom: 8px
+
+.hero-brand-logo
+  L4675-4682: display: block; filter: brightness(0) invert(1); filter: drop-shadow(0 2px 10px rgb(5 13 24 / 26%)) brightness(0) invert(1); height: clamp(52px, 5vw, 69px); object-fit: contain; width: clamp(104px, 10vw, 138px)
+  L5060-5067: display: block; drop-shadow: 0 2px 10px rgb(5 13 24 / 26%); filter: brightness(0) invert(1); height: clamp(52px, 5vw, 69px); object-fit: contain; width: clamp(104px, 10vw, 138px)
+
+.hero-attribution
+  L4684-4693: color: rgb(255 255 255 / 84%); font-size: var(--type-brand); font-weight: 500; letter-spacing: 0.12em; line-height: 1.2; max-width: none; text-shadow: 0 1px 12px rgb(6 15 30 / 40%); text-transform: uppercase
+  L5069-5078: color: rgb(255 255 255 / 82%); font-size: var(--type-brand); font-weight: 500; letter-spacing: 0.12em; line-height: 1.2; max-width: none; text-shadow: 0 1px 12px rgb(6 15 30 / 40%); text-transform: uppercase
+  L5398-5409: align-items: center; display: inline-flex; font-family: var(--font-ui); font-size: var(--type-brand); gap: 10px; justify-content: center; letter-spacing: 0; line-height: 1; margin-bottom: 8px; text-transform: none
+
+.hero .hero-title
+  L4697-4707: color: #fff; font-size: var(--type-hero-h1); font-weight: 800; letter-spacing: -0.045em; line-height: 1.02; margin: 0; max-width: 20ch; text-shadow: 0 2px 20px rgb(5 13 24 / 30%); text-wrap: balance
+  L5419-5426: font-family: var(--font-ui); font-size: var(--type-hero-h1); font-weight: 800; letter-spacing: var(--tracking-display); line-height: var(--leading-display); margin: 0
+
+.hero-tagline
+  L4709-4721: color: #fff; font-family: var(--font-editorial); font-size: var(--type-hero-h2); font-style: normal; font-weight: 400; letter-spacing: var(--tracking-editorial); line-height: var(--leading-display); margin: 0; max-width: 24ch; text-shadow: 0 2px 18px rgb(5 13 
+  L5094-5106: color: #fff; font-family: var(--font-editorial); font-size: var(--type-hero-h2); font-style: normal; font-weight: 400; letter-spacing: var(--tracking-editorial); line-height: var(--leading-display); margin: 0; max-width: 24ch; text-shadow: 0 2px 18px rgb(5 13 
+  L5428-5436: font-family: var(--font-editorial); font-size: var(--type-hero-h2); font-style: normal; font-weight: 400; letter-spacing: var(--tracking-editorial); line-height: var(--leading-display); margin: 4px 0 0
+
+.hero-description
+  L4723-4731: color: rgb(255 255 255 / 91%); font-size: var(--type-hero-body); line-height: var(--leading-body); margin: 0; max-width: 58ch; text-shadow: 0 1px 14px rgb(5 13 24 / 34%); text-wrap: pretty
+  L5108-5116: color: rgb(255 255 255 / 91%); font-size: var(--type-hero-body); line-height: var(--leading-body); margin: 0; max-width: 58ch; text-shadow: 0 1px 14px rgb(5 13 24 / 34%); text-wrap: pretty
+  L5438-5443: font-family: var(--font-ui); font-size: var(--type-hero-body); line-height: var(--leading-body); margin: 22px 0 26px
+
+.hero .wizard
+  L4733-4743: -webkit-backdrop-filter: blur(18px) saturate(145%); backdrop-filter: blur(18px) saturate(145%); background: rgb(255 255 255 / 94%); border-radius: 19px; border: 1px solid rgb(255 255 255 / 88%); box-shadow: 0 18px 48px rgb(7 17 31 / 22%), inset 0 1px 0 rgb(255
+  L5118-5128: -webkit-backdrop-filter: blur(18px) saturate(145%); backdrop-filter: blur(18px) saturate(145%); background: rgb(255 255 255 / 94%); border-radius: 19px; border: 1px solid rgb(255 255 255 / 88%); box-shadow: 0 18px 48px rgb(7 17 31 / 22%), inset 0 1px 0 rgb(255
+  L5445-5445: margin: 0
+  L5514-5524: -webkit-backdrop-filter: blur(28px) saturate(165%); backdrop-filter: blur(28px) saturate(165%); background: rgb(17 29 45 / 34%); border-radius: 22px; border: 1px solid rgb(255 255 255 / 34%); box-shadow: 0 20px 50px rgb(5 13 24 / 20%), inset 0 1px 0 rgb(255 25
+  L5879-5879: background: rgb(17 29 45 / 34%); border-color: rgb(255 255 255 / 34%); color: #fff
+  L6507-6514: -webkit-backdrop-filter: blur(28px) saturate(165%); backdrop-filter: blur(28px) saturate(165%); background: rgb(17 29 45 / 34%); border-color: rgb(255 255 255 / 34%); box-shadow: 0 20px 50px rgb(5 13 24 / 20%), inset 0 1px 0 rgb(255 255 255 / 22%); color: #fff
+
+.hero .composer-input
+  L4745-4754: align-items: center; border-radius: inherit; border: 0; display: grid; gap: 7px; grid-template-columns: 32px 36px minmax(0, 1fr) 44px; margin: 0; padding: 8px 10px
+  L5130-5139: align-items: center; border-radius: inherit; border: 0; display: grid; gap: 7px; grid-template-columns: 32px 36px minmax(0, 1fr) 44px; margin: 0; padding: 8px 10px
+  L5526-5531: gap: 7px; grid-template-columns: 38px minmax(0, 1fr) 40px 46px; padding: 8px 10px; position: relative
+  L5659-5662: grid-template-columns: 38px minmax(0, 1fr) 40px 46px; position: relative
+  L5842-5845: grid-template-columns: 38px minmax(0, 1fr) 40px 46px; position: relative
+  L6516-6520: gap: 7px; grid-template-columns: 38px minmax(0, 1fr) 40px 46px; padding: 8px 10px
+
+.hero .composer-add
+  L4769-4778: background: transparent; border-radius: 50%; border: 0; color: #465369; display: grid; height: 36px; place-items: center; width: 36px
+  L5154-5163: background: transparent; border-radius: 50%; border: 0; color: #465369; display: grid; height: 36px; place-items: center; width: 36px
+  L5545-5552: background: rgb(255 255 255 / 12%); border-radius: 12px; border: 1px solid rgb(255 255 255 / 24%); color: #fff; height: 38px; width: 38px
+  L5882-5882: background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 24%); color: #fff
+  L6525-6529: background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 24%); color: #fff
+
+.hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"]
+  L4780-4784: background: var(--accent-soft); color: var(--accent)
+  L5165-5169: background: var(--accent-soft); color: var(--accent)
+  L5554-5559: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 42%); color: #fff
+  L6531-6536: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 42%); color: #fff
+
+.hero .composer-input textarea
+  L4788-4802: background: transparent; border-radius: 0; border: 0; color: var(--ink); font-size: var(--type-composer); line-height: 1.45; max-height: 144px; min-height: 44px; min-width: 0; overflow-y: auto; padding: 10px 5px; resize: none; width: 100%
+  L5173-5187: background: transparent; border-radius: 0; border: 0; color: var(--ink); font-size: var(--type-composer); line-height: 1.45; max-height: 144px; min-height: 44px; min-width: 0; overflow-y: auto; padding: 10px 5px; resize: none; width: 100%
+  L5561-5561: color: #fff
+  L5880-5880: color: #fff
+  L6522-6522: color: #fff
+
+.hero .composer-input textarea::placeholder
+  L4804-4804: color: #647187; opacity: 1
+  L5189-5189: color: #647187; opacity: 1
+  L5562-5562: color: rgb(255 255 255 / 76%)
+  L5881-5881: color: rgb(255 255 255 / 76%)
+  L6523-6523: color: rgb(255 255 255 / 76%)
+
+.hero .composer-input textarea:focus-visible
+  L4805-4805: outline-offset: -3px
+  L5190-5190: outline-offset: -3px
+  L5948-5951: outline-offset: -3px; outline: 1px solid rgb(255 255 255 / 78%)
+
+.hero .send-button
+  L4807-4818: background: var(--accent); border-radius: 13px; border: 1px solid var(--accent); box-shadow: none; color: #fff; display: grid; height: 44px; place-items: center; transition: background-color 150ms ease, transform 150ms ease; width: 44px
+  L5192-5203: background: var(--accent); border-radius: 13px; border: 1px solid var(--accent); box-shadow: none; color: #fff; display: grid; height: 44px; place-items: center; transition: background-color 150ms ease, transform 150ms ease; width: 44px
+  L5564-5568: border-radius: 14px; height: 46px; width: 46px
+  L5887-5887: background: var(--accent); color: #fff
+
+.hero .send-button svg
+  L4825-4825: height: 19px; width: 19px
+  L5210-5210: height: 19px; width: 19px
+  L5570-5574: height: 20px; stroke-width: 2; width: 20px
+  L5888-5888: color: #fff
+
+.composer-meta
+  L4827-4837: align-items: center; color: var(--muted); display: flex; font-size: var(--type-eyebrow); gap: 12px; justify-content: space-between; letter-spacing: var(--tracking-small); line-height: 1.2; padding: 0 15px 9px
+  L5212-5222: align-items: center; color: var(--muted); display: flex; font-size: var(--type-eyebrow); gap: 12px; justify-content: space-between; letter-spacing: var(--tracking-small); line-height: 1.2; padding: 0 15px 9px
+  L5455-5459: font-family: var(--font-ui); font-size: var(--type-eyebrow); letter-spacing: var(--tracking-small)
+  L5803-5803: color: rgb(255 255 255 / 78%)
+  L5889-5889: color: rgb(255 255 255 / 78%)
+  L6556-6556: color: rgb(255 255 255 / 78%)
+
+.composer-count
+  L4839-4839: font-variant-numeric: tabular-nums; white-space: nowrap
+  L5224-5224: font-variant-numeric: tabular-nums; white-space: nowrap
+  L5805-5805: color: rgb(255 255 255 / 74%)
+  L5891-5891: color: rgb(255 255 255 / 74%)
+  L6558-6558: color: rgb(255 255 255 / 74%)
+
+.hero-benefits
+  L4845-4858: align-items: center; color: rgb(255 255 255 / 92%); display: flex; flex-wrap: wrap; font-size: var(--type-micro); gap: 11px clamp(14px, 2.2vw, 30px); justify-content: center; list-style: none; margin: 3px 0 0; padding: 0; text-shadow: 0 1px 12px rgb(5 13 24 / 
+  L5230-5243: align-items: center; color: rgb(255 255 255 / 92%); display: flex; flex-wrap: wrap; font-size: var(--type-micro); gap: 11px clamp(14px, 2.2vw, 30px); justify-content: center; list-style: none; margin: 3px 0 0; padding: 0; text-shadow: 0 1px 12px rgb(5 13 24 / 
+  L5656-5656: margin-top: 22px
+  L5898-5898: margin-top: 22px
+  L6616-6616: margin-top: 22px
+
+.hero-ecosystem
+  L4863-4870: align-items: center; display: flex; flex-direction: column; gap: 5px; margin-top: 2px; width: min(820px, 100%)
+  L5248-5255: align-items: center; display: flex; flex-direction: column; gap: 5px; margin-top: 2px; width: min(820px, 100%)
+  L6063-6063: gap: 12px
+
+.hero-ecosystem-label
+  L4872-4880: color: rgb(255 255 255 / 82%); font-size: var(--type-eyebrow); letter-spacing: var(--tracking-small); line-height: 1.3; max-width: 100%; text-align: center; text-shadow: 0 1px 12px rgb(5 13 24 / 36%)
+  L5257-5265: color: rgb(255 255 255 / 82%); font-size: var(--type-eyebrow); letter-spacing: var(--tracking-small); line-height: 1.3; max-width: 100%; text-align: center; text-shadow: 0 1px 12px rgb(5 13 24 / 36%)
+  L5467-5471: font-family: var(--font-ui); font-size: var(--type-eyebrow); letter-spacing: var(--tracking-small)
+
+.hero-logo-marquee
+  L4882-4890: --duration: 32s; --gap: clamp(28px, 4vw, 54px); color: #fff; mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%); min-height: 34px; padding: 0; width: min(760px, 100%)
+  L5267-5275: --duration: 32s; --gap: clamp(28px, 4vw, 54px); color: #fff; mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%); min-height: 34px; padding: 0; width: min(760px, 100%)
+  L5900-5900: --duration: 42s; --gap: clamp(18px, 2.4vw, 30px)
+  L6257-6260: --duration: 44s; --gap: clamp(16px, 2vw, 26px)
+  L6609-6612: --duration: 42s; --gap: clamp(18px, 2.4vw, 30px)
+
+.hero-logo-marquee .marquee-copy
+  L4892-4892: align-items: center; gap: var(--gap)
+  L5277-5277: align-items: center; gap: var(--gap)
+  L5901-5901: align-items: center; gap: var(--gap)
+  L6262-6266: align-items: center; gap: var(--gap); padding-inline-end: var(--gap)
+  L6614-6614: gap: var(--gap)
+
+.hero-logo-item
+  L4893-4893: align-items: center; color: rgb(255 255 255 / 92%); display: inline-flex; font-size: var(--type-micro); font-weight: 650; gap: 8px; text-shadow: 0 1px 12px rgb(5 13 24 / 38%); white-space: nowrap
+  L5278-5278: align-items: center; color: rgb(255 255 255 / 92%); display: inline-flex; font-size: var(--type-micro); font-weight: 650; gap: 8px; text-shadow: 0 1px 12px rgb(5 13 24 / 38%); white-space: nowrap
+  L5902-5902: flex: 0 0 108px; gap: 7px; justify-content: center
+  L6268-6274: align-items: center; display: inline-flex; flex: 0 0 108px; gap: 7px; justify-content: center
+  L6615-6615: flex: 0 0 108px; gap: 7px; justify-content: center
+
+.hero-cloud-transition
+  L4896-4901: background: linear-gradient(180deg, transparent 0%, rgb(255 255 255 / 4%) 18%, rgb(255 255 255 / 28%) 52%, rgb(255 255 255 / 80%) 82%, #fff 100%); height: clamp(140px, 18vh, 210px); inset-block: auto 0; z-index: 2
+  L5281-5286: background: linear-gradient(180deg, transparent 0%, rgb(255 255 255 / 4%) 18%, rgb(255 255 255 / 28%) 52%, rgb(255 255 255 / 80%) 82%, #fff 100%); height: clamp(165px, 25vh, 260px); inset-block: auto 0; z-index: 2
+  L5634-5644: animation: none; background: linear-gradient( 180deg, transparent 0%, rgb(255 255 255 / 3%) 18%, rgb(255 255 255 / 22%) 52%, rgb(255 255 255 / 72%) 82%, #fff 100% )
+
+.hero-cloud-transition::before
+  L4912-4922: background: radial-gradient(ellipse 20% 70% at 8% 100%, rgb(255 255 255 / 82%) 0 28%, transparent 78%), radial-gradient(ellipse 26% 82% at 31% 100%, rgb(255 255 255 / 74%) 0 28%, transparent 78%), radial-gradient(ellipse 24% 76% at 59% 100%, rgb(255 255 255 / 
+  L5297-5307: background: radial-gradient(ellipse 20% 70% at 8% 100%, rgb(255 255 255 / 82%) 0 28%, transparent 78%), radial-gradient(ellipse 26% 82% at 31% 100%, rgb(255 255 255 / 74%) 0 28%, transparent 78%), radial-gradient(ellipse 24% 76% at 59% 100%, rgb(255 255 255 / 
+  L5646-5646: opacity: 0.78
+
+.hero-cloud-transition::after
+  L4924-4928: background: linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 68%) 48%, #fff 100%); bottom: 0; top: 44%
+  L5309-5313: background: linear-gradient(180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 68%) 48%, #fff 100%); bottom: 0; top: 44%
+  L5647-5654: background: linear-gradient( 180deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 58%) 48%, #fff 100% )
+
+.composer-context-popover
+  L5672-5687: -webkit-backdrop-filter: blur(26px) saturate(165%); backdrop-filter: blur(26px) saturate(165%); background: rgb(20 30 46 / 82%); border-radius: 14px; border: 1px solid rgb(255 255 255 / 24%); bottom: auto; box-shadow: 0 18px 42px rgb(4 10 18 / 30%), inset 0 1p
+  L5847-5859: -webkit-backdrop-filter: blur(26px) saturate(165%); backdrop-filter: blur(26px) saturate(165%); background: rgb(20 30 46 / 82%); border-radius: 14px; border: 1px solid rgb(255 255 255 / 24%); bottom: auto; box-shadow: 0 18px 42px rgb(4 10 18 / 30%), inset 0 1p
+  L5966-5975: -webkit-backdrop-filter: blur(28px) saturate(165%); backdrop-filter: blur(28px) saturate(165%); background: rgb(20 30 46 / 94%); bottom: auto; max-height: min(204px, calc(100svh - 180px)); overflow-y: auto; top: calc(100% + 8px); width: min(248px, calc(100vw -
+  L6179-6191: -webkit-backdrop-filter: blur(28px) saturate(165%); backdrop-filter: blur(28px) saturate(165%); background: rgb(20 30 46 / 92%); border-color: rgb(255 255 255 / 28%); bottom: auto; color: #fff; max-height: min(240px, calc(100svh - 180px)); overflow-y: auto; pa
+  L6560-6574: -webkit-backdrop-filter: blur(26px) saturate(165%); backdrop-filter: blur(26px) saturate(165%); background: rgb(20 30 46 / 92%); border-color: rgb(255 255 255 / 28%); border-radius: 14px; bottom: auto; box-shadow: 0 18px 42px rgb(4 10 18 / 30%), inset 0 1px 0 
+
+.composer-context-heading
+  L5689-5697: align-items: center; color: #fff; display: flex; font-size: 0.8125rem; gap: 12px; justify-content: space-between; padding: 2px 4px 6px
+  L5861-5861: color: #fff; font-size: 0.8125rem; padding: 2px 4px 6px
+  L6576-6576: color: #fff; font-size: 0.8125rem; padding: 2px 4px 6px
+
+.composer-context-close
+  L5699-5708: background: transparent; border-radius: 9px; border: 0; color: rgb(255 255 255 / 72%); display: grid; height: 28px; place-items: center; width: 28px
+  L5862-5862: color: rgb(255 255 255 / 72%); height: 28px; width: 28px
+  L6577-6577: color: rgb(255 255 255 / 72%); height: 28px; width: 28px
+
+.composer-context-actions
+  L5713-5713: display: grid; gap: 1px
+  L6579-6579: gap: 1px
+
+.composer-context-actions > button
+  L5715-5728: align-items: center; background: transparent; border-radius: 9px; border: 0; color: #fff; display: grid; gap: 9px; grid-template-columns: 19px minmax(0, 1fr); min-height: 42px; padding: 6px 8px; text-align: left; width: 100%
+  L5864-5864: color: #fff; min-height: 40px
+  L5977-5977: min-height: 36px
+  L6580-6580: border-radius: 9px; color: #fff; gap: 9px; grid-template-columns: 19px minmax(0, 1fr); min-height: 42px; padding: 6px 8px
+
+.composer-context-actions > button:hover,
+.composer-context-actions > button:focus-visible
+  L5730-5733: background: rgb(255 255 255 / 12%)
+  L5865-5866: background: rgb(255 255 255 / 12%)
+  L5978-5979: background: rgb(255 255 255 / 8%)
+  L6193-6197: background: rgb(255 255 255 / 9%); color: #fff
+  L6581-6582: background: rgb(255 255 255 / 12%)
+
+.composer-context-actions > button > svg
+  L5735-5739: color: #fff; height: 17px; width: 17px
+  L5867-5867: color: #fff
+  L6583-6583: color: #fff; height: 17px; width: 17px
+
+.composer-context-actions strong
+  L5747-5747: font-size: 0.8125rem; font-weight: 600
+  L5868-5868: font-size: 0.8125rem
+  L6584-6584: font-size: 0.8125rem
+
+.composer-context-actions small
+  L5748-5748: color: rgb(255 255 255 / 68%); font-size: 0.6875rem; line-height: 1.25
+  L5869-5869: color: rgb(255 255 255 / 68%); font-size: 0.6875rem
+  L6585-6585: color: rgb(255 255 255 / 68%); font-size: 0.6875rem
+
+.composer-context-message
+  L5758-5763: background: rgb(180 35 50 / 40%); border-radius: 8px; color: #fff; padding: 8px 9px
+  L5871-5871: background: rgb(180 35 50 / 40%); color: #fff
+  L6587-6587: background: rgb(180 35 50 / 40%); color: #fff
+
+.composer-source-form
+  L5765-5765: display: grid; gap: 7px; padding: 3px
+  L5872-5872: gap: 7px; padding: 3px
+  L6588-6588: gap: 7px; padding: 3px
+
+.composer-source-form label
+  L5766-5766: color: rgb(255 255 255 / 72%); font-size: 0.6875rem; font-weight: 600
+  L5873-5873: color: rgb(255 255 255 / 72%); font-size: 0.6875rem
+  L6589-6589: color: rgb(255 255 255 / 72%); font-size: 0.6875rem
+
+.composer-source-form input
+  L5768-5779: background: rgb(255 255 255 / 9%); border-radius: 9px; border: 1px solid rgb(255 255 255 / 25%); color: #fff; font-size: 0.8125rem; font: inherit; min-height: 38px; min-width: 0; padding: 9px 11px; width: 100%
+  L5874-5874: background: rgb(255 255 255 / 9%); border-color: rgb(255 255 255 / 25%); color: #fff; font-size: 0.8125rem; min-height: 38px
+  L6590-6590: background: rgb(255 255 255 / 9%); border-color: rgb(255 255 255 / 25%); color: #fff; font-size: 0.8125rem; min-height: 38px
+
+.composer-source-actions button
+  L5783-5783: background: rgb(255 255 255 / 10%); border-radius: 8px; border: 0; color: #fff; font-size: 0.75rem; min-height: 32px; padding: 7px 10px
+  L5876-5876: background: rgb(255 255 255 / 10%); color: #fff; font-size: 0.75rem; min-height: 32px
+  L6592-6592: background: rgb(255 255 255 / 10%); color: #fff; font-size: 0.75rem; min-height: 32px
+
+.hero .composer-voice-button
+  L5787-5797: background: rgb(255 255 255 / 10%); border-radius: 12px; border: 1px solid rgb(255 255 255 / 18%); color: #fff; display: grid; height: 40px; place-items: center; transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease; width: 40px
+  L5884-5884: background: rgb(255 255 255 / 10%); border-color: rgb(255 255 255 / 18%); color: #fff
+  L6538-6542: background: transparent; border-color: transparent; color: #fff
+
+.hero .composer-voice-button:hover:not(:disabled)
+  L5800-5800: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 38%); color: #fff
+  L5885-5885: background: rgb(255 255 255 / 22%); border-color: rgb(255 255 255 / 38%); color: #fff
+  L6544-6548: background: transparent; border-color: transparent; color: #fff
+
+.composer-image-reference
+  L5807-5818: align-items: center; background: rgb(255 255 255 / 10%); border-radius: 10px; border: 1px solid rgb(255 255 255 / 24%); color: #fff; display: flex; gap: 9px; margin: 0 12px 10px; min-width: 0; padding: 7px
+  L5892-5892: background: rgb(255 255 255 / 10%); border-color: rgb(255 255 255 / 24%); color: #fff
+  L6595-6599: background: rgb(255 255 255 / 10%); border-color: rgb(255 255 255 / 24%); color: #fff
+
+.composer-image-reference small
+  L5823-5823: color: rgb(255 255 255 / 72%); font-size: 0.6875rem
+  L5893-5893: color: rgb(255 255 255 / 72%)
+  L6601-6601: color: rgb(255 255 255 / 72%)
+
+.composer-image-reference > button
+  L5824-5824: background: rgb(255 255 255 / 10%); border-radius: 8px; border: 0; color: #fff; display: grid; flex: 0 0 32px; height: 32px; margin-left: auto; place-items: center; width: 32px
+  L5894-5894: background: rgb(255 255 255 / 10%); color: #fff
+  L6602-6602: background: rgb(255 255 255 / 10%); color: #fff
+
+.composer-dictation-status
+  L5826-5826: color: rgb(255 255 255 / 78%); font-size: 0.75rem; line-height: 1.4; margin: 0 14px 10px
+  L5895-5895: color: rgb(255 255 255 / 78%)
+  L6603-6603: color: rgb(255 255 255 / 78%)
+
+.site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover
+  L5941-5945: background: transparent; color: var(--nav-foreground)
+  L6026-6029: background: transparent
+  L6115-6118: background: transparent
+  L6153-6157: background: transparent; color: var(--nav-foreground)
+  L6245-6248: background: transparent
+
+.site-preloader
+  L6299-6299: isolation: isolate
+  L6384-6394: animation: preloader-safety-dismiss 240ms ease 2s forwards; background: var(--canvas); color: var(--ink); display: grid; inset: 0; overflow: hidden; place-items: center; position: fixed; z-index: 1000
+
+.preloader-content
+  L6308-6308: position: relative; z-index: 2
+  L6400-6406: display: grid; gap: 16px; justify-items: center; text-align: center; width: min(320px, calc(100% - 48px))
+
+.site-header[data-contrast]
+  L6323-6326: color: var(--nav-foreground, #fff); transition: color 240ms ease
+  L6462-6465: color: var(--nav-foreground); transition: color 240ms ease
+
+.site-header[data-contrast] .site-nav-links a,
+.site-header[data-contrast] .site-nav-account > a,
+.site-header[data-contrast] .site-mobile-links > a,
+.site-header[data-contrast] .site-mobile-actions > a:not(.nav-cta),
+.site-header[data-contrast] .site-mobile-toggle,
+.site-header[data-contrast] .nav-avatar-fallback
+  L6328-6336: color: var(--nav-foreground, #fff); transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease
+  L6471-6479: color: var(--nav-foreground); transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease
+
+--- R3. MEDIA QUERY CONDITIONS ---
+19x  (max-width: 720px)
+8x  (max-width: 360px)
+6x  (prefers-reduced-motion: reduce)
+2x  (max-height: 820px) and (min-width: 721px)
+1x  (max-width: 760px)
+1x  (max-width: 820px)
+1x  (max-width: 460px)
+1x  (max-width: 980px)
+1x  (pointer: coarse)
+1x  (max-width: 1080px)
+1x  (max-width: 940px)
+1x  (max-width: 899px)
+1x  (max-width: 860px)
+1x  (max-width: 1020px)
+
+--- R4. !important (count: 15) ---
+L774: width: 18px !important;
+L775: height: 18px !important;
+L1775: border-color: var(--line-white) !important;
+L1779: padding-block: 24px !important;
+L1780: color: var(--white) !important;
+L1781: font-size: 1.05rem !important;
+L1782: font-weight: 700 !important;
+L1783: text-decoration: none !important;
+L1787: text-decoration: underline !important;
+L1792: color: var(--white) !important;
+L1797: padding-bottom: 24px !important;
+L3058: animation-duration: 0.01ms !important;
+L3059: animation-iteration-count: 1 !important;
+L3060: transition-duration: 0.01ms !important;
+L4293: .workflow-progress-fill { transform: scaleY(1) !important; }
+
+--- R5. KEYFRAMES ---
+marquee: 0 css refs
+marquee-vertical: 0 css refs
+accordion-down: 0 css refs
+accordion-up: 0 css refs
+noise-animation: 1 css refs
+preloader-safety-dismiss: 1 css refs
+
+--- R6. COPY-PASTE IDENTICAL DECL GROUPS ACROSS SELECTORS (>=3) ---
+x9: .site-nav-links a:hover,
+.site-nav-account > a:hover | .hero .composer-input textarea | .composer-dictation-status.is-listening | .composer-context-actions > button > svg | .hero .composer-input textarea | .hero .send-button svg | .composer-dictation-status.is-listening | .hero .composer-input textarea | .composer-dictation-status.is-listening
+  decls: color: #fff
+
+x9: .pricing-card-featured button | .auth-submit | .composer-source-actions .composer-source-submit | .composer-source-actions .composer-source-submit | .hero .send-button | .site-header[data-contrast] .nav-cta:hover | .site-header[data-contrast] .nav-cta:hover | .site-header .nav-cta:hover | .composer-source-actions .composer-source-submit
+  decls: background: var(--accent); color: #fff
+
+x7: .preview-pattern-3 .preview-visual | .site-mobile-links .site-nav-item | .capability-compare article > span | .faq-action > span | .hero .starter-prompts[hidden] | .hero .starter-prompts[hidden] | .composer-file-input
+  decls: display: none
+
+x7: .privacy-chip | .starter-prompts > span | .workflow-step p | .output-heading > p | .document-bar span:last-child | .output-note | .faq-content
+  decls: color: var(--muted)
+
+x7: .hero .composer-voice-button.is-listening | .hero .composer-voice-button.is-listening | .hero .composer-voice-button.is-listening | .hero .composer-voice-button.is-listening | .hero .composer-voice-button.is-listening | .hero .composer-voice-button.is-listening | .hero .composer-voice-button.is-listening
+  decls: background: rgb(0 110 255 / 72%); border-color: rgb(255 255 255 / 48%); color: #fff
+
+x6: .profile-details div | .auth-panel | .generate-heading > *,
+.document-layout > *,
+.document-toolbar > *,
+.document-section-header > * | .document-section-header > div:first-child | .profile-identity > div | .profile-details div
+  decls: min-width: 0
+
+x6: .auth-brand-kicker | .composer-meta | .composer-meta | .composer-dictation-status | .composer-meta | .composer-dictation-status
+  decls: color: rgb(255 255 255 / 78%)
+
+x6: .site-header[data-accent-background="brand"] .nav-cta | .site-header[data-accent-background="brand"] .nav-cta | .site-header[data-accent-background="brand"] .nav-cta | .site-header[data-accent-background="brand"] .nav-cta | .site-header[data-accent-background="brand"] .nav-cta | .site-header[data-accent-background="brand"] .nav-cta
+  decls: background: transparent; border-color: rgb(255 255 255 / 68%); box-shadow: none; color: #fff
+
+x6: .hero .composer-voice-button,
+.hero .composer-voice-button:hover:not(:disabled) | .hero .composer-voice-button,
+.hero .composer-voice-button:hover:not(:disabled) | .hero .composer-voice-button,
+.hero .composer-voice-button:hover:not(:disabled) | .hero .composer-voice-button,
+.hero .composer-voice-button:hover:not(:disabled) | .hero .composer-voice-button | .hero .composer-voice-button:hover:not(:disabled)
+  decls: background: transparent; border-color: transparent; color: #fff
+
+x4: button | .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover | .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover | .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover
+  decls: background: transparent
+
+x4: .nav,
+.pricing-header,
+.auth-page,
+.pricing-page,
+.generate-shell | .auth-eyebrow,
+.auth-back:hover,
+.auth-switch a | .pricing-error | .generate-status
+  decls: color: var(--blueprint-ink)
+
+x4: .composer-heading | .document-content | .faq-trigger,.faq-content | .clarify-journey-rail li.is-complete,
+.clarify-journey-rail li[aria-current="step"]
+  decls: color: var(--ink)
+
+x4: .visual-copy .plain-list | .hero-benefits | .hero-benefits | .hero-benefits
+  decls: margin-top: 22px
+
+x4: .site-header[data-contrast] .nav-cta | .site-header[data-contrast] .nav-cta | .site-header .nav-cta | .site-header[data-contrast] .nav-cta
+  decls: background: var(--accent); border-color: var(--accent); color: #fff; transition: transform 150ms ease
+
+x4: .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover | .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover | .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover,
+.site-header[data-contrast] .site-mobile-links > a:hover,
+.site-header[data-contrast] .site-mobile-actions > a:not(.nav-cta):hover,
+.site-header[data-contrast] .site-mobile-toggle:hover | .site-header[data-contrast] .site-nav-links a:hover,
+.site-header[data-contrast] .site-nav-account > a:hover,
+.site-header[data-contrast] .site-mobile-links > a:hover,
+.site-header[data-contrast] .site-mobile-actions > a:not(.nav-cta):hover,
+.site-header[data-contrast] .site-mobile-toggle:hover
+  decls: background: transparent; color: var(--nav-foreground)
+
+x3: ::selection | .starter-prompts button:hover | .feedback-rating-button[aria-pressed="true"]
+  decls: background: var(--blue); color: var(--white)
+
+x3: .auth-brand-kicker | .composer-image-reference small | .composer-image-reference small
+  decls: color: rgb(255 255 255 / 72%)
+
+x3: .composer-input textarea:focus-visible | .hero .composer-input textarea:focus-visible | .hero .composer-input textarea:focus-visible
+  decls: outline-offset: -3px
+
+x3: .clarify-option:has([data-state="checked"]) | .stack-option:hover,
+.stack-option:focus-visible,
+.stack-option.is-selected | .document-nav button[aria-pressed="true"]
+  decls: background: var(--blue); border-color: var(--blue); color: var(--white)
+
+x3: .stack-option span | .unavailable-skill-list code | .document-summary strong,
+.document-summary p
+  decls: min-width: 0; overflow-wrap: anywhere
+
+x3: .catalog-notice p | .profile-details dd | .hero .wizard
+  decls: margin: 0
+
+x3: .site-header .signout-icon-button:hover | .hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"] | .hero .composer-add:hover,
+.hero .composer-add[aria-expanded="true"]
+  decls: background: var(--accent-soft); color: var(--accent)
+
+x3: .composer-input | .document-bar | .faq-item
+  decls: border-color: var(--line)
+
+x3: .hero .send-button svg | .hero .send-button svg | .hero .composer-voice-button svg
+  decls: height: 19px; width: 19px
+
+x3: .hero-logo-marquee .marquee-copy | .hero-logo-marquee .marquee-copy | .hero-logo-marquee .marquee-copy
+  decls: align-items: center; gap: var(--gap)
+
+--- R7. CLASS SELECTORS WITH NO TOKEN MATCH IN SOURCE (candidates; verify before delete) ---
+count: 46
+hero-copy, hero-meta, composer-heading, privacy-chip, composer-toolbar, composer-tools, input-meta, starter-prompts, prototype-note, slow, preview-card, preview-placeholder, preview-browser-bar, preview-wireframe, preview-copy, preview-title, preview-action, preview-visual, preview-pattern-2, preview-pattern-3, clarification-copy, question-example, not-equal, type-specimen, specimen-display, specimen-ui, swatches, privacy-icon, theme-slot, unavailable-skill-list, site-signout, site-mobile-signout, nav-item-visual, nav-item-pricing, nav-item-approach, nav-item-output, showcase-route, hero-brand, hero-brand-logo, composer-brand-mark, hero-attribution-logo, composer-context-note, preloader-tile-1, preloader-tile-2, preloader-tile-3, preloader-tile-4

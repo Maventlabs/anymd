@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check, RefreshCw } from "lucide-react";
 import BrandLogo from "@/components/brand-logo";
+import PageMotion from "@/components/page-motion";
 import { useDraft } from "@/components/draft-provider";
+import { trackAnalytics } from "@/lib/analytics-client";
 import {
   completedQuestions,
   visibleQuestions,
@@ -68,6 +70,7 @@ export default function SkillSelection() {
 
   if (!validDraft)
     return (
+      <PageMotion className="page-motion-root skills-motion-root">
       <div className="skills-shell shell">
         <header className="nav">
           <Link href="/" className="wordmark" aria-label="AnyMD home">
@@ -76,8 +79,8 @@ export default function SkillSelection() {
         </header>
         <main className="skills-empty">
           <span className="quiet">03 / Skills</span>
-          <h1>Start with your product idea first.</h1>
-          <p>
+              <h1 data-gsap="reveal">Start with your product idea first.</h1>
+              <p data-gsap="reveal">
              Skill recommendations use a completed brief saved locally in this
              browser. Return to the idea composer to begin again.
           </p>
@@ -86,6 +89,7 @@ export default function SkillSelection() {
           </Link>
         </main>
       </div>
+      </PageMotion>
     );
 
   const skills = catalog?.data ?? [];
@@ -99,6 +103,10 @@ export default function SkillSelection() {
   const recommended = skills.filter(({ id }) => recommendedIds.includes(id));
 
   return (
+    <PageMotion
+      className="page-motion-root skills-motion-root"
+      motionKey={`${catalog?.meta.source ?? (error ? "error" : "loading")}:${complete}`}
+    >
     <div className="skills-shell shell">
       <a href="#skills-main" className="skip-link">
         Skip to skills
@@ -111,10 +119,10 @@ export default function SkillSelection() {
       </header>
       <main id="skills-main" className="skills-main">
         {complete ? (
-          <section className="skills-complete" aria-labelledby="skills-complete-title">
+            <section className="skills-complete" aria-labelledby="skills-complete-title" data-gsap="reveal">
             <span className="quiet">03 / Skills complete</span>
-             <h1 id="skills-complete-title">Recommendations saved locally.</h1>
-            <p>
+                 <h1 id="skills-complete-title" data-gsap="reveal">Recommendations saved locally.</h1>
+            <p data-gsap="reveal">
               {recommended.length
                 ? `${recommended.length} recommended skill${recommended.length === 1 ? "" : "s"} will guide the AGENTS.md instructions.`
                 : "No matching skills were recommended. The generated files will follow repository conventions."}
@@ -141,12 +149,12 @@ export default function SkillSelection() {
           </section>
         ) : (
           <>
-            <div className="skills-heading">
+            <div className="skills-heading" data-gsap="group">
               <div>
                 <span className="quiet">03 / Skill recommendations</span>
-                <h1>Recommended for this build.</h1>
+                <h1 data-gsap-item>Recommended for this build.</h1>
               </div>
-              <p>
+              <p data-gsap-item>
                 AnyMD matches the current brief to its curated catalog. Your coding
                 agent must still check whether each skill is installed; a skill
                 never proves MCP access.
@@ -191,7 +199,7 @@ export default function SkillSelection() {
                     <legend>{category.label}</legend>
                     <div className="skill-grid">
                       {categorySkills.map((skill) => (
-                            <article className="skill-card" key={skill.id}>
+                            <article className="skill-card" data-gsap="reveal" key={skill.id}>
                               <span className="skill-check" aria-hidden="true">
                                 <Check />
                               </span>
@@ -217,6 +225,7 @@ export default function SkillSelection() {
                 className="pill"
                 disabled={!catalog}
                 onClick={() => {
+                  trackAnalytics("skills_selected", { skill_count: recommendedIds.length });
                   setDraft((state) => ({
                     ...state,
                     selectedSkillIds: recommendedIds,
@@ -235,5 +244,6 @@ export default function SkillSelection() {
          is assumed.
       </p>
     </div>
+    </PageMotion>
   );
 }

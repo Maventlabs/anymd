@@ -12,7 +12,7 @@ Solo developers and small teams starting a new product or a substantial multi-st
 
 ## Product Purpose
 
-AnyMD turns a freely written product idea into a focused clarification journey and two agent-ready Markdown documents: `prd.md` for what to build and `AGENTS.md` for how the coding agent should work.
+AnyMD turns a freely written product idea into a focused clarification journey and three agent-ready Markdown documents: `prd.md` for what to build, `AGENTS.md` for how the coding agent should work, and `SESSION.md` for mutable execution state and evidence.
 
 ## Positioning
 
@@ -26,11 +26,11 @@ Users write an idea in any language, optionally record existing stack decisions,
 
 - Current preview supports idea entry, six optional stack categories, Unicode-safe validation, output-language and theme clarification, automatic recommendations from a curated 25-skill catalog at `/skills`, and AI-refined document review at `/generate`.
 - `GET /api/skills` prefers a validated structured remote catalog, caches successful fetches for six hours, and falls back to a version-controlled snapshot.
-- `POST /api/generate` validates the complete handoff, resolves recommended skill IDs server-side, and returns `prd.md`, `AGENTS.md`, and optional `CLAUDE.md` as stable sectioned documents.
+- `POST /api/generate` validates the complete handoff, resolves recommended skill IDs server-side, and returns `prd.md`, `AGENTS.md`, `SESSION.md`, and optional `CLAUDE.md` as stable sectioned documents.
 - `prd.md` follows `PRD-Template-Output-AnyMD.md`, emits Mermaid source, and remains within a tested 4,000-word hard cap. Section rebuild preserves all non-target sections.
 - Input is valid at 20-5,000 trimmed Unicode code points.
 - The current preview calls a maintainer-configured OpenAI-compatible provider from the server. It reviews structured sections or exact raw Markdown, copies documents and the initialization prompt, and downloads Markdown from browser memory. Generation jobs, quota claims, token balances, and Stripe webhook state are persisted in Neon; the product does not install skills or verify local skill availability.
-- Default output is exactly `prd.md` and `AGENTS.md`; the Claude-specific `CLAUDE.md` importer is opt-in rather than a third default document.
+- Default output is exactly `prd.md`, `AGENTS.md`, and `SESSION.md`; the Claude-specific `CLAUDE.md` importer is opt-in rather than a fourth default document.
 - Public responses apply a restrictive baseline CSP, deny framing and unused camera/microphone/geolocation access, disable MIME sniffing, and limit referrer disclosure.
 - AnyMD is intended for new products and substantial features, not every small code change.
 

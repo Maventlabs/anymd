@@ -4,8 +4,15 @@ import { ArrowUpRight, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { tokenPackages, type TokenPackageId } from "@/lib/token-packages";
+import { trackAnalytics } from "@/lib/analytics-client";
 
 type PricingTableProps = { signedIn: boolean; returnTo?: string };
+
+const displayNames: Record<TokenPackageId, string> = {
+  starter: "Starter",
+  builder: "Builder",
+  studio: "Studio",
+};
 
 export default function PricingTable({
   signedIn,
@@ -22,6 +29,7 @@ export default function PricingTable({
     }
     setPending(packageId);
     setError(null);
+    trackAnalytics("checkout_started", { packageId });
     try {
       const response = await fetch("/api/stripe/checkout", {
         method: "POST",
@@ -42,24 +50,34 @@ export default function PricingTable({
 
   return (
     <div className="pricing-wrap">
-      <div className="pricing-grid">
+      <div className="pricing-grid" data-gsap="group">
         {(Object.entries(tokenPackages) as [TokenPackageId, (typeof tokenPackages)[TokenPackageId]][]).map(
           ([id, tokenPackage]) => (
-            <article className={`pricing-card ${id === "builder" ? "pricing-card-featured" : ""}`} key={id}>
+            <article
+              className={`pricing-card ${id === "builder" ? "pricing-card-featured" : ""}`}
+              data-gsap-item
+              key={id}
+            >
               {id === "builder" && (
-                <span className="pricing-badge">
+                <span className="pricing-flag">
                   Recommended for a first full brief
                 </span>
               )}
               <span className="pricing-kicker">{tokenPackage.tokens} tokens</span>
-              <h2>{tokenPackage.name}</h2>
+              <h2>{displayNames[id]}</h2>
               <p className="pricing-price">${(tokenPackage.unitAmount / 100).toFixed(2)}</p>
+              <p className="pricing-per">
+                ≈ ${((tokenPackage.unitAmount / 100) / tokenPackage.tokens).toFixed(2)} per
+                generation
+              </p>
               <p className="pricing-detail">
-                One-time purchase. Tokens are added after payment is confirmed.
+                One-time purchase. Tokens land in your balance after payment is
+                confirmed.
               </p>
               <ul>
-                <li><Check aria-hidden="true" /> No subscription</li>
-                <li><Check aria-hidden="true" /> Use when you need them</li>
+                <li><Check aria-hidden="true" /> 1 token covers 1 full generation</li>
+                <li><Check aria-hidden="true" /> No subscription, ever</li>
+                <li><Check aria-hidden="true" /> Use them whenever you need them</li>
               </ul>
               <button type="button" onClick={() => void checkout(id)} disabled={pending !== null}>
                 {pending === id
